@@ -7,10 +7,10 @@ public class User {
     private String lastName;
     private String email;
     private String projects;
-    private String isAdmin;
+    private int isAdmin;
     private String jobTitel;
 
-    public User(int userId, String firstName, String lastName, String email, String projects, String isAdmin, String jobTitel) {
+    public User(int userId, String firstName, String lastName, String email, String projects, int isAdmin, String jobTitel) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -63,11 +63,11 @@ public class User {
         this.projects = projects;
     }
 
-    public String getIsAdmin() {
+    public int getIsAdmin() {
         return isAdmin;
     }
 
-    public void setIsAdmin(String isAdmin) {
+    public void setIsAdmin(int isAdmin) {
         this.isAdmin = isAdmin;
     }
 
