@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+    <link rel="stylesheet" type="text/css" href="main_style.css"/>
 <body>
 
 <table class="project-table">
@@ -24,4 +23,5 @@
 </table>
 
 </body>
+<th:block th:include="/includes/footer :: footer"></th:block>
 </html>
