@@ -1,18 +1,21 @@
 /**
- * Every mapper class should extend the SuperMapper class
+ * This class is the abstraction for all Mapper classes.
+ *
+ * In this class there are 2 methods for use by external access.
+ *      1. create(): Will create a single object from resultSet and returns Object
+ *      2. batch(): Will create multiple objects from resultSet and returns ArrayList
  *
  * @author Patrick Vincent Højstrøm
  * @version 1.0
  * @since 27-11-2020
  */
-
 package com.example.demo.Mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class SuperMapper {
+public abstract class AbstractMapper {
     // Template pattern: Larman: Kap 37
     // Martin Fowler: Identity field: Patterns of enterprice and architecture
     // Loader fra map i cache
@@ -24,15 +27,11 @@ public class SuperMapper {
         }
         return list;
     }
-
     public Object create(ResultSet resultSet) throws SQLException {
         if (resultSet.isBeforeFirst()) {
             resultSet.next();
         }
-        return mapper(resultSet);
+        return mapping(resultSet);
     }
-
-    public Object mapper(ResultSet resultSet) {
-        return new Object();
-    }
+    public abstract Object mapping(ResultSet resultSet);
 }
