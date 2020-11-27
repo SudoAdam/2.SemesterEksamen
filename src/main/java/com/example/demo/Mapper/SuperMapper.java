@@ -1,3 +1,11 @@
+/**
+ * Every mapper class should extend the SuperMapper class
+ *
+ * @author Patrick Vincent Højstrøm
+ * @version 1.0
+ * @since 27-11-2020
+ */
+
 package com.example.demo.Mapper;
 
 import java.sql.ResultSet;
@@ -21,8 +29,7 @@ public class SuperMapper {
         if (resultSet.isBeforeFirst()) {
             resultSet.next();
         }
-        Object object = mapper(resultSet);
-        return object;
+        return mapper(resultSet);
     }
 
     public Object mapper(ResultSet resultSet) {
