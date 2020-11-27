@@ -9,21 +9,23 @@
 <th:block th:include="/includes/header :: header"></th:block>
 <body>
 
-<div id="signupfields">
+<div id="registrationform">
     <form action="/register" object="" method="POST">
         <p>Email
-        <p><input type="email" name="mail" style="font-size:20px" required>
+        <p><input type="email" name="mail" required>
         <p>Password
-            <input type="password" name="password" style="font-size:20px" required>
+        <p><input type="password" name="password" required>
         <p>Fornavn
-        <p><input type="text" name="firstName" style="font-size:20px" required>
+        <p><input type="text" name="firstName" required>
         <p>Efternavn
-            <input type="text" name="lastName" style="font-size:20px" required>
+        <p><input type="text" name="lastName" required>
         <p>Job
-        <p><input type="text" name="job" style="font-size: 20px" required>
+        <p><input type="text" name="job" required>
         <div class="button">
             <input type="Submit" value="  Create!  ">
         </div>
+        <p>
+            <a href="/"> Login her </a>
     </form>
 </div>
 

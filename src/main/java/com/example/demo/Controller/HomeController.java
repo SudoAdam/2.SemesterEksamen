@@ -10,4 +10,7 @@ public class HomeController {
     public String showHome(){
         return "authentication/login";
     }
+
+    @GetMapping("/register")
+    public String register() { return "authentication/register";}
 }

@@ -7,19 +7,21 @@
 </head>
 <th:block th:include="/includes/header :: header"></th:block>
 <body>
-<div id="loginfields">
-    LOG IN!
-    <form action="/projectList" method="POST">
-        <p> Email
-        <p><input type="email" name="mail" style="font-size:20px" >
-        <p> Password
-        <p><input type="password" name="password" style="font-size:20px" >
+<div id="container">
+    <div id="loginform">
+        <form action="/projectList" method="POST">
+            <p> Email
+            <p><input type="email" name="mail">
+            <p> Password
+            <p><input type="password" name="password">
+            <p>
+            <div class="button">
+                <input type="Submit" value="  Log in!  ">
+            </div>
+        </form>
         <p>
-        <div class="button">
-            <input type="Submit" value="  Log in!  ">
-        </div>
-    </form>
-    <a href="/Register"> Opret her </a>
+        <a href="/register"> Opret her </a>
+    </div>
 </div>
 </body>
 <th:block th:include="/includes/footer :: footer"></th:block>
