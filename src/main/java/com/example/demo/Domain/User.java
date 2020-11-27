@@ -8,16 +8,16 @@ public class User {
     private String email;
     private String projects;
     private int isAdmin;
-    private String jobTitel;
+    private String jobTitle;
 
-    public User(int userId, String firstName, String lastName, String email, String projects, int isAdmin, String jobTitel) {
+    public User(int userId, String firstName, String lastName, String email, String projects, int isAdmin, String jobTitle) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.projects = projects;
         this.isAdmin = isAdmin;
-        this.jobTitel = jobTitel;
+        this.jobTitle = jobTitle;
     }
 
     public User() {
@@ -72,11 +72,11 @@ public class User {
     }
 
     public String getJobTitel() {
-        return jobTitel;
+        return jobTitle;
     }
 
     public void setJobTitel(String jobTitel) {
-        this.jobTitel = jobTitel;
+        this.jobTitle = jobTitel;
     }
 
     @Override
@@ -88,7 +88,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", projects='" + projects + '\'' +
                 ", isAdmin='" + isAdmin + '\'' +
-                ", jobTitel='" + jobTitel + '\'' +
+                ", jobTitel='" + jobTitle + '\'' +
                 '}';
     }
 }
