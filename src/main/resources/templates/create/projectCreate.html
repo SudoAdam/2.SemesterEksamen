@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- @author Adam -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -8,6 +9,27 @@
 <th:block th:include="/includes/header :: header"></th:block>
 <body>
 This will become where you create a project... :)
+<div id="signupfields">
+    <form action="/projectCreate" object="" method="POST">
+        <p>Project Name
+        <p><input type="text" name="pName" style="font-size:20px" required>
+        <p>Costumer
+        <p><input type="text" name="comName" placeholder="Company name" style="font-size:20px" required>
+        <p>Costumer Contact
+        <p><input type="text" name="conName" placeholder="Name" style="font-size:20px" required>
+        <p><input type="email" name="cEmail"  placeholder="E-mail"  style="font-size:20px" required>
+        <p><input type="tel" name="tel"  placeholder="Phone number"  style="font-size:20px" required>
+        <p>Project manager
+        <p><input type="text" name="PMName" placeholder="E-mail" style="font-size:20px" required>
+        <p>Kick-off
+        <p><input type="date" name="kickOff" style="font-size:20px" required>
+        <p>Deadline
+        <p><input type="date" name="deadline" style="font-size: 20px" required>
+        <div class="button">
+            <input type="Submit" value="  Create!  ">
+        </div>
+    </form>
+</div>
 </body>
 <th:block th:include="/includes/footer :: footer"></th:block>
 </html>
