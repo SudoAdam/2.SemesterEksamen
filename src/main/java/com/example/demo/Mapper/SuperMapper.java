@@ -1,10 +1,13 @@
-package com.example.demo.Factories;
+package com.example.demo.Mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class SuperFactory {
+public class SuperMapper {
+    // Template pattern: Larman: Kap 37
+    // Martin Fowler: Identity field: Patterns of enterprice and architecture
+    // Loader fra map i cache
     public ArrayList<Object> batch(ResultSet resultSet) throws SQLException {
         ArrayList<Object> list = new ArrayList<>();
         while (resultSet.next()) {
