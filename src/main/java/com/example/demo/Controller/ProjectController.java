@@ -10,4 +10,10 @@ public class ProjectController {
     public String showProjects(){
         return "lists/projectList";
     }
+
+    @GetMapping("/projectCreate")
+    public String createProject(){
+        return "create/projectCreate";
+    }
+
 }
