@@ -1,4 +1,4 @@
 package com.example.demo.Data;
 
-public class UserMapper {
+public class UserData {
 }
