@@ -21,6 +21,6 @@ public class RegisterController {
         // For så får vi nemlig userID med. med det samme.
         UserService userService = new UserService();
         userService.createUser(email,firstName,lastName,jobTitle);
-        return "authentication/register";
+        return "edit/employeeEdit";
     }
 }

@@ -21,6 +21,12 @@ public class ProjectController {
 
     @PostMapping("/projectCreate")
     public String createingProject(WebRequest request) {
+        //denne funktion er ikke færdig!
+        String projectName = request.getParameter("pName");
+        String companyName = request.getParameter("comName");
+        String contactName = request.getParameter("conName");
+        String contactEmail = request.getParameter("conEmail");
+
 
         return "error";
     }
