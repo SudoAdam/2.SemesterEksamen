@@ -59,6 +59,7 @@ footer{
 
 
 #container {
+    padding: 100px;
     width: 900px;
     margin: auto;
 
@@ -76,4 +77,44 @@ footer{
 
     text-align: center;
 
+}
+
+.project-table {
+    border-collapse: collapse;
+    top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 0.9em;
+    width: 100%;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+}
+
+.project-table thead tr {
+    font-size: 25px;
+    background-color: #000000;
+    color: white;
+    text-align: left;
+    font-weight: bold;
+    border-radius: 5px 5px 5px 5px;
+
+}
+
+.project-table th,
+.project-table td {
+    font-size: 25px;
+    padding: 12px 15px;
+    border: 1px solid #c4e0e5;
+}
+
+.project-table tbody tr {
+    height: 50px;
+}
+
+.project-table tbody tr:nth-of-type(even) {
+    border-radius: 5px 5px 5px 5px;
+}
+
+.project-table tbody tr:last-of-type {
+    border-bottom: 3px  solid #4ca1af;
 }
