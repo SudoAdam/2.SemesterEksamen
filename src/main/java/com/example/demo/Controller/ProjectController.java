@@ -6,11 +6,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Controller
 public class ProjectController {
+    ProjectService projectService = new ProjectService();
+
+
 
     @GetMapping("/projectList")
     public String showProjects() {
@@ -24,7 +28,7 @@ public class ProjectController {
 
 
     @PostMapping("/projectCreate")
-    public String createingProject(WebRequest request) {
+    public String createProject(WebRequest request) {
         //denne funktion er ikke færdig!
         String projectName = request.getParameter("pName");
         String companyName = request.getParameter("comName");
@@ -32,11 +36,13 @@ public class ProjectController {
         String contactEmail = request.getParameter("conEmail");
         String kickOffStr = request.getParameter("kickOff");
         String deadlineStr = request.getParameter("deadline");
+        int project_leader_id = 1;
+        int customer_id = 1;
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate kickOff = LocalDate.parse(kickOffStr,dateTimeFormatter);
+        LocalDate kickOff =                LocalDate.parse(kickOffStr,dateTimeFormatter);
         LocalDate deadline = LocalDate.parse(deadlineStr,dateTimeFormatter); ;
-        ProjectService projectService = new ProjectService();
-        //projectService.createProject(projectName,kickOff, deadline,);
+
+        projectService.createProject(projectName, Date.valueOf(kickOff), Date.valueOf(deadline), project_leader_id, customer_id);
 
         return "error";
     }
