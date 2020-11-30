@@ -13,4 +13,10 @@ public class HomeController {
 
     @GetMapping("/register")
     public String register() { return "authentication/register";}
+
+    @GetMapping("/employeeList")
+    public String showEmployees() {
+        return "lists/employeeList";
+    }
 }
+

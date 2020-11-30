@@ -7,7 +7,29 @@
 </head>
 <th:block th:include="/includes/header :: header"></th:block>
 <body>
-
+<div id="container">
+    <table class="project-table">
+        <thead>
+        <tr>
+            <th>Last name</th>
+            <th>First name</th>
+            <th>E-mail</th>
+            <th>Active projects</th>
+            <th>View</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <!-- Table value Examples. Replace with thymeleaf values. -->
+            <td>Dudeson</td>
+            <td>Dude</td>
+            <td>employee@alpha-solutions.com</td>
+            <td>2 projects</td>
+            <td><a href="">View Employee</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 <th:block th:include="/includes/footer :: footer"></th:block>
 </html>
