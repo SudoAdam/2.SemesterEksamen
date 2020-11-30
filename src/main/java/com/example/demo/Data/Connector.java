@@ -8,6 +8,7 @@ import java.util.Properties;
 
 public class Connector {
 
+    // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public Connection getConnection() {
         try (InputStream input = new FileInputStream("src/main/resources/application.properties")) {
             Properties properties = new Properties();
@@ -29,5 +30,4 @@ public class Connector {
         }
         return null;
     }
-
 }

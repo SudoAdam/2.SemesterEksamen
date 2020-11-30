@@ -16,7 +16,7 @@ class ProjectDataTest {
         ArrayList<Project> list = projectData.getProjects();
 
         // Assert project is correct by name
-        assertEquals("The new Deal", list.get(0).getName());
+        assertEquals("The new Deal", list.get(0).getProject_name());
 
         // Assert project has correct type
         assertEquals(Project.class, list.get(0).getClass());

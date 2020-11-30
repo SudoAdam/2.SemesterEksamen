@@ -12,8 +12,13 @@ import java.sql.Date;
 
 public class ProjectData {
 
-    ProjectMapper projectMapper = new ProjectMapper();
-    Connector connector = new Connector();
+    ProjectMapper projectMapper;
+    Connector connector;
+
+    public ProjectData() {
+        projectMapper = new ProjectMapper();
+        connector = new Connector();
+    }
 
     public ArrayList<Project> getProjects() {
         Connection connection = connector.getConnection();
