@@ -18,5 +18,10 @@ public class HomeController {
     public String showEmployees() {
         return "lists/employeeList";
     }
+
+    @GetMapping("/employeeEdit")
+    public String editEmployee() {
+        return "edit/employeeEdit";
+    }
 }
 
