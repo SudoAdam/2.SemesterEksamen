@@ -1,6 +1,6 @@
 /**
- * This class works to create new objects of a special type.
- * See 'AbstractMapper' class for more specifics.
+ * This class works to create specific domain objects.
+ * See 'AbstractMapper' class for more information.
  *
  * @author Patrick Vincent Højstrøm
  * @version 1.0

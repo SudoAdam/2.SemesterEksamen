@@ -1,6 +1,6 @@
 package com.example.demo.Domain;
 
-public class User {
+public class User implements DomainFacade {
 
     private int userId;
     private String firstName;

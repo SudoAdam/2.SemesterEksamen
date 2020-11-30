@@ -1,60 +1,45 @@
 package com.example.demo.Domain;
 
-public class Project {
-    private String projectName;
-    private int startDate;
-    private int endDate;
-    private int employeeNumber;
+import java.util.Date;
 
-    public Project(String projectName, int startDate, int endDate, int employeeNumber) {
-        this.projectName = projectName;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.employeeNumber = employeeNumber;
+public class Project implements DomainFacade {
+    private int project_id;
+    private String name;
+    private Date kickoff;
+    private Date deadline;
+    private int project_leader_id;
+    private int customer_id;
+
+    public Project(int project_id, String name, Date kickoff, Date deadline, int project_leader_id, int customer_id) {
+        this.project_id = project_id;
+        this.name = name;
+        this.kickoff = kickoff;
+        this.deadline = deadline;
+        this.project_leader_id = project_leader_id;
+        this.customer_id = customer_id;
     }
 
-    public Project() {
+    public int getProject_id() {
+        return project_id;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public String getName() {
+        return name;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public Date getKickoff() {
+        return kickoff;
     }
 
-    public int getStartDate() {
-        return startDate;
+    public Date getDeadline() {
+        return deadline;
     }
 
-    public void setStartDate(int startDate) {
-        this.startDate = startDate;
+    public int getProject_leader_id() {
+        return project_leader_id;
     }
 
-    public int getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(int endDate) {
-        this.endDate = endDate;
-    }
-
-    public int getEmployeeNumber() {
-        return employeeNumber;
-    }
-
-    public void setEmployeeNumber(int employeeNumber) {
-        this.employeeNumber = employeeNumber;
-    }
-
-    @Override
-    public String toString() {
-        return "Project{" +
-                "projectName='" + projectName + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", employeeNumber=" + employeeNumber +
-                '}';
+    public int getCustomer_id() {
+        return customer_id;
     }
 }
