@@ -1,3 +1,10 @@
+/**
+ *
+ * @author Patrick Vincent Højstrøm
+ * @version 1.0
+ * @since 27-11-2020
+ */
+
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Project;
@@ -11,15 +18,17 @@ import java.util.ArrayList;
 import java.sql.Date;
 
 public class ProjectData {
+    // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    private final ProjectMapper projectMapper;
+    private final Connector connector;
 
-    ProjectMapper projectMapper;
-    Connector connector;
-
+    // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public ProjectData() {
         projectMapper = new ProjectMapper();
         connector = new Connector();
     }
 
+    // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public ArrayList<Project> getProjects() {
         Connection connection = connector.getConnection();
         String statement = "SELECT * FROM projects";
@@ -27,6 +36,20 @@ public class ProjectData {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             ResultSet resultSet = preparedStatement.executeQuery();
             return (ArrayList) projectMapper.batch(resultSet);
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return null;
+    }
+
+    public Project getProject(int id) {
+        Connection connection = connector.getConnection();
+        String statement = "SELECT * FROM projects WHERE project_id=?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return (Project) projectMapper.create(resultSet);
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
@@ -52,4 +75,23 @@ public class ProjectData {
         return success;
     }
 
+    public boolean editProject(int project_id, String project_name, Date kickoff, Date deadline, int project_leader_id, int customer_id) {
+        Connection connection = connector.getConnection();
+        String statement = "UPDATE projects SET project_name=?, kickoff=?, deadline=?, project_leader_id=?, customer_id=? WHERE project_id=?";
+        boolean success = false;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, project_name);
+            preparedStatement.setDate(2, kickoff);
+            preparedStatement.setDate(3, deadline);
+            preparedStatement.setInt(4, project_leader_id);
+            preparedStatement.setInt(5, customer_id);
+            preparedStatement.setInt(6, project_id);
+            preparedStatement.executeUpdate();
+            success = true;
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return success;
+    }
 }

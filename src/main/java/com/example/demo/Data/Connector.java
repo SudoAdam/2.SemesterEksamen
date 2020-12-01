@@ -21,12 +21,8 @@ public class Connector {
             System.out.println(e.getMessage());
             System.out.println(e.getSQLState());
             System.out.println(e.getErrorCode());
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-            System.out.println(e.getCause());
         } catch (IOException e) {
-            System.out.println(e.getMessage());
-            System.out.println(e.getCause());
+            System.out.println(e.getStackTrace());
         }
         return null;
     }

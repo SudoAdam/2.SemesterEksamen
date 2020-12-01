@@ -4,8 +4,7 @@ import com.example.demo.Domain.Project;
 import com.example.demo.Service.ProjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import java.sql.Date;
@@ -50,6 +49,13 @@ public class ProjectController {
         projectService.createProject(projectName, kickOff, deadline, project_leader_id, customer_id);
 
         return "errors/defaultError";
+    }
+
+    // Responds to /projectView?id=project_id
+    @RequestMapping(value = "/projectView", method = {RequestMethod.GET, RequestMethod.POST})
+    public String profile(@RequestParam int id, Model model) {
+        model.addAttribute("project", projectService.getProject(id));
+        return "projectView";
     }
 
 }

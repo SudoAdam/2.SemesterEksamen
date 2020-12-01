@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="main_style.css"/>
+    <title>Project (name)</title>
 </head>
+<th:block th:include="/includes/header :: header"></th:block>
 <body>
+<div id="container">
+    <div id="bio" style="float: left">
+        <h1 style="font-size: 50px" th:text="${project.project_name}"></h1>
+        <hr class="rounded">
+            Customer: <span>cname</span>
+        <p>
+            Project Leader: <span>plname</span>
+        <p>
+            Kick Off: <span th:text="${project}"></span>
+        <p>
+            Deadline: <label for="jobs">Choose job:</label>
 
+            <select name="jobs" id="jobs">
+                <option value="volvo">Job1</option>
+                <option value="saab">Job2</option>
+                <option value="mercedes">Job3</option>
+                <option value="audi">Job4</option>
+            </select>
+    </div>
+    <div id="profilepic" style="float: right">
+        <img class="pb" src="/images/defaultprofilepic.png">
+        <!-- th:src="*{'data:image/jpeg;base64,' + profilePic}"> -->
+    </div>
+</div>
 </body>
+<th:block th:include="/includes/footer :: footer"></th:block>
 </html>

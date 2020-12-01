@@ -1,5 +1,8 @@
 /**
  *
+ * @author Patrick Vincent Højstrøm
+ * @version 1.0
+ * @since 27-11-2020
  */
 
 package com.example.demo.Service;
@@ -15,7 +18,6 @@ import java.util.ArrayList;
 import java.sql.Date;
 
 public class ProjectService {
-
     // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private final ProjectData projectData;
     private final UserData userData;
@@ -52,7 +54,17 @@ public class ProjectService {
         return list;
     }
 
+    public Project getProject(int id) {
+        Project p = projectData.getProject(id);
+        finalize(p);
+        return p;
+    }
+
     public boolean createProject(String name, Date kickoff, Date deadline, int project_leader_id, int customer_id){
         return projectData.createProject(name, kickoff, deadline, project_leader_id, customer_id);
+    }
+
+    public boolean editProject(int project_id, String name, Date kickoff, Date deadline, int project_leader_id, int customer_id) {
+        return projectData.editProject(project_id, name, kickoff, deadline, project_leader_id, customer_id);
     }
 }
