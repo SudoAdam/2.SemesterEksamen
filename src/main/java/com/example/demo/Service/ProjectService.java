@@ -14,6 +14,7 @@ import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Project;
 import com.example.demo.Domain.User;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.sql.Date;
 
@@ -60,11 +61,11 @@ public class ProjectService {
         return p;
     }
 
-    public boolean createProject(String name, Date kickoff, Date deadline, int project_leader_id, int customer_id){
+    public boolean createProject(String name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id){
         return projectData.createProject(name, kickoff, deadline, project_leader_id, customer_id);
     }
 
-    public boolean editProject(int project_id, String name, Date kickoff, Date deadline, int project_leader_id, int customer_id) {
+    public boolean editProject(int project_id, String name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) {
         return projectData.editProject(project_id, name, kickoff, deadline, project_leader_id, customer_id);
     }
 }

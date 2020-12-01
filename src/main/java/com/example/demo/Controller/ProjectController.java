@@ -7,9 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
-import java.sql.Date;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 @Controller
@@ -39,9 +37,8 @@ public class ProjectController {
         String deadlineStr = request.getParameter("deadline");
         int project_leader_id = 1;
         int customer_id = 1;
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        Date kickOff = Date.valueOf(LocalDate.parse(kickOffStr,dateTimeFormatter));
-        Date deadline = Date.valueOf(LocalDate.parse(deadlineStr,dateTimeFormatter)); ;
+        LocalDate kickOff = LocalDate.parse(kickOffStr);
+        LocalDate deadline = LocalDate.parse(deadlineStr);
 
         projectService.createProject(projectName, kickOff, deadline, project_leader_id, customer_id);
 

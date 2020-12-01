@@ -1,18 +1,19 @@
 package com.example.demo.Domain;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Project implements DomainFacade {
     private final int project_id;
     private final String project_name;
-    private final Date kickoff;
-    private final Date deadline;
+    private final LocalDate kickoff;
+    private final LocalDate deadline;
     private final int project_leader_id;
     private final int customer_id;
     private User project_leader;
     private Customer customer;
 
-    public Project(int project_id, String project_name, Date kickoff, Date deadline, int project_leader_id, int customer_id) {
+    public Project(int project_id, String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) {
         this.project_id = project_id;
         this.project_name = project_name;
         this.kickoff = kickoff;
@@ -45,11 +46,11 @@ public class Project implements DomainFacade {
         return project_name;
     }
 
-    public Date getKickoff() {
+    public LocalDate getKickoff() {
         return kickoff;
     }
 
-    public Date getDeadline() {
+    public LocalDate getDeadline() {
         return deadline;
     }
 
