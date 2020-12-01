@@ -1,4 +1,6 @@
 /**
+ * This test is specifically made ordered.
+ * Ordered tests are needed when testing data requests due to CRUD (Create, Read, Edit, Delete)
  *
  * @author Patrick Vincent Højstrøm
  * @version 1.0
@@ -49,6 +51,26 @@ class ProjectDataTest {
 
     @Test
     @Order(2)
+    void getProject() {
+        // For the sake of test, we need the project for the last row in the DBMS
+        ArrayList<Project> list = projectData.getProjects();
+
+        // Actual method test
+        Project p = projectData.getProject(list.get(list.size()-1).getProject_id());
+
+        // Assert correct table data
+        assertEquals("The newest Deal", p.getProject_name());
+        assertEquals(LocalDate.of(2020,12, 2), p.getKickoff());
+        assertEquals(LocalDate.of(2020,12,21), p.getDeadline());
+        assertEquals(1, p.getProject_leader_id());
+        assertEquals(2, p.getCustomer_id());
+
+        // Assert domain object has correct type
+        assertEquals(Project.class, list.get(0).getClass());
+    }
+
+    @Test
+    @Order(3)
     void editProject() {
         // Select the last project in list and apply changes
         ArrayList<Project> list = projectData.getProjects();
@@ -72,4 +94,6 @@ class ProjectDataTest {
         assertEquals(1, p_new.getProject_leader_id());
         assertEquals(2, p_new.getCustomer_id());
     }
+
+
 }
