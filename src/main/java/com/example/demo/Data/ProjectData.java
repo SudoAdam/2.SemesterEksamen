@@ -10,12 +10,9 @@ package com.example.demo.Data;
 import com.example.demo.Domain.Project;
 import com.example.demo.Mapper.ProjectMapper;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.sql.Date;
 
 public class ProjectData {
     // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -56,15 +53,15 @@ public class ProjectData {
         return null;
     }
 
-    public boolean createProject(String project_name, Date kickoff, Date deadline, int project_leader_id, int customer_id) {
+    public boolean createProject(String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) {
         Connection connection = connector.getConnection();
         String statement = "INSERT INTO projects (project_name, kickoff, deadline, project_leader_id, customer_id) VALUES (?,?,?,?,?)";
         boolean success = false;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setString(1,project_name);
-            preparedStatement.setDate(2, kickoff);
-            preparedStatement.setDate(3, deadline);
+            preparedStatement.setString(2, kickoff.toString());
+            preparedStatement.setString(3, deadline.toString());
             preparedStatement.setInt(4, project_leader_id);
             preparedStatement.setInt(5, customer_id);
             preparedStatement.execute();
@@ -75,15 +72,15 @@ public class ProjectData {
         return success;
     }
 
-    public boolean editProject(int project_id, String project_name, Date kickoff, Date deadline, int project_leader_id, int customer_id) {
+    public boolean editProject(int project_id, String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) {
         Connection connection = connector.getConnection();
         String statement = "UPDATE projects SET project_name=?, kickoff=?, deadline=?, project_leader_id=?, customer_id=? WHERE project_id=?";
         boolean success = false;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setString(1, project_name);
-            preparedStatement.setDate(2, kickoff);
-            preparedStatement.setDate(3, deadline);
+            preparedStatement.setString(2, kickoff.toString());
+            preparedStatement.setString(3, deadline.toString());
             preparedStatement.setInt(4, project_leader_id);
             preparedStatement.setInt(5, customer_id);
             preparedStatement.setInt(6, project_id);

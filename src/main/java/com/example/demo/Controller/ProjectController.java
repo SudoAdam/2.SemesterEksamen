@@ -47,7 +47,7 @@ public class ProjectController {
         Date kickOff = Date.valueOf(LocalDate.parse(kickOffStr,dateTimeFormatter));
         Date deadline = Date.valueOf(LocalDate.parse(deadlineStr,dateTimeFormatter)); ;
 
-        projectService.createProject(projectName, kickOff, deadline, project_leader_id, customer_id);
+        // projectService.createProject(projectName, kickOff, deadline, project_leader_id, customer_id);
 
         return "error";
     }
