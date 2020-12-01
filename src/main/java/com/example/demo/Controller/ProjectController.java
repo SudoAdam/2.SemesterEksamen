@@ -51,7 +51,7 @@ public class ProjectController {
         return "errors/defaultError";
     }
 
-    // Responds to /projectView?id=project_id
+    // Responds to /viewProject?id=project_id
     @RequestMapping(value = "/viewProject", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewProject(@RequestParam int id, Model model) {
         model.addAttribute("project", projectService.getProject(id));

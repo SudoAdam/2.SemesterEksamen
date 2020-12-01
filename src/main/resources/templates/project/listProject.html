@@ -22,7 +22,7 @@
             <td th:text="${project.project_name}"></td>
             <td th:text="${project.kickoff}" ></td>
             <td th:text="${project.deadline}"></td>
-            <td><a href="">View Project</a></td>
+            <td><a th:href="@{/viewProject?id={id}(id=${project.project_id})}">View Project</a></td>
         </tr>
         </tbody>
     </table>

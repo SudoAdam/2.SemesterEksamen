@@ -15,21 +15,33 @@
         <p>
             Project Leader: <span>plname</span>
         <p>
-            Kick Off: <span th:text="${project}"></span>
+            Kick Off: <span th:text="${project.kickoff}"></span>
         <p>
-            Deadline: <label for="jobs">Choose job:</label>
-
-            <select name="jobs" id="jobs">
-                <option value="volvo">Job1</option>
-                <option value="saab">Job2</option>
-                <option value="mercedes">Job3</option>
-                <option value="audi">Job4</option>
-            </select>
+            Deadline: <span th:text="${project.deadline}"></span>
     </div>
     <div id="profilepic" style="float: right">
         <img class="pb" src="/images/defaultprofilepic.png">
         <!-- th:src="*{'data:image/jpeg;base64,' + profilePic}"> -->
     </div>
+    <table class="project-table">
+        <thead>
+        <tr>
+            <th>Tasks</th>
+            <th>Working hours</th>
+            <th>Start</th>
+            <th>End</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <!-- Table value Examples. Replace with thymeleaf values. -->
+            <td>Task name</td>
+            <td>0 hours</td>
+            <td>(Date)</td>
+            <td>(Date)</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 <th:block th:include="/includes/footer :: footer"></th:block>
