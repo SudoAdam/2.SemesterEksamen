@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="main_style.css"/>
-    <title>Register</title>
+    <title>Create User</title>
 </head>
-<th:block th:include="/includes/headerNotLogedin :: header"></th:block>
+<th:block th:include="/includes/headerNotLoggedIn :: header"></th:block>
 <body>
 
 <div id="registrationform">
-    <form action="/register" object="" method="POST">
+    <form action="/createUser" object="" method="POST">
         <p>Email
         <p><input type="email" name="mail" required>
         <p>Password
