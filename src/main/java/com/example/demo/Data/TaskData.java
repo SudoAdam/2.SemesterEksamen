@@ -27,7 +27,7 @@ public class TaskData {
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public ArrayList<Task> getTasks(int project_id) {
         Connection connection = connector.getConnection();
-        String statement = "SELECT * FROM tasks WHERE project_id=?";
+        String statement = "SELECT * FROM tasks WHERE project_id=?;";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, project_id);
@@ -41,7 +41,7 @@ public class TaskData {
 
     public boolean createTask(int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) {
         Connection connection = connector.getConnection();
-        String statement = "INSERT INTO tasks (project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours) VALUES (?,?,?,?,?,?,?)";
+        String statement = "INSERT INTO tasks (project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours) VALUES (?,?,?,?,?,?,?);";
         boolean success = false;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
@@ -62,7 +62,7 @@ public class TaskData {
 
     public boolean editTask(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) {
         Connection connection = connector.getConnection();
-        String statement = "UPDATE tasks SET project_id=?, task_name=?, task_description=?, task_leader_id=?, kickoff=?, deadline=?, working_hours=? WHERE task_id=?";
+        String statement = "UPDATE tasks SET project_id=?, task_name=?, task_description=?, task_leader_id=?, kickoff=?, deadline=?, working_hours=? WHERE task_id=?;";
         boolean success = false;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);

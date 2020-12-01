@@ -15,10 +15,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import java.sql.Time;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -61,11 +59,12 @@ class TaskDataTest {
     @Test
     @Order(2)
     void editTask() {
-        ArrayList<Task> list = taskData.getTasks(1);
+        ArrayList<Task> list01 = taskData.getTasks(1);
+        Task t01 = list01.get(list01.size()-1);
 
-        int task_id = list.get(list.size()-1).getTask_id();
-        int project_id = 1;
-        String task_name = "Make clean!";
+        int task_id = t01.getTask_id();
+        int project_id = t01.getProject_id();
+        String task_name = t01.getTask_name();
         String task_description = "The software has a lot of mess in it... There's even more now!";
         int task_leader_id = 2;
         LocalDate kickoff = LocalDate.of(2020,12,2);
@@ -77,19 +76,20 @@ class TaskDataTest {
         // Test return result that should be true
         assertTrue(result);
 
-        ArrayList<Task> list_new = taskData.getTasks(1);
-        Task t = list.get(list_new.size()-1);
+        ArrayList<Task> list02 = taskData.getTasks(1);
+        Task t02 = list02.get(list02.size()-1);
 
-        System.out.println(t.getTask_id());
+        // Compare the two versions
+        assertNotEquals(t02, t01);
 
         // Test that data transfer is correctly translated
-        assertEquals(t.getTask_id(),list_new.get(list.size()-1).getTask_id());
-        assertEquals(1,t.getProject_id());
-        assertEquals(task_name,t.getTask_name());
-        assertEquals(task_description,t.getTask_description());
-        assertEquals(2,t.getTask_leader_id());
-        assertEquals(LocalDate.of(2020,12,2),t.getKickoff());
-        assertEquals(LocalDate.of(2020,12,9),t.getDeadline());
-        assertEquals(48,t.getWorking_hours());
+        assertEquals(t02.getTask_id(),list02.get(list01.size()-1).getTask_id());
+        assertEquals(1,t02.getProject_id());
+        assertEquals(task_name,t02.getTask_name());
+        assertEquals(task_description,t02.getTask_description());
+        assertEquals(2,t02.getTask_leader_id());
+        assertEquals(LocalDate.of(2020,12,2),t02.getKickoff());
+        assertEquals(LocalDate.of(2020,12,9),t02.getDeadline());
+        assertEquals(48,t02.getWorking_hours());
     }
 }
