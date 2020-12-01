@@ -2,93 +2,80 @@ package com.example.demo.Domain;
 
 public class User implements DomainFacade {
 
-    private int userId;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String projects;
-    private int isAdmin;
-    private String jobTitle;
-
-    public User(int userId, String firstName, String lastName, String email, String projects, int isAdmin, String jobTitle) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.projects = projects;
-        this.isAdmin = isAdmin;
-        this.jobTitle = jobTitle;
-    }
+    private int user_Id;
+    private String e_mail;
+    private String password;
+    private String first_name;
+    private String last_name;
+    private int is_admin;
+    private int job_title_id;
 
     public User() {
     }
 
-    public int getUserId() {
-        return userId;
+    public User(int user_Id, String e_mail, String password, String first_name, String last_name, int is_admin, int job_title_id) {
+        this.user_Id = user_Id;
+        this.e_mail = e_mail;
+        this.password = password;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.is_admin = is_admin;
+        this.job_title_id = job_title_id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public int getUser_Id() {
+        return user_Id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public void setUser_Id(int user_Id) {
+        this.user_Id = user_Id;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public String getE_mail() {
+        return e_mail;
     }
 
-    public String getLastName() {
-        return lastName;
+    public void setE_mail(String e_mail) {
+        this.e_mail = e_mail;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public String getPassword() {
+        return password;
     }
 
-    public String getEmail() {
-        return email;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getFirst_name() {
+        return first_name;
     }
 
-    public String getProjects() {
-        return projects;
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
-    public void setProjects(String projects) {
-        this.projects = projects;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public int getIsAdmin() {
-        return isAdmin;
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
-    public void setIsAdmin(int isAdmin) {
-        this.isAdmin = isAdmin;
+    public int getIs_admin() {
+        return is_admin;
     }
 
-    public String getJobTitel() {
-        return jobTitle;
+    public void setIs_admin(int is_admin) {
+        this.is_admin = is_admin;
     }
 
-    public void setJobTitel(String jobTitel) {
-        this.jobTitle = jobTitel;
+    public int getJob_title_id() {
+        return job_title_id;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", projects='" + projects + '\'' +
-                ", isAdmin='" + isAdmin + '\'' +
-                ", jobTitel='" + jobTitle + '\'' +
-                '}';
+    public void setJob_title_id(int job_title_id) {
+        this.job_title_id = job_title_id;
     }
 }
