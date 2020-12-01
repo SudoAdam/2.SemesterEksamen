@@ -1,7 +1,9 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Domain.Project;
 import com.example.demo.Service.ProjectService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
@@ -9,6 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 @Controller
 public class ProjectController {
@@ -17,8 +20,10 @@ public class ProjectController {
 
 
     @GetMapping("/projectList")
-    public String showProjects() {
-        return "lists/projectList";
+    public String showProjects(Model model) {
+    ArrayList<Project> projectList = projectService.getProjects();
+    model.addAttribute("projectList", projectList);
+    return "lists/projectList";
     }
 
     @GetMapping("/projectCreate")
@@ -39,10 +44,10 @@ public class ProjectController {
         int project_leader_id = 1;
         int customer_id = 1;
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate kickOff =                LocalDate.parse(kickOffStr,dateTimeFormatter);
-        LocalDate deadline = LocalDate.parse(deadlineStr,dateTimeFormatter); ;
+        Date kickOff = Date.valueOf(LocalDate.parse(kickOffStr,dateTimeFormatter));
+        Date deadline = Date.valueOf(LocalDate.parse(deadlineStr,dateTimeFormatter)); ;
 
-        projectService.createProject(projectName, Date.valueOf(kickOff), Date.valueOf(deadline), project_leader_id, customer_id);
+        projectService.createProject(projectName, kickOff, deadline, project_leader_id, customer_id);
 
         return "error";
     }
