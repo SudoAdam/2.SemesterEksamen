@@ -51,9 +51,9 @@ public class UserData {
         return null;
     }
 
-    public boolean createUser(String e_mail, String password, String first_name, String last_name, int is_admin, int job_title_id){
+    public boolean createUser(String e_mail, String password, String first_name, String last_name, int job_title_id){
         Connection connection = connector.getConnection();
-        String statement = "INSERT INTO users (e_mail, password, first_name, last_name, is_admin, job_title_id) VALUES (?,?,?,?,?,?)";
+        String statement = "INSERT INTO users (e_mail, password, first_name, last_name, job_title_id) VALUES (?,?,?,?,?,?)";
         boolean success = false;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
@@ -61,8 +61,7 @@ public class UserData {
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, first_name);
             preparedStatement.setString(4, last_name);
-            preparedStatement.setInt(5, is_admin);
-            preparedStatement.setInt(6, job_title_id);
+            preparedStatement.setInt(5, job_title_id);
             preparedStatement.execute();
             success = true;
         } catch(SQLException sqlException) {
