@@ -16,8 +16,6 @@ import java.util.ArrayList;
 public class ProjectController {
     ProjectService projectService = new ProjectService();
 
-
-
     @GetMapping("/listProject")
     public String showProjects(Model model) {
     ArrayList<Project> projectList = projectService.getProjects();
@@ -29,7 +27,6 @@ public class ProjectController {
     public String createProject() {
         return "project/createProject";
     }
-
 
     @PostMapping("/createProject")
     public String createProject(WebRequest request) {
@@ -57,5 +54,4 @@ public class ProjectController {
         model.addAttribute("project", projectService.getProject(id));
         return "project/viewProject";
     }
-
 }
