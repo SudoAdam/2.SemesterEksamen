@@ -13,7 +13,9 @@
             <th>Project name</th>
             <th>Start</th>
             <th>End</th>
+            <th>Status</th>
             <th>(edit button)</th>
+
         </tr>
         </thead>
         <tbody>
@@ -22,6 +24,7 @@
             <td th:text="${project.project_name}"></td>
             <td th:text="${project.kickoff}" ></td>
             <td th:text="${project.deadline}"></td>
+            <td> &#10060; </td> <!-- 9989 -->
             <td><a th:href="@{/viewProject?id={id}(id=${project.project_id})}">View Project</a></td>
         </tr>
         </tbody>
