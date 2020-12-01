@@ -91,4 +91,18 @@ public class ProjectData {
         }
         return success;
     }
+
+    public boolean deleteProject(int project_id) {
+        Connection connection = connector.getConnection();
+        String statement = "UPDATE projects SET project_name=?, kickoff=?, deadline=?, project_leader_id=?, customer_id=? WHERE project_id=?";
+        boolean success = false;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.execute();
+            success = true;
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return success;
+    }
 }
