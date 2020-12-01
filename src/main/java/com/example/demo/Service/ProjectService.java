@@ -1,5 +1,10 @@
+/**
+ *
+ */
+
 package com.example.demo.Service;
 
+import com.example.demo.Data.CustomerData;
 import com.example.demo.Data.ProjectData;
 import com.example.demo.Data.UserData;
 import com.example.demo.Domain.Customer;
@@ -14,25 +19,31 @@ public class ProjectService {
     // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private final ProjectData projectData;
     private final UserData userData;
+    private final CustomerData customerData;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public ProjectService() {
         this.projectData = new ProjectData();
         this.userData = new UserData();
+        this.customerData = new CustomerData();
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private void finalize(Project project) {
+        // Late dependency injection for single domain objects
         int project_leader_id = project.getProject_leader_id();
         int customer_id = project.getCustomer_id();
         User project_leader = userData.getUser(project_leader_id);
-        Customer customer = userData.getUser(customer_id);
+        Customer customer = customerData.getCustomer(customer_id);
         project.setProject_leader(project_leader);
         project.setCustomer(customer);
     }
 
     private void finalize(ArrayList<Project> list) {
-
+        // Late dependency injection for collections of domain objects
+        for (Project p: list) {
+            finalize(p);
+        }
     }
 
     public ArrayList<Project> getProjects() {
@@ -41,7 +52,7 @@ public class ProjectService {
         return list;
     }
 
-    public void createProject(String name, Date kickoff, Date deadline, int project_leader_id, int customer_id){
-        projectData.createProject(name, kickoff, deadline, project_leader_id, customer_id);
+    public boolean createProject(String name, Date kickoff, Date deadline, int project_leader_id, int customer_id){
+        return projectData.createProject(name, kickoff, deadline, project_leader_id, customer_id);
     }
 }
