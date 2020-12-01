@@ -21,7 +21,7 @@
     </div>
     <div id="profilepic" style="float: right">
         <img class="pb" src="/images/defaultprofilepic.png">
-        <!-- th:src="*{'data:image/jpeg;base64,' + profilePic}"> -->
+        <a th:href="@{/editProject?id={id}(id=${project.project_id})}">Edit Project</a>
     </div>
     <table class="project-table">
         <thead>

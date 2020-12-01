@@ -42,7 +42,28 @@ public class ProjectController {
 
         projectService.createProject(projectName, kickOff, deadline, project_leader_id, customer_id);
 
-        return "errors/defaultError";
+        return "error";
+    }
+
+    // Responds to /editProject?id=project_id
+    @RequestMapping(value = "/editProject", method = {RequestMethod.GET, RequestMethod.POST})
+    public String editProject(@RequestParam int id, Model model) {
+        model.addAttribute("project", projectService.getProject(id));
+        return "project/editProject";
+    }
+
+    @PostMapping("/updateProject")
+    public String updateProject(WebRequest request, Model model) {
+        String projectId = request.getParameter("id");
+        String projectName = request.getParameter("pName");
+        String kickOffStr = request.getParameter("kickOff");
+        String deadlineStr = request.getParameter("deadline");
+        String pLeaderId = request.getParameter("plId");
+        String CustomerId = request.getParameter("cid");
+        projectService.editProject(Integer.parseInt(projectId), projectName, LocalDate.parse(kickOffStr),
+                LocalDate.parse(deadlineStr), Integer.parseInt(pLeaderId), Integer.parseInt(CustomerId));
+        model.addAttribute("project", projectService.getProject(Integer.parseInt(projectId)));
+        return "project/viewProject";
     }
 
     // Responds to /viewProject?id=project_id
