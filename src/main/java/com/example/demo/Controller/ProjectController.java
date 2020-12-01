@@ -52,10 +52,10 @@ public class ProjectController {
     }
 
     // Responds to /projectView?id=project_id
-    @RequestMapping(value = "/projectView", method = {RequestMethod.GET, RequestMethod.POST})
-    public String profile(@RequestParam int id, Model model) {
+    @RequestMapping(value = "/viewProject", method = {RequestMethod.GET, RequestMethod.POST})
+    public String viewProject(@RequestParam int id, Model model) {
         model.addAttribute("project", projectService.getProject(id));
-        return "projectView";
+        return "project/viewProject";
     }
 
 }
