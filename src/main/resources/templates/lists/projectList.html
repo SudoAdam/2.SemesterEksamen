@@ -11,17 +11,17 @@
         <thead>
         <tr>
             <th>Project name</th>
-            <th>Date</th>
-            <th>No. of employees</th>
+            <th>Start</th>
+            <th>End</th>
             <th>(edit button)</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
+        <tr th:each="project : ${projectList}">
             <!-- Table value Examples. Replace with thymeleaf values. -->
-            <td>Project no. 1</td>
-            <td>30/11/20 - 01/01/20</td>
-            <td>5 Employees</td>
+            <td th:text="${project.project_name}"></td>
+            <td th:text="${project.kickoff}" ></td>
+            <td th:text="${project.deadline}"></td>
             <td><a href="">View Project</a></td>
         </tr>
         </tbody>
