@@ -1,97 +1,84 @@
-package com.example.demo.Data;
-
 /**
- *
  * @author Patrick Vincent Højstrøm
  * @version 1.0
  * @since 27-11-2020
  */
 
-import com.example.demo.Domain.Project;
-import com.example.demo.Mapper.ProjectMapper;
+package com.example.demo.Data;
+
+import com.example.demo.Domain.Task;
+import com.example.demo.Mapper.TaskMapper;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
-//stjålet fra projectData, skal rettes til task
-
 public class TaskData {
+    // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    private final TaskMapper taskMapper;
+    private final Connector connector;
 
-        // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        private final ProjectMapper projectMapper;
-        private final Connector connector;
+    // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public TaskData() {
+        taskMapper = new TaskMapper();
+        connector = new Connector();
+    }
 
-        // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        public TaskData() {
-            projectMapper = new ProjectMapper();
-            connector = new Connector();
+    // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public ArrayList<Task> getTasks(int project_id) {
+        Connection connection = connector.getConnection();
+        String statement = "SELECT * FROM tasks WHERE project_id=?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setInt(1, project_id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return (ArrayList) taskMapper.batch(resultSet);
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
         }
+        return null;
+    }
 
-        // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        public ArrayList<Project> getProjects() {
-            Connection connection = connector.getConnection();
-            String statement = "SELECT * FROM projects";
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement(statement);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                return (ArrayList) projectMapper.batch(resultSet);
-            } catch (SQLException sqlException) {
-                sqlException.printStackTrace();
-            }
-            return null;
+    public boolean createTask(int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) {
+        Connection connection = connector.getConnection();
+        String statement = "INSERT INTO tasks (project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours) VALUES (?,?,?,?,?,?,?)";
+        boolean success = false;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setInt(1, project_id);
+            preparedStatement.setString(2, task_name);
+            preparedStatement.setString(3, task_description);
+            preparedStatement.setInt(4, task_leader_id);
+            preparedStatement.setString(5, kickoff.toString());
+            preparedStatement.setString(6, deadline.toString());
+            preparedStatement.setInt(7, working_hours);
+            preparedStatement.execute();
+            success = true;
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
         }
+        return success;
+    }
 
-        public Project getProject(int id) {
-            Connection connection = connector.getConnection();
-            String statement = "SELECT * FROM projects WHERE project_id=?";
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement(statement);
-                preparedStatement.setInt(1, id);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                return (Project) projectMapper.create(resultSet);
-            } catch (SQLException sqlException) {
-                sqlException.printStackTrace();
-            }
-            return null;
+    public boolean editTask(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) {
+        Connection connection = connector.getConnection();
+        String statement = "UPDATE tasks SET project_id=?, task_name=?, task_description=?, task_leader_id=?, kickoff=?, deadline=?, working_hours=? WHERE task_id=?";
+        boolean success = false;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setInt(1, project_id);
+            preparedStatement.setString(2, task_name);
+            preparedStatement.setString(3, task_description);
+            preparedStatement.setInt(4, task_leader_id);
+            preparedStatement.setString(5, kickoff.toString());
+            preparedStatement.setString(6, deadline.toString());
+            preparedStatement.setInt(7, working_hours);
+            preparedStatement.setInt(8, task_id);
+            preparedStatement.executeUpdate();
+            success = true;
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
         }
-
-        public boolean createProject(String project_name, Date kickoff, Date deadline, int project_leader_id, int customer_id) {
-            Connection connection = connector.getConnection();
-            String statement = "INSERT INTO projects (project_name, kickoff, deadline, project_leader_id, customer_id) VALUES (?,?,?,?,?)";
-            boolean success = false;
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement(statement);
-                preparedStatement.setString(1, project_name);
-                preparedStatement.setDate(2, kickoff);
-                preparedStatement.setDate(3, deadline);
-                preparedStatement.setInt(4, project_leader_id);
-                preparedStatement.setInt(5, customer_id);
-                preparedStatement.execute();
-                success = true;
-            } catch (SQLException sqlException) {
-                sqlException.printStackTrace();
-            }
-            return success;
-        }
-
-        public boolean editProject(int project_id, String project_name, Date kickoff, Date deadline, int project_leader_id, int customer_id) {
-            Connection connection = connector.getConnection();
-            String statement = "UPDATE projects SET project_name=?, kickoff=?, deadline=?, project_leader_id=?, customer_id=? WHERE project_id=?";
-            boolean success = false;
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement(statement);
-                preparedStatement.setString(1, project_name);
-                preparedStatement.setDate(2, kickoff);
-                preparedStatement.setDate(3, deadline);
-                preparedStatement.setInt(4, project_leader_id);
-                preparedStatement.setInt(5, customer_id);
-                preparedStatement.setInt(6, project_id);
-                preparedStatement.executeUpdate();
-                success = true;
-            } catch (SQLException sqlException) {
-                sqlException.printStackTrace();
-            }
-            return success;
-        }
+        return success;
     }
 }
