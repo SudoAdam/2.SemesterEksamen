@@ -1,5 +1,4 @@
 /**
- *
  * @author Patrick Vincent Højstrøm
  * @version 1.0
  * @since 27-11-2020
@@ -32,7 +31,12 @@ public class ProjectData {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             ResultSet resultSet = preparedStatement.executeQuery();
-            return (ArrayList) projectMapper.batch(resultSet);
+
+            ArrayList<Project> projects = new ArrayList<>();
+            while (resultSet.next()) {
+                projects.add((Project) projectMapper.create(resultSet));
+            }
+            return projects;
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }

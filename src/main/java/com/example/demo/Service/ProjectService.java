@@ -1,5 +1,4 @@
 /**
- *
  * @author Patrick Vincent Højstrøm
  * @version 1.0
  * @since 27-11-2020
@@ -16,7 +15,6 @@ import com.example.demo.Domain.User;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.sql.Date;
 
 public class ProjectService {
     // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

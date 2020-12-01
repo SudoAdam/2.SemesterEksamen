@@ -32,7 +32,12 @@ public class TaskData {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, project_id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            return (ArrayList) taskMapper.batch(resultSet);
+
+            ArrayList<Task> tasks = new ArrayList<>();
+            while (resultSet.next()) {
+                tasks.add((Task) taskMapper.create(resultSet));
+            }
+            return tasks;
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
