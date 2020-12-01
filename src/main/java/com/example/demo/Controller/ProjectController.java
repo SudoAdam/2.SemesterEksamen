@@ -51,5 +51,4 @@ public class ProjectController {
         model.addAttribute("project", projectService.getProject(id));
         return "project/viewProject";
     }
-
 }
