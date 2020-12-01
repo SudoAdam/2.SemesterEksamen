@@ -19,20 +19,20 @@ public class ProjectController {
 
 
 
-    @GetMapping("/projectList")
+    @GetMapping("/listProject")
     public String showProjects(Model model) {
     ArrayList<Project> projectList = projectService.getProjects();
     model.addAttribute("projectList", projectList);
-    return "lists/projectList";
+    return "project/listProject";
     }
 
-    @GetMapping("/projectCreate")
+    @GetMapping("/createProject")
     public String createProject() {
-        return "create/projectCreate";
+        return "project/createProject";
     }
 
 
-    @PostMapping("/projectCreate")
+    @PostMapping("/createProject")
     public String createProject(WebRequest request) {
         //denne funktion er ikke færdig!
         String projectName = request.getParameter("pName");
@@ -49,7 +49,7 @@ public class ProjectController {
 
         projectService.createProject(projectName, kickOff, deadline, project_leader_id, customer_id);
 
-        return "error";
+        return "errors/defaultError";
     }
 
 }

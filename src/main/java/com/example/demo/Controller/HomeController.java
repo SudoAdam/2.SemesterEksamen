@@ -11,17 +11,5 @@ public class HomeController {
         return "authentication/login";
     }
 
-    @GetMapping("/register")
-    public String register() { return "authentication/register";}
-
-    @GetMapping("/employeeList")
-    public String showEmployees() {
-        return "lists/employeeList";
-    }
-
-    @GetMapping("/employeeEdit")
-    public String editEmployee() {
-        return "edit/employeeEdit";
-    }
 }
 
