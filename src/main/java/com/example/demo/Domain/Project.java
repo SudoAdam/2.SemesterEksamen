@@ -3,12 +3,12 @@ package com.example.demo.Domain;
 import java.util.Date;
 
 public class Project implements DomainFacade {
-    private int project_id;
-    private String project_name;
-    private Date kickoff;
-    private Date deadline;
-    private int project_leader_id;
-    private int customer_id;
+    private final int project_id;
+    private final String project_name;
+    private final Date kickoff;
+    private final Date deadline;
+    private final int project_leader_id;
+    private final int customer_id;
     private User project_leader;
     private Customer customer;
 
