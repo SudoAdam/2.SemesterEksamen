@@ -19,13 +19,13 @@ public class UserMapper extends AbstractMapper {
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Override
     public User mapping(ResultSet resultSet) throws SQLException{
-        int userId = resultSet.getInt("userId");
-        String firstName = resultSet.getString("firstName");
-        String lastName = resultSet.getString("lastName");
-        String email = resultSet.getString("email");
-        String projects = resultSet.getString("projects");
-        int isAdmin = resultSet.getInt("isAdmin");
-        String jobTitle = resultSet.getString("jobTitle");
-        return new User(userId, firstName, lastName, email, projects, isAdmin, jobTitle);
+        int user_id = resultSet.getInt("user_id");
+        String e_mail = resultSet.getString("e_mail");
+        String password = resultSet.getString("password");
+        String first_name = resultSet.getString("first_name");
+        String last_name = resultSet.getString("last_name");
+        int is_admin = resultSet.getInt("is_admin");
+        int job_title_id = resultSet.getInt("job_title_id");
+        return new User(user_id, e_mail, password, first_name, last_name, is_admin, job_title_id);
     }
 }
