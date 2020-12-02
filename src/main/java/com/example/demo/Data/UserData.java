@@ -90,4 +90,23 @@ public class UserData {
         }
         return success;
     }
+
+    public  int findUserIdFromEmail (String e_mail){
+        int id = -1;
+        Connection connection = connector.getConnection();
+        String statement = "SELECT user_id from users where e_mail = ?";
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, e_mail);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            String result ="" + resultSet.getObject(1);
+            id = Integer.parseInt(result);
+
+        } catch(SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
+        return id;
+
+    }
 }
