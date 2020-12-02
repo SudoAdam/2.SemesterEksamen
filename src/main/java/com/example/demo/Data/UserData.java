@@ -30,7 +30,7 @@ public class UserData {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             ResultSet resultSet = preparedStatement.executeQuery();
-            return (ArrayList) userMapper.batch(resultSet);
+            return (ArrayList) userMapper.create(resultSet);
         } catch (SQLException sqlException){
             sqlException.printStackTrace();
         }
