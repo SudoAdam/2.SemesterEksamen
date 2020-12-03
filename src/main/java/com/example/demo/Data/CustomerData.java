@@ -29,10 +29,10 @@ public class CustomerData {
     public  int findCustomerIdFromName (String name){
         int id = -1;
         Connection connection = connector.getConnection();
-        String statement = "SELECT customer_id from customers where name like \"?\"";
+        String statement = "SELECT customer_id from customers where name like  ? ";
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
-            preparedStatement.setString(1, name);
+            preparedStatement.setString(1,'"' + name + '"');
             ResultSet resultSet = preparedStatement.executeQuery();
             String result ="" + resultSet.getObject(1);
             id = Integer.parseInt(result);
