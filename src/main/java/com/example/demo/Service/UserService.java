@@ -4,6 +4,7 @@
 package com.example.demo.Service;
 
 import com.example.demo.Data.UserData;
+import com.example.demo.Domain.User;
 
 import java.time.LocalDate;
 
@@ -18,6 +19,9 @@ public class UserService {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public User getUser(int id){
+        return userData.getUser(id);
+    }
 
     public boolean createUser(String e_mail, String password, String first_name, String last_name, int project_role_id){
         return userData.createUser(e_mail, password, first_name, last_name, project_role_id);
