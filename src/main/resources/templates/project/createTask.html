@@ -11,7 +11,7 @@
 This will become where you create a task... :)
 <div id="container">
     <div id="inputform">
-        <form action="/createTask" method="POST">
+        <form action="/createTaskPost" method="POST">
             <p>Task Name
             <p><input type="text" name="taskName" required>
             <p>Description
@@ -24,7 +24,7 @@ This will become where you create a task... :)
             <p><input type="date" name="deadline" required>
             <p>Working Hours
             <p><input type="number" name="workingHours" required>
-            <input type="hidden" name="projectID" th:value="">
+            <input type="hidden" name="projectID" th:value="project.project_id">
             <div class="button">
                 <input type="Submit" value="  Create!  ">
             </div>

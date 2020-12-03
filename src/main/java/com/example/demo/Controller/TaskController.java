@@ -28,8 +28,8 @@ public class TaskController {
     model.addAttribute("project", projectService.getProject(project_id));
     return "project/createTask";
 }
-@PostMapping("/createTask")
-    public String createTask(WebRequest request, Model model) {
+@PostMapping("/createTaskPost")
+    public String createTaskPost(WebRequest request, Model model) {
     String projectId = request.getParameter("projectId");
     String taskName = request.getParameter("taskName");
     String taskDesc = request.getParameter("taskDesc");
@@ -37,8 +37,6 @@ public class TaskController {
     String taskKickoff = request.getParameter("kickoff");
     String taskDeadline = request.getParameter("deadline");
     String workingHoursSTR = request.getParameter("workingHours");
-
-
 
     LocalDate kickoff = LocalDate.parse(taskKickoff);
     LocalDate deadline = LocalDate.parse(taskDeadline);

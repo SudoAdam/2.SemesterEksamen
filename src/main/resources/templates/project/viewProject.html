@@ -47,7 +47,7 @@
         <tr>
             <td>
                 <form action="/createTask" method="post">
-                    <input value="task.project_id" type="hidden" name="project_id">
+                    <input type="hidden" name="project_id" th:value="${tasks.get(0).getProject_id()}">
                     <input value="&#10133;" type="submit">
                 </form>
             </td>
