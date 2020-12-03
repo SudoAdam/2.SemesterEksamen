@@ -26,4 +26,9 @@ public class UserService {
     public boolean editUser(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin, int project_role_id) {
         return userData.editUser(user_id, e_mail, password, first_name, last_name, is_admin, project_role_id);
     }
+
+    public int findUserIdFromEmail(String email){
+        return userData.findUserIdFromEmail(email);
+
+    }
 }
