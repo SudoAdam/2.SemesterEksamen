@@ -13,7 +13,7 @@ public class CustomerController {
 
     @GetMapping("/createCustomer")
     public String createProject() {
-        return "project/createProject";
+        return "customer/createCustomer";
     }
 
     @PostMapping("/createCustomer")
