@@ -79,26 +79,20 @@ footer{
 
 #container {
     background-color: #EDEDED;
-    padding: 100px;
+    padding: 50px;
     width: 900px;
     min-height: 100vh;
     margin: auto;
     text-align: center;
 }
 
-#loginform {
+#inputform {
     padding: 100px;
-
+    font-size: 20px;
     text-align: center;
 
 }
 
-#registrationform {
-    padding: 100px;
-
-    text-align: center;
-
-}
 
 .project-table {
     border-collapse: collapse;

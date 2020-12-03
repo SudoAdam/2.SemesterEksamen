@@ -8,14 +8,14 @@
 <th:block th:include="/includes/header :: header"></th:block>
 <body>
 <div id="container">
-    <div id="registrationform">
+    <div id="inputform">
         <form action="/updateProject" object="" method="POST">
             Project name
-            <p><input type="text" name="pName" th:value="${project.project_name}" style="font-size:20px" required>
+            <p><input type="text" name="pName" th:value="${project.project_name}" required>
             <p>Kick-off
-            <p><input type="date" name="kickOff" th:value="${project.kickoff}" style="font-size:20px" required>
+            <p><input type="date" name="kickOff" th:value="${project.kickoff}" required>
             <p>Deadline
-            <p><input type="date" name="deadline" th:value="${project.deadline}" style="font-size: 20px" required>
+            <p><input type="date" name="deadline" th:value="${project.deadline}" required>
             <input type="hidden" name="id" th:value="${project.project_id}" required>
             <input type="hidden" name="plId" th:value="${project.project_leader_id}" required>
             <input type="hidden" name="cid" th:value="${project.customer_id}" required>
