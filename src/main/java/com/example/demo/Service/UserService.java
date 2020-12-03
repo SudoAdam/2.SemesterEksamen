@@ -7,6 +7,7 @@ import com.example.demo.Data.UserData;
 import com.example.demo.Domain.User;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class UserService {
 
@@ -19,6 +20,11 @@ public class UserService {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public ArrayList<User> getUsers(){
+        ArrayList<User> list = userData.getUsers();
+        return list;
+    }
+
     public User getUser(int id){
         return userData.getUser(id);
     }
