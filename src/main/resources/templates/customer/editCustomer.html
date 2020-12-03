@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!-- @author Adam -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="main_style.css"/>
+    <title>Title</title>
+</head>
+<th:block th:include="/includes/header :: header"></th:block>
+<body>
+<div id="inputform">
+    <form action="/createCustomer" object="" method="POST">
+        <p>Customer Name
+        <p><input type="text" name="comName" th:value="${customer.comName}" required>
+        <p>Customer Contact
+        <p><input type="text" name="conName" th:value="${customer.conName}" required>
+        <p><input type="email" name="cEmail" th:value="${customer.cEmail}" required>
+        <p><input type="tel" name="tel" th:value="${customer.tel}" required>
+        <div class="button">
+            <input type="Submit" value="  Update!  ">
+        </div>
+        <p>
+            <a href="/"> Login her </a>
+    </form>
+</div>
+
+</body>
+<th:block th:include="/includes/footer :: footer"></th:block>
+</html>
