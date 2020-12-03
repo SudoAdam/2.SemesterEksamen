@@ -1,15 +1,28 @@
 //@author Adam
 package com.example.demo.Controller;
 
+
+import com.example.demo.Domain.User;
 import com.example.demo.Service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.ArrayList;
+
 @Controller
 public class UserController {
+    UserService userService = new UserService();
 
+    @GetMapping("/listUser")
+    public String showUsers(Model model) {
+        ArrayList<User> userList = userService.getUsers();
+        System.out.println(userList);
+        model.addAttribute("userList", userList);
+        return "user/listUser";
+    }
 
     @GetMapping("/createUser")
     public String createUser() { return "user/createUser";}
@@ -26,11 +39,6 @@ public class UserController {
         UserService userService = new UserService();
         userService.createUser(e_mail, password, first_name, last_name);
         return "user/editUser";
-    }
-
-    @GetMapping("/listUser")
-    public String showUsers() {
-        return "user/listUser";
     }
 
     @GetMapping("/editUser")

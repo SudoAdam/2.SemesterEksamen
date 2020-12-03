@@ -12,19 +12,16 @@
         <thead>
         <tr>
             <th>E-mail</th>
-            <th>First name</th>
-            <th>E-mail</th>
-            <th>Active projects</th>
-            <th>View</th>
+            <th>First Name</th>
+            <th>Last Name</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
+        <tr th:each="user : ${userList}">
             <!-- Table value Examples. Replace with thymeleaf values. -->
-            <td>Dudeson</td>
-            <td>Dude</td>
-            <td>employee@alpha-solutions.com</td>
-            <td>2 projects</td>
+            <td th:text="${user.e_mail}"></td>
+            <td th:text="${user.first_name}"></td>
+            <td th:text="${user.last_name}"></td>
             <td><a href="">View Employee</a></td>
         </tr>
         </tbody>

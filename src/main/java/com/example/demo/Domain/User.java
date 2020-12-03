@@ -68,4 +68,16 @@ public class User implements DomainFacade {
     public void setIs_admin(int is_admin) {
         this.is_admin = is_admin;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "user_Id=" + user_Id +
+                ", e_mail='" + e_mail + '\'' +
+                ", password='" + password + '\'' +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", is_admin=" + is_admin +
+                '}';
+    }
 }
