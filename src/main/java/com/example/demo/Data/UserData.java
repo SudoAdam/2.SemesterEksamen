@@ -51,9 +51,9 @@ public class UserData {
         return null;
     }
 
-    public boolean createUser(String e_mail, String password, String first_name, String last_name, int job_title_id){
+    public boolean createUser(String e_mail, String password, String first_name, String last_name){
         Connection connection = connector.getConnection();
-        String statement = "INSERT INTO users (e_mail, password, first_name, last_name, job_title_id) VALUES (?,?,?,?,?,?)";
+        String statement = "INSERT INTO users (e_mail, password, first_name, last_name) VALUES (?,?,?,?,?)";
         boolean success = false;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
@@ -61,7 +61,6 @@ public class UserData {
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, first_name);
             preparedStatement.setString(4, last_name);
-            preparedStatement.setInt(5, job_title_id);
             preparedStatement.execute();
             success = true;
         } catch(SQLException sqlException) {
@@ -70,9 +69,9 @@ public class UserData {
         return success;
     }
 
-    public boolean editUser(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin, int project_role_id){
+    public boolean editUser(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin){
         Connection connection = connector.getConnection();
-        String statement = "UPDATE users SET e_mail=?, password=?, first_name=?, last_name=?, is_admin=?, project_role_id=? WHERE user_id=?";
+        String statement = "UPDATE users SET e_mail=?, password=?, first_name=?, last_name=?, is_admin=? WHERE user_id=?";
         boolean success = false;
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
@@ -81,8 +80,7 @@ public class UserData {
             preparedStatement.setString(3, first_name);
             preparedStatement.setString(4, last_name);
             preparedStatement.setInt(5, is_admin);
-            preparedStatement.setInt(6, project_role_id);
-            preparedStatement.setInt(7, user_id);
+            preparedStatement.setInt(6, user_id);
             preparedStatement.executeUpdate();
             success = true;
         } catch(SQLException sqlException) {

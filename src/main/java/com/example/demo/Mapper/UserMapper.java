@@ -25,7 +25,6 @@ public class UserMapper extends AbstractMapper {
         String first_name = resultSet.getString("first_name");
         String last_name = resultSet.getString("last_name");
         int is_admin = resultSet.getInt("is_admin");
-        int project_role = resultSet.getInt("project_role");
-        return new User(user_id, e_mail, password, first_name, last_name, is_admin, project_role);
+        return new User(user_id, e_mail, password, first_name, last_name, is_admin);
     }
 }
