@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="main_style.css"/>
+    <title>Task (name)</title>
+</head>
+<th:block th:include="/includes/header :: header"></th:block>
+<body>
+<div id="container">
+    <div id="inputform">
+        <form action="/updateTask" object="" method="POST">
+            Project name
+            <p><input type="text" name="pName" th:value="${project.project_name}" required>
+            <p>Kick-off
+            <p><input type="date" name="kickOff" th:value="${project.kickoff}" required>
+            <p>Deadline
+            <p><input type="date" name="deadline" th:value="${project.deadline}" required>
+                <input type="hidden" name="id" th:value="${project.project_id}" required>
+                <input type="hidden" name="plId" th:value="${project.project_leader_id}" required>
+                <input type="hidden" name="cid" th:value="${project.customer_id}" required>
+            <div class="button">
+                <input type="Submit" value="  Update!  ">
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+<th:block th:include="/includes/footer :: footer"></th:block>
+</html>
