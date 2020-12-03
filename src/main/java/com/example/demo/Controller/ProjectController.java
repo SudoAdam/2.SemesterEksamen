@@ -27,7 +27,7 @@ public class ProjectController {
     }
 
     @PostMapping("/createProject")
-    public String createProject(WebRequest request) {
+    public String createProject(WebRequest request, Model model) {
         //denne funktion er ikke færdig!
         String projectName = request.getParameter("pName");
         String companyName = request.getParameter("comName");
@@ -35,14 +35,15 @@ public class ProjectController {
         String contactEmail = request.getParameter("conEmail");
         String kickOffStr = request.getParameter("kickOff");
         String deadlineStr = request.getParameter("deadline");
-        int project_leader_id = 1;
+        int project_leader_id = 1;                                  //request email and get project_leader_id
         int customer_id = 1;
         LocalDate kickOff = LocalDate.parse(kickOffStr);
         LocalDate deadline = LocalDate.parse(deadlineStr);
 
         projectService.createProject(projectName, kickOff, deadline, project_leader_id, customer_id);
-
-        return "error";
+        ArrayList<Project> projectList = projectService.getProjects();
+        model.addAttribute("projectList", projectList);
+        return "project/listProject";
     }
 
     // Responds to /editProject?id=project_id
