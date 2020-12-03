@@ -17,10 +17,10 @@ public class TaskController {
     ProjectService projectService = new ProjectService();
 
     // Responds to /editProject?id=project_id
-    @RequestMapping(value = "/editProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String editProject(@RequestParam int id, Model model) {
+    @RequestMapping(value = "/editTask", method = {RequestMethod.GET, RequestMethod.POST})
+    public String editTask(@RequestParam int id, Model model) {
         model.addAttribute("project", projectService.getProject(id));
-        return "project/editProject";
+        return "project/editTask";
     }
 
 @RequestMapping( value = "/createTask", method = {RequestMethod.GET, RequestMethod.POST})
