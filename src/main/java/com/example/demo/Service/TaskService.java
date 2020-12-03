@@ -25,6 +25,8 @@ public class TaskService {
         int task_leader_id = task.getTask_leader_id();
         User task_leader = userService.getUser(task_leader_id);
         task.setTask_leader(task_leader);
+        String e_mail = userService.findEmailFromUserId(task_leader_id);
+        task.setTask_leader_email(e_mail);
     }
 
     private void finalize(ArrayList<Task> list) {

@@ -99,6 +99,7 @@ public class UserData {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setString(1, e_mail);
             ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
             String result ="" + resultSet.getObject(1);
             id = Integer.parseInt(result);
         } catch(SQLException sqlException) {
@@ -117,7 +118,8 @@ public class UserData {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            String result ="" + resultSet.getObject(1);
+            resultSet.next();
+            String result ="" + resultSet.getString("e_mail");
             e_mail = result;
         } catch(SQLException sqlException) {
             sqlException.printStackTrace();

@@ -82,9 +82,6 @@ public class ProjectController {
     // Responds to /viewProject?id=project_id
     @RequestMapping(value = "/viewProject", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewProject(@RequestParam int id, Model model) {
-
-
-
         model.addAttribute("tasks", taskService.getTasks(id));
         model.addAttribute("project", projectService.getProject(id));
         return "project/viewProject";

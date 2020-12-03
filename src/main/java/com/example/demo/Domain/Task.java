@@ -10,6 +10,7 @@ public class Task implements DomainFacade {
     private String task_description;
     private int task_leader_id;
     private User task_leader;
+    private String task_leader_email;
     private LocalDate kickoff;
     private LocalDate deadline;
     private int working_hours;
@@ -70,6 +71,10 @@ public class Task implements DomainFacade {
     public User getTask_leader() { return task_leader; }
 
     public void setTask_leader(User task_leader) { this.task_leader = task_leader; }
+
+    public String getTask_leader_email() { return task_leader_email; }
+
+    public void setTask_leader_email(String task_leader_email) { this.task_leader_email = task_leader_email; }
 
     public LocalDate getKickoff() {
         return kickoff;
