@@ -43,11 +43,14 @@
             <td th:text="${task.kickoff}"></td>
             <td th:text="${task.deadline}"></td>
             <td th:text="${task.task_leader_email}"></td>
-
-
         </tr>
         <tr>
-            <td> <a style="text-decoration: none" href="/createTask"> &#10133; </a> </td>
+            <td>
+                <form action="/createTask" method="post">
+                    <input value="task.project_id" type="hidden" name="project_id">
+                    <input value="&#10133;" type="submit">
+                </form>
+            </td>
         </tr>
 
         </tbody>
