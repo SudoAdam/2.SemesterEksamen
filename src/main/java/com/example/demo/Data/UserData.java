@@ -108,4 +108,23 @@ public class UserData {
         return id;
 
     }
+
+    public String findEmailFromUserId(int id) {
+        String e_mail ="";
+        Connection connection = connector.getConnection();
+        String statement = "SELECT e_mail from users where user_id = ?";
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            String result ="" + resultSet.getObject(1);
+            e_mail = result;
+        } catch(SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
+        return e_mail;
+
+    }
+
 }

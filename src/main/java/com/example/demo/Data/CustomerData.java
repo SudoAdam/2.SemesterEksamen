@@ -84,4 +84,24 @@ public class CustomerData {
         }
         return success;
     }
+
+    public  int findCustomerIdFromName (String name) {
+        int id = -1;
+        Connection connection = connector.getConnection();
+        String statement = "SELECT customer_id from customers where name like ?";
+        boolean success = false;
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, '"' + name + '"');
+            ResultSet resultSet = preparedStatement.executeQuery();
+            String result = "" + resultSet.getObject(1);
+            id = Integer.parseInt(result);
+            success = true;
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
+        return id;
+
+    }
 }

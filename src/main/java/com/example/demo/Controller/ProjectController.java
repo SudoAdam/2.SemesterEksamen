@@ -2,6 +2,8 @@ package com.example.demo.Controller;
 
 import com.example.demo.Domain.Project;
 import com.example.demo.Service.ProjectService;
+import com.example.demo.Service.TaskService;
+import com.example.demo.Service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,8 @@ import java.util.ArrayList;
 @Controller
 public class ProjectController {
     ProjectService projectService = new ProjectService();
+    TaskService taskService = new TaskService();
+    UserService userService = new UserService();
 
     @GetMapping("/listProject")
     public String showProjects(Model model) {
@@ -61,15 +65,24 @@ public class ProjectController {
         String deadlineStr = request.getParameter("deadline");
         String pLeaderId = request.getParameter("plId");
         String CustomerId = request.getParameter("cid");
-        projectService.editProject(Integer.parseInt(projectId), projectName, LocalDate.parse(kickOffStr),
-                LocalDate.parse(deadlineStr), Integer.parseInt(pLeaderId), Integer.parseInt(CustomerId));
+
+        int pId = Integer.parseInt(projectId);
+        LocalDate kickoff = LocalDate.parse(kickOffStr);
+        LocalDate deadline = LocalDate.parse(deadlineStr);
+        int pLId = Integer.parseInt(pLeaderId);
+        int cId = Integer.parseInt(CustomerId);
+
+        projectService.editProject(pId, projectName, kickoff, deadline, pLId, cId);
         model.addAttribute("project", projectService.getProject(Integer.parseInt(projectId)));
+
         return "project/viewProject";
     }
 
     // Responds to /viewProject?id=project_id
     @RequestMapping(value = "/viewProject", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewProject(@RequestParam int id, Model model) {
+       // model.addAttribute("email", userService.findUserIdFromEmail())
+        model.addAttribute("tasks", taskService.getTasks(id));
         model.addAttribute("project", projectService.getProject(id));
         return "project/viewProject";
     }
