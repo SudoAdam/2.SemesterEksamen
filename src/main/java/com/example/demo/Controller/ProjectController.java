@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.Project;
+import com.example.demo.Domain.Task;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.TaskService;
 import com.example.demo.Service.UserService;
@@ -81,7 +82,6 @@ public class ProjectController {
     // Responds to /viewProject?id=project_id
     @RequestMapping(value = "/viewProject", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewProject(@RequestParam int id, Model model) {
-       // model.addAttribute("email", userService.findUserIdFromEmail())
         model.addAttribute("tasks", taskService.getTasks(id));
         model.addAttribute("project", projectService.getProject(id));
         return "project/viewProject";

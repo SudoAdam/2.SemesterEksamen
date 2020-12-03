@@ -8,19 +8,17 @@ public class User implements DomainFacade {
     private String first_name;
     private String last_name;
     private int is_admin;
-    private int project_role;
 
     public User() {
     }
 
-    public User(int user_Id, String e_mail, String password, String first_name, String last_name, int is_admin, int project_role) {
+    public User(int user_Id, String e_mail, String password, String first_name, String last_name, int is_admin) {
         this.user_Id = user_Id;
         this.e_mail = e_mail;
         this.password = password;
         this.first_name = first_name;
         this.last_name = last_name;
         this.is_admin = is_admin;
-        this.project_role = project_role;
     }
 
     public int getUser_Id() {
@@ -69,13 +67,5 @@ public class User implements DomainFacade {
 
     public void setIs_admin(int is_admin) {
         this.is_admin = is_admin;
-    }
-
-    public int getProject_role() {
-        return project_role;
-    }
-
-    public void setProject_role(int project_role) {
-        this.project_role = project_role;
     }
 }
