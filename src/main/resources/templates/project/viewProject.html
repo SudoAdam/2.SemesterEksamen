@@ -27,18 +27,24 @@
         <thead>
         <tr>
             <th>Tasks</th>
+            <th>Description</th>
             <th>Working hours</th>
             <th>Start</th>
             <th>End</th>
+            <th>Task Manager</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
+        <tr th:each="task : ${tasks}">
             <!-- Table value Examples. Replace with thymeleaf values. -->
-            <td>Task name</td>
-            <td>0 hours</td>
-            <td>(Date)</td>
-            <td>(Date)</td>
+            <td th:text="${task.task_name}"></td>
+            <td th:text="${task.task_description}"></td>
+            <td th:text="${task.working_hours}"></td>
+            <td th:text="${task.kickoff}"></td>
+            <td th:text="${task.deadline}"></td>
+            <td th:text="${task.kickoff}"></td>
+            <td
+
         </tr>
         </tbody>
     </table>

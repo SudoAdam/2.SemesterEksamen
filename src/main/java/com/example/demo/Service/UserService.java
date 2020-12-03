@@ -31,4 +31,8 @@ public class UserService {
         return userData.findUserIdFromEmail(email);
 
     }
+
+    public String findEmailFromUserId(int id){
+        return userData.findEmailFromUserId(id);
+    }
 }
