@@ -5,9 +5,7 @@ import com.example.demo.Service.TaskService;
 import com.example.demo.Service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDate;
@@ -18,7 +16,14 @@ public class TaskController {
     UserService userService = new UserService();
     ProjectService projectService = new ProjectService();
 
-@GetMapping("/createTask")
+    // Responds to /editProject?id=project_id
+    @RequestMapping(value = "/editProject", method = {RequestMethod.GET, RequestMethod.POST})
+    public String editProject(@RequestParam int id, Model model) {
+        model.addAttribute("project", projectService.getProject(id));
+        return "project/editProject";
+    }
+
+@RequestMapping( value = "/createTask", method = {RequestMethod.GET, RequestMethod.POST})
     public String createTask(@RequestParam int project_id, Model model){
     model.addAttribute("project", projectService.getProject(project_id));
     return "project/createTask";
