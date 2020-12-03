@@ -70,9 +70,9 @@ public class UserData {
         return success;
     }
 
-    public boolean editUser(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin, int job_title_id){
+    public boolean editUser(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin, int project_role_id){
         Connection connection = connector.getConnection();
-        String statement = "UPDATE users SET e_mail=?, password=?, first_name=?, last_name=?, is_admin=?, job_title_id=? WHERE user_id=?";
+        String statement = "UPDATE users SET e_mail=?, password=?, first_name=?, last_name=?, is_admin=?, project_role_id=? WHERE user_id=?";
         boolean success = false;
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
@@ -81,7 +81,7 @@ public class UserData {
             preparedStatement.setString(3, first_name);
             preparedStatement.setString(4, last_name);
             preparedStatement.setInt(5, is_admin);
-            preparedStatement.setInt(6, job_title_id);
+            preparedStatement.setInt(6, project_role_id);
             preparedStatement.setInt(7, user_id);
             preparedStatement.executeUpdate();
             success = true;
@@ -108,4 +108,23 @@ public class UserData {
         return id;
 
     }
+
+    public String findEmailFromUserId(int id) {
+        String e_mail ="";
+        Connection connection = connector.getConnection();
+        String statement = "SELECT e_mail from users where user_id = ?";
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            String result ="" + resultSet.getObject(1);
+            e_mail = result;
+        } catch(SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
+        return e_mail;
+
+    }
+
 }
