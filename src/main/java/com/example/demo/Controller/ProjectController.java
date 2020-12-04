@@ -21,9 +21,9 @@ public class ProjectController {
 
     @GetMapping("/listProject")
     public String showProjects(Model model) throws SQLException {
-    ArrayList<Project> projectList = projectService.getProjects();
-    model.addAttribute("projectList", projectList);
-    return "project/listProject";
+        ArrayList<Project> projectList = projectService.getProjects();
+        model.addAttribute("projectList", projectList);
+        return "project/listProject";
     }
 
     @GetMapping("/createProject")
