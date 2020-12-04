@@ -9,7 +9,7 @@
 <body>
 <div id="container" style="text-align: left">
     <div id="bio" style="float: left">
-        <h1 style="font-size: 50px" th:text="${session.user.first_name}"</h1>
+        <h1 style="font-size: 50px" th:text="${user.first_name}"></h1>
     </div>
     <div id="profilepic" style="float: right">
         <img class="profilepic" src="/static/images/defaultprofilepic.png"> <!-- th:src="*{'data:image/jpeg;base64,' + profilePic}"> -->
@@ -24,9 +24,9 @@
         </thead>
         <tbody>
         <tr style="text-align: left">
-            <td th:text="${session.user.e_mail}"></td>
-            <td th:text="${session.user.first_name}"></td>
-            <td th:text="${session.user.last_name}"></td>
+            <td th:text="${user.e_mail}"></td>
+            <td th:text="${user.first_name}"></td>
+            <td th:text="${user.last_name}"></td>
         </tr>
         </tbody>
     </table>

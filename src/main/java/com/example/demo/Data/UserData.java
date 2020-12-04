@@ -64,7 +64,7 @@ public class UserData {
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setString(1, email);
-            preparedStatement.setString(1, password);
+            preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
             return (User) userMapper.create(resultSet);
         } catch(SQLException sqlException) {

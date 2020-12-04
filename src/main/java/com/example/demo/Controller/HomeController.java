@@ -22,7 +22,6 @@ public class HomeController {
     private void setSessionInfo(WebRequest request, User user) {
         // Place user info on session
         request.setAttribute("user", user, WebRequest.SCOPE_SESSION);
-        request.setAttribute("role", user.getIs_admin(), WebRequest.SCOPE_SESSION);
     }
 
     @PostMapping("/login")
@@ -31,7 +30,17 @@ public class HomeController {
         String password = request.getParameter("password");
         User user = userService.login(email, password);
         setSessionInfo(request, user);
-        return "user/currentUser";
+        return "authentication/loggedin";
+    }
+
+    @GetMapping("/loggedin")
+    public String loggedin(WebRequest request,Model model){
+        User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
+        if (user != null) {
+            return "loggedin";
+        } else
+            return "redirect:/";
+
     }
 
 }
