@@ -42,6 +42,12 @@ public class TaskService {
         return list;
     }
 
+    public Task getTask(int task_id){
+        Task t = taskData.getTask(task_id);
+        finalize(t);
+        return (t);
+    }
+
     public boolean createTask(int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours){
         return taskData.createTask(project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
     }

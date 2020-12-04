@@ -16,11 +16,35 @@ public class TaskController {
     UserService userService = new UserService();
     ProjectService projectService = new ProjectService();
 
-    // Responds to /editProject?id=project_id
+    // Responds to /editTask?id=task_id
     @RequestMapping(value = "/editTask", method = {RequestMethod.GET, RequestMethod.POST})
     public String editTask(@RequestParam int id, Model model) {
-        model.addAttribute("project", projectService.getProject(id));
+        model.addAttribute("task", taskService.getTask(id));
         return "project/editTask";
+    }
+
+    @PostMapping("/updateTask")
+    public String updateTask(WebRequest request, Model model) {
+        String taskId = request.getParameter("tId");
+        String projectId = request.getParameter("pId");
+        String taskName = request.getParameter("tName");
+        String taskDesc = request.getParameter("tDesc");
+        String taskLeader = request.getParameter("tLId");
+        String kickOffStr = request.getParameter("kickoff");
+        String deadlineStr = request.getParameter("deadline");
+        String workingHours = request.getParameter("wh");
+
+        int tId = Integer.parseInt(taskId);
+        int pId = Integer.parseInt(projectId);
+        int tLId = Integer.parseInt(taskLeader);
+        LocalDate kickoff = LocalDate.parse(kickOffStr);
+        LocalDate deadline = LocalDate.parse(deadlineStr);
+        int wh = Integer.parseInt(workingHours);
+
+        taskService.editTask(tId, pId, taskName, taskDesc, tLId, kickoff, deadline, wh);
+        model.addAttribute("project", projectService.getProject(Integer.parseInt(projectId)));
+        model.addAttribute("tasks", taskService.getTasks(pId));
+        return "project/viewProject";
     }
 
     @RequestMapping(value = "/createTask", method = {RequestMethod.GET, RequestMethod.POST})
