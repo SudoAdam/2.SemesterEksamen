@@ -3,6 +3,8 @@ package com.example.demo.Service;
 import com.example.demo.Data.CustomerData;
 import com.example.demo.Domain.Customer;
 
+import java.util.ArrayList;
+
 public class CustomerService {
     // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -22,5 +24,11 @@ public class CustomerService {
 
     public boolean editCustomer(int customer_id, String name, String contact_name, String contact_email, String contact_phone){
         return customerData.editCustomer(customer_id, name, contact_name, contact_email, contact_phone);
+    }
+
+    public ArrayList<Customer> getCustomers(){
+        ArrayList<Customer> customerlist = new ArrayList();
+        customerData.getCustomers();
+        return customerlist;
     }
 }

@@ -7,6 +7,27 @@
 </head>
 <th:block th:include="/includes/header :: header"></th:block>
 <body>
+<div id="container">
+    <table class="project-table">
+        <thead>
+        <tr>
+            <th>Company name</th>
+            <th>Contact name</th>
+            <th>Contact E-mail</th>
+            <th>Projects</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="customer : ${customerList}">
+            <!-- Table value Examples. Replace with thymeleaf values. -->
+            <td th:text="${customer.name}"></td>
+            <td th:text="${customer.contact_name}"></td>
+            <td th:text="${customer.contact_email}"></td>
+            <td><a href="">View Projects</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 </body>
 <th:block th:include="/includes/footer :: footer"></th:block>
