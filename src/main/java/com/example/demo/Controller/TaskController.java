@@ -23,31 +23,34 @@ public class TaskController {
         return "project/editTask";
     }
 
-@RequestMapping( value = "/createTask", method = {RequestMethod.GET, RequestMethod.POST})
-    public String createTask(@RequestParam int project_id, Model model){
-    model.addAttribute("project", projectService.getProject(project_id));
-    return "project/createTask";
-}
-@PostMapping("/createTaskPost")
-    public String createTaskPost(WebRequest request, Model model) {
-    String projectId = request.getParameter("projectId");
-    String taskName = request.getParameter("taskName");
-    String taskDesc = request.getParameter("taskDesc");
-    String taskLeaderEmail = request.getParameter("taskLeaderEmail");
-    String taskKickoff = request.getParameter("kickoff");
-    String taskDeadline = request.getParameter("deadline");
-    String workingHoursSTR = request.getParameter("workingHours");
+    @RequestMapping(value = "/createTask", method = {RequestMethod.GET, RequestMethod.POST})
+    public String createTask(@RequestParam int id, Model model) {
+        model.addAttribute("project", projectService.getProject(id));
+        return "project/createTask";
+    }
 
-    LocalDate kickoff = LocalDate.parse(taskKickoff);
-    LocalDate deadline = LocalDate.parse(taskDeadline);
-    int workingHours = Integer.parseInt(workingHoursSTR);
-    int project_leader_id = userService.findUserIdFromEmail(taskLeaderEmail);
-    int pId = Integer.parseInt(projectId);
+    @RequestMapping(value = "/createTaskPost", method = {RequestMethod.GET, RequestMethod.POST})
+    public String createTaskPost(@RequestParam int id, WebRequest request, Model model) {
 
-    taskService.createTask(pId, taskName, taskDesc, project_leader_id, kickoff, deadline, workingHours);
-    model.addAttribute("project", projectService.getProject(pId));
-    return "project/viewProject";
-}
+        String taskName = request.getParameter("taskName");
+        String taskDesc = request.getParameter("taskDesc");
+        String taskLeaderEmail = request.getParameter("taskLeaderEmail");
+        String taskKickoff = request.getParameter("kickoff");
+        String taskDeadline = request.getParameter("deadline");
+        String workingHoursSTR = request.getParameter("workingHours");
+
+
+        LocalDate kickoff = LocalDate.parse(taskKickoff);
+        LocalDate deadline = LocalDate.parse(taskDeadline);
+        int workingHours = Integer.parseInt(workingHoursSTR);
+        int project_leader_id = userService.findUserIdFromEmail(taskLeaderEmail);
+
+
+        taskService.createTask(id, taskName, taskDesc, project_leader_id, kickoff, deadline, workingHours);
+        model.addAttribute("project", projectService.getProject(id));
+        model.addAttribute("tasks", taskService.getTasks(id));
+        return "project/viewProject";
+    }
 
     /*@PostMapping("/updateTask")
     public String updateTask(WebRequest request, Model model) {
