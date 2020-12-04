@@ -13,9 +13,11 @@
         <hr class="rounded">
         Email: <span th:text="${user.e_mail}"></span>
         <p>
-        <a th:href="@{/editUser?id={id}(id=${user.user_id})}">Edit My Info</a>
+
     </div>
     <div id="profilepic" style="float: right">
+        <a style="text-align: right" th:href="@{/editUser?id={id}(id=${user.user_id})}">Edit My Info</a>
+        <br>
         <img class="pb" src="/images/defaultprofilepic.png"> <!-- th:src="*{'data:image/jpeg;base64,' + profilePic}"> -->
     </div>
 </div>

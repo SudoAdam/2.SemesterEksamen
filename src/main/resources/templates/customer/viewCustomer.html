@@ -9,6 +9,7 @@
 <body>
 <div id="container" style="text-align: left">
     <div id="bio" style="float: left">
+        <a style="text-decoration: none" href="/listCustomer">&#128281;</a>
         <h1 style="font-size: 50px" th:text="${customer.name}"></h1>
         <hr class="rounded">
         Contact name: <span th:text="${customer.contact_name}"></span>
@@ -18,7 +19,10 @@
             Phone: <span th:text="${customer.contact_phone}"></span>
     </div>
     <div id="profilepic" style="float: right">
-        <img class="pb" src="/images/defaultprofilepic.png"> <!-- th:src="*{'data:image/jpeg;base64,' + profilePic}"> -->
+        <a th:href="@{/editCustomer?id={id}(id=${customer.customer_id})}">Edit Customer</a>
+        <br>
+        <img class="pb" src="/images/defaultprofilepic.png">
+
     </div>
     <table class="project-table">
         <thead>
@@ -33,9 +37,9 @@
         <tbody>
         <tr th:each="project : ${customerProjects}">
             <td th:text="${project.project_name}"></td>
-            <td th:text="${project.kickoff}" ></td>
+            <td th:text="${project.kickoff}"></td>
             <td th:text="${project.deadline}"></td>
-            <td> &#10060; </td> <!-- 9989 -->
+            <td> &#10060;</td> <!-- 9989 -->
             <td><a th:href="@{/viewProject?id={id}(id=${project.project_id})}">View Project</a></td>
         </tr>
         </tbody>

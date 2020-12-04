@@ -20,6 +20,8 @@ public class TaskController {
     // Responds to /editTask?id=task_id
     @RequestMapping(value = "/editTask", method = {RequestMethod.GET, RequestMethod.POST})
     public String editTask(@RequestParam int id, Model model) throws SQLException {
+        int project_id = taskService.getTask(id).getProject_id();
+        model.addAttribute("project", projectService.getProject(project_id));
         model.addAttribute("task", taskService.getTask(id));
         return "project/editTask";
     }
