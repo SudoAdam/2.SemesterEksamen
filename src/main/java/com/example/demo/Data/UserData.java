@@ -58,6 +58,21 @@ public class UserData {
         return null;
     }
 
+    public User login(String email, String password){
+        Connection connection = connector.getConnection();
+        String statement = "SELECT * FROM users WHERE e_mail=? and password=?";
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(1, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return (User) userMapper.create(resultSet);
+        } catch(SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return null;
+    }
+
     public boolean createUser(String e_mail, String password, String first_name, String last_name){
         Connection connection = connector.getConnection();
         String statement = "INSERT INTO users (e_mail, password, first_name, last_name) VALUES (?,?,?,?,?)";

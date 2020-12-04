@@ -25,6 +25,11 @@ public class UserService {
         return list;
     }
 
+    public User login(String email, String password){
+        User user = userData.login(email,password);
+        return user;
+    }
+
     public User getUser(int id){
         return userData.getUser(id);
     }

@@ -35,4 +35,8 @@ public class CustomerService {
         ArrayList<Customer> customerlist = customerData.getCustomers();
         return customerlist;
     }
+
+    public Customer getCustomer(int id){
+      return customerData.getCustomer(id);
+    }
 }
