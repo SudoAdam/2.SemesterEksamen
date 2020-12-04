@@ -48,8 +48,16 @@ public class UserController {
     }
 
     @RequestMapping(value = "/viewUser", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewProject(@RequestParam int id, Model model) {
+    public String viewUser(@RequestParam int id, Model model, WebRequest request) {
+
         model.addAttribute("user", userService.getUser(id));
+        return "user/viewUser";
+    }
+
+    @RequestMapping(value = "/currentUser", method = {RequestMethod.GET, RequestMethod.POST})
+    public String currentUser(@RequestParam int id, Model model, WebRequest request) {
+        User user = (User) request.getAttribute("user" ,WebRequest.SCOPE_SESSION);
+        model.addAttribute("user", user);
         return "user/viewUser";
     }
 }
