@@ -27,7 +27,11 @@ public class CustomerData {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             ResultSet resultSet = preparedStatement.executeQuery();
-            return (ArrayList) customerMapper.create(resultSet);
+            ArrayList<Customer> customers = new ArrayList<>();
+            while (resultSet.next()){
+                customers.add((Customer) customerMapper.create(resultSet));
+            }
+            return customers;
         } catch(SQLException sqlException){
             sqlException.printStackTrace();
         }
