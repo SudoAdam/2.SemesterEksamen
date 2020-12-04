@@ -45,10 +45,10 @@
             <td th:text="${task.task_leader_email}"></td>
         </tr>
         <tr>
-            <td>
+            <td colspan="6">
                 <form action="/createTask" method="post">
                     <input type="hidden" name="project_id" th:value="${tasks.get(0).getProject_id()}">
-                    <input value="&#10133;" type="submit">
+                    <input value="&#10133;" type="submit" style="width: 45px; height: 45px">
                 </form>
             </td>
         </tr>
