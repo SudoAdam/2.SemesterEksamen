@@ -39,7 +39,6 @@ public class CustomerController {
     @GetMapping("/listCustomer")
     public String listCustomer(Model model) {
         ArrayList<Customer> customerList = customerService.getCustomers();
-        System.out.println(customerList);
         model.addAttribute("customerList",customerList);
         return "customer/listCustomer";
     }
