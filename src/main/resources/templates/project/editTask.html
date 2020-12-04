@@ -10,15 +10,20 @@
 <div id="container">
     <div id="inputform">
         <form action="/updateTask" object="" method="POST">
-            Project name
-            <p><input type="text" name="pName" th:value="${project.project_name}" required>
+            Task name
+            <p><input type="text" name="tName" th:value="${task.task_name}" required>
+            <p>Description
+            <p><input type="text" name="tDesc" th:value="${task.task_description}" required>
+            <p>Task Leader
+            <p><input type="text" name="taskLeaderEmail" th:value="${task.task_leader_email}" required>
             <p>Kick-off
-            <p><input type="date" name="kickOff" th:value="${project.kickoff}" required>
+            <p><input type="date" name="kickoff" th:value="${task.kickoff}" required>
             <p>Deadline
-            <p><input type="date" name="deadline" th:value="${project.deadline}" required>
-                <input type="hidden" name="id" th:value="${project.project_id}" required>
-                <input type="hidden" name="plId" th:value="${project.project_leader_id}" required>
-                <input type="hidden" name="cid" th:value="${project.customer_id}" required>
+            <p><input type="date" name="deadline" th:value="${task.deadline}" required>
+            <p>Working hours
+            <p><input type="text" name="wh" th:value="${task.working_hours}" required>
+                <input type="hidden" name="tId" th:value="${task.task_id}" required>
+                <input type="hidden" name="pId" th:value="${task.project_id}" required>
             <div class="button">
                 <input type="Submit" value="  Update!  ">
             </div>

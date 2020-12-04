@@ -7,6 +7,7 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Task;
+import com.example.demo.Domain.User;
 import com.example.demo.Mapper.TaskMapper;
 
 import java.sql.*;
@@ -39,6 +40,20 @@ public class TaskData {
             }
             return tasks;
         } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return null;
+    }
+
+    public Task getTask(int task_id){
+        Connection connection = connector.getConnection();
+        String statement = "SELECT * FROM tasks WHERE task_id = ?";
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setInt(1, task_id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return (Task) taskMapper.create(resultSet);
+        } catch(SQLException sqlException) {
             sqlException.printStackTrace();
         }
         return null;

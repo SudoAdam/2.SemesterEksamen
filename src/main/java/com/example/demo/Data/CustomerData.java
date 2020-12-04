@@ -59,7 +59,7 @@ public class CustomerData {
 
     public boolean createCustomer(String name, String contact_name, String contact_email, String contact_phone){
         Connection connection = connector.getConnection();
-        String statement = "INSERT INTO customers name, contact_name, contact_email, contact_phone VALUES (?,?,?,?)";
+        String statement = "INSERT INTO customers (name, contact_name, contact_email, contact_phone) VALUES (?,?,?,?)";
         boolean success = false;
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
