@@ -32,8 +32,7 @@ public class CustomerService {
     }
 
     public ArrayList<Customer> getCustomers(){
-        ArrayList<Customer> customerlist = new ArrayList();
-        customerData.getCustomers();
+        ArrayList<Customer> customerlist = customerData.getCustomers();
         return customerlist;
     }
 }
