@@ -29,19 +29,19 @@ public class TaskController {
         String projectId = request.getParameter("pId");
         String taskName = request.getParameter("tName");
         String taskDesc = request.getParameter("tDesc");
-        String taskLeader = request.getParameter("tLId");
+        String taskLeaderEmail = request.getParameter("taskLeaderEmail");
         String kickOffStr = request.getParameter("kickoff");
         String deadlineStr = request.getParameter("deadline");
         String workingHours = request.getParameter("wh");
 
         int tId = Integer.parseInt(taskId);
         int pId = Integer.parseInt(projectId);
-        int tLId = Integer.parseInt(taskLeader);
+        int project_leader_id = userService.findUserIdFromEmail(taskLeaderEmail);
         LocalDate kickoff = LocalDate.parse(kickOffStr);
         LocalDate deadline = LocalDate.parse(deadlineStr);
         int wh = Integer.parseInt(workingHours);
 
-        taskService.editTask(tId, pId, taskName, taskDesc, tLId, kickoff, deadline, wh);
+        taskService.editTask(tId, pId, taskName, taskDesc, project_leader_id, kickoff, deadline, wh);
         model.addAttribute("project", projectService.getProject(Integer.parseInt(projectId)));
         model.addAttribute("tasks", taskService.getTasks(pId));
         return "project/viewProject";
