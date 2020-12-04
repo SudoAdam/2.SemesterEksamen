@@ -2,6 +2,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Domain.User;
 import com.example.demo.Service.UserService;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,12 @@ public class HomeController {
         User currentUser = (User) request.getAttribute("user" ,WebRequest.SCOPE_SESSION);
         model.addAttribute("user", currentUser);
         return "user/currentUser";
+    }
+    @GetMapping("/logout")
+    public String logout(WebRequest request){
+        // en hurtig tanke... Ser ud til at virke. men skal testet godt igennem
+        request.removeAttribute("user",WebRequest.SCOPE_SESSION);
+        return "authentication/login";
     }
 
     @GetMapping("/loggedin")
