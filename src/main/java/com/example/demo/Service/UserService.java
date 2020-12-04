@@ -1,5 +1,5 @@
 /**
- * @author Adam
+ * @author Adam and Rasmus
  */
 package com.example.demo.Service;
 
