@@ -1,8 +1,13 @@
+/**
+ @Author Rasmus Berg
+ */
+
+
 package com.example.demo.Domain;
 
 public class User implements DomainFacade {
 
-    private int user_Id;
+    private int user_id;
     private String e_mail;
     private String password;
     private String first_name;
@@ -12,8 +17,8 @@ public class User implements DomainFacade {
     public User() {
     }
 
-    public User(int user_Id, String e_mail, String password, String first_name, String last_name, int is_admin) {
-        this.user_Id = user_Id;
+    public User(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin) {
+        this.user_id = user_id;
         this.e_mail = e_mail;
         this.password = password;
         this.first_name = first_name;
@@ -21,12 +26,12 @@ public class User implements DomainFacade {
         this.is_admin = is_admin;
     }
 
-    public int getUser_Id() {
-        return user_Id;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setUser_Id(int user_Id) {
-        this.user_Id = user_Id;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public String getE_mail() {
@@ -72,7 +77,7 @@ public class User implements DomainFacade {
     @Override
     public String toString() {
         return "User{" +
-                "user_Id=" + user_Id +
+                "user_Id=" + user_id +
                 ", e_mail='" + e_mail + '\'' +
                 ", password='" + password + '\'' +
                 ", first_name='" + first_name + '\'' +

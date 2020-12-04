@@ -81,7 +81,7 @@ footer{
     background-color: #EDEDED;
     padding: 50px;
     width: 900px;
-    min-height: 100vh;
+    min-height: 80vh;
     margin: auto;
     text-align: center;
 }
@@ -131,6 +131,6 @@ footer{
 }
 
 .project-table tbody tr:last-of-type {
-    background-color: #9EBDD5;
+    border-radius: 15px 15px 15px 15px;
     text-align: center;
 }

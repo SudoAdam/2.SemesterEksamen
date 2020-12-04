@@ -1,8 +1,13 @@
+/**
+ @Author Rasmus Berg
+ */
+
+
+
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Customer;
 import com.example.demo.Mapper.CustomerMapper;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +32,11 @@ public class CustomerData {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             ResultSet resultSet = preparedStatement.executeQuery();
-            return (ArrayList) customerMapper.create(resultSet);
+            ArrayList<Customer> customers = new ArrayList<>();
+            while (resultSet.next()){
+                customers.add((Customer) customerMapper.create(resultSet));
+            }
+            return customers;
         } catch(SQLException sqlException){
             sqlException.printStackTrace();
         }
@@ -50,7 +59,7 @@ public class CustomerData {
 
     public boolean createCustomer(String name, String contact_name, String contact_email, String contact_phone){
         Connection connection = connector.getConnection();
-        String statement = "INSERT INTO customers name, contact_name, contact_email, contact_phone VALUES (?,?,?,?)";
+        String statement = "INSERT INTO customers (name, contact_name, contact_email, contact_phone) VALUES (?,?,?,?)";
         boolean success = false;
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(statement);

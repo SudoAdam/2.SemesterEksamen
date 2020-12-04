@@ -32,6 +32,7 @@
             <th>Start</th>
             <th>End</th>
             <th>Task Manager</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -43,12 +44,12 @@
             <td th:text="${task.kickoff}"></td>
             <td th:text="${task.deadline}"></td>
             <td th:text="${task.task_leader_email}"></td>
+            <td><a th:href="@{/editTask?id={id}(id=${task.task_id})}">&#128736;</a></td>
         </tr>
-        <tr>
-            <td colspan="6">
-                <form action="/createTask" method="post">
-                    <input type="hidden" name="project_id" th:value="${tasks.get(0).getProject_id()}">
-                    <input value="&#10133;" type="submit" style="width: 35px; height: 35px">
+        <tr style="background-color: #9EBDD5">
+            <td colspan="7">
+                <form th:action="@{/createTask?id={id}(id=${project.project_id})}" method="post">
+                    <input value="&#10133;" type="submit" style="width: 45px; height: 45px">
                 </form>
             </td>
         </tr>
