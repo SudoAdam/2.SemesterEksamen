@@ -7,28 +7,29 @@
 </head>
 <th:block th:include="/includes/header :: header"></th:block>
 <body>
-<div id="container">
+<div id="container" style="text-align: left">
     <div id="bio" style="float: left">
-        <h1 style="font-size: 50px"> <!--th:text="${profileName}"> --> Dudeson Dude</h1>
-        <hr class="rounded">
-        Email: <span>email@email.com</span>
-        <p>
-            Active projects: <span>Project no.1, project, no.2.</span>
-        <p>
-            Admin: <span> <input type="checkbox" id="admin" name="admin" value="admin"></span>
-        <p>
-            Job: <label for="jobs">Choose job:</label>
-
-            <select name="jobs" id="jobs">
-                <option value="volvo">Job1</option>
-                <option value="saab">Job2</option>
-                <option value="mercedes">Job3</option>
-                <option value="audi">Job4</option>
-            </select>
+        <h1 style="font-size: 50px" th:text="${user.first_name}"</h1>
     </div>
     <div id="profilepic" style="float: right">
         <img class="profilepic" src="/static/images/defaultprofilepic.png"> <!-- th:src="*{'data:image/jpeg;base64,' + profilePic}"> -->
     </div>
+    <table class="project-table">
+        <thead>
+            <tr>
+            <th>E-mail</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="text-align: left">
+            <td th:text="${user.e_mail}"></td>
+            <td th:text="${user.first_name}"></td>
+            <td th:text="${user.last_name}"></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 <th:block th:include="/includes/footer :: footer"></th:block>

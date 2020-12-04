@@ -9,8 +9,7 @@ import com.example.demo.Domain.User;
 import com.example.demo.Service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ public class UserController {
     @GetMapping("/listUser")
     public String showUsers(Model model) {
         ArrayList<User> userList = userService.getUsers();
-        System.out.println(userList);
         model.addAttribute("userList", userList);
         return "user/listUser";
     }
@@ -47,5 +45,11 @@ public class UserController {
     @GetMapping("/editUser")
     public String editUser() {
         return "user/editUser";
+    }
+
+    @RequestMapping(value = "/viewUser", method = {RequestMethod.GET, RequestMethod.POST})
+    public String viewProject(@RequestParam int id, Model model) {
+        model.addAttribute("user", userService.getUser(id));
+        return "user/viewUser";
     }
 }
