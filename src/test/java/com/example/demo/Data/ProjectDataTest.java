@@ -12,6 +12,7 @@ package com.example.demo.Data;
 import com.example.demo.Domain.Project;
 import org.junit.jupiter.api.*;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -23,7 +24,7 @@ class ProjectDataTest {
 
     @Test
     @Order(0)
-    void createProject() {
+    void createProject() throws SQLException {
         String project_name = "The newest Deal";
         LocalDate kickoff = LocalDate.of(2020,12,2);
         LocalDate deadline = LocalDate.of(2020,12,21);
@@ -34,7 +35,7 @@ class ProjectDataTest {
 
     @Test
     @Order(1)
-    void getProjects() {
+    void getProjects() throws SQLException {
         ArrayList<Project> list = projectData.getProjects();
         Project p = list.get(list.size()-1);
 
@@ -51,7 +52,7 @@ class ProjectDataTest {
 
     @Test
     @Order(2)
-    void getProject() {
+    void getProject() throws SQLException {
         // For the sake of test, we need the project for the last row in the DBMS
         ArrayList<Project> list = projectData.getProjects();
 
@@ -71,7 +72,7 @@ class ProjectDataTest {
 
     @Test
     @Order(3)
-    void editProject() {
+    void editProject() throws SQLException {
         // Select the last project in list and apply changes
         ArrayList<Project> list = projectData.getProjects();
         Project p = list.get(list.size()-1);

@@ -1,7 +1,6 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.Project;
-import com.example.demo.Domain.Task;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.TaskService;
 import com.example.demo.Service.UserService;
@@ -10,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ public class ProjectController {
     UserService userService = new UserService();
 
     @GetMapping("/listProject")
-    public String showProjects(Model model) {
+    public String showProjects(Model model) throws SQLException {
     ArrayList<Project> projectList = projectService.getProjects();
     model.addAttribute("projectList", projectList);
     return "project/listProject";
@@ -32,7 +32,7 @@ public class ProjectController {
     }
 
     @PostMapping("/createProject")
-    public String createProject(WebRequest request, Model model) {
+    public String createProject(WebRequest request, Model model) throws SQLException {
         //denne funktion er ikke færdig!
         String projectName = request.getParameter("pName");
         String companyName = request.getParameter("comName");
@@ -53,13 +53,13 @@ public class ProjectController {
 
     // Responds to /editProject?id=project_id
     @RequestMapping(value = "/editProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String editProject(@RequestParam int id, Model model) {
+    public String editProject(@RequestParam int id, Model model) throws SQLException {
         model.addAttribute("project", projectService.getProject(id));
         return "project/editProject";
     }
 
     @PostMapping("/updateProject")
-    public String updateProject(WebRequest request, Model model) {
+    public String updateProject(WebRequest request, Model model) throws SQLException {
         String projectId = request.getParameter("id");
         String projectName = request.getParameter("pName");
         String kickOffStr = request.getParameter("kickOff");
@@ -81,7 +81,7 @@ public class ProjectController {
 
     // Responds to /viewProject?id=project_id
     @RequestMapping(value = "/viewProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewProject(@RequestParam int id, Model model) {
+    public String viewProject(@RequestParam int id, Model model) throws SQLException {
         model.addAttribute("tasks", taskService.getTasks(id));
         model.addAttribute("project", projectService.getProject(id));
         return "project/viewProject";

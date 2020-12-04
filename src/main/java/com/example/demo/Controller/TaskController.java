@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 @Controller
@@ -18,18 +19,18 @@ public class TaskController {
 
     // Responds to /editProject?id=project_id
     @RequestMapping(value = "/editTask", method = {RequestMethod.GET, RequestMethod.POST})
-    public String editTask(@RequestParam int id, Model model) {
+    public String editTask(@RequestParam int id, Model model) throws SQLException {
         model.addAttribute("project", projectService.getProject(id));
         return "project/editTask";
     }
 
 @RequestMapping( value = "/createTask", method = {RequestMethod.GET, RequestMethod.POST})
-    public String createTask(@RequestParam int project_id, Model model){
+    public String createTask(@RequestParam int project_id, Model model) throws SQLException {
     model.addAttribute("project", projectService.getProject(project_id));
     return "project/createTask";
 }
 @PostMapping("/createTaskPost")
-    public String createTaskPost(WebRequest request, Model model) {
+    public String createTaskPost(WebRequest request, Model model) throws SQLException {
     String projectId = request.getParameter("projectId");
     String taskName = request.getParameter("taskName");
     String taskDesc = request.getParameter("taskDesc");

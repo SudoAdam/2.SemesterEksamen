@@ -25,88 +25,57 @@ public class ProjectData {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<Project> getProjects() {
+    public ArrayList<Project> getProjects() throws SQLException {
         Connection connection = connector.getConnection();
         String statement = "SELECT * FROM projects";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(statement);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        ResultSet resultSet = preparedStatement.executeQuery();
 
-            ArrayList<Project> projects = new ArrayList<>();
-            while (resultSet.next()) {
-                projects.add((Project) projectMapper.create(resultSet));
-            }
-            return projects;
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+        ArrayList<Project> projects = new ArrayList<>();
+        while (resultSet.next()) {
+            projects.add((Project) projectMapper.create(resultSet));
         }
-        return null;
+        return projects;
     }
 
-    public Project getProject(int id) {
+    public Project getProject(int id) throws SQLException {
         Connection connection = connector.getConnection();
         String statement = "SELECT * FROM projects WHERE project_id=?";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(statement);
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return (Project) projectMapper.create(resultSet);
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return null;
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setInt(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return (Project) projectMapper.create(resultSet);
     }
 
-    public boolean createProject(String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) {
+    public void createProject(String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws SQLException {
         Connection connection = connector.getConnection();
         String statement = "INSERT INTO projects (project_name, kickoff, deadline, project_leader_id, customer_id) VALUES (?,?,?,?,?)";
-        boolean success = false;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(statement);
-            preparedStatement.setString(1,project_name);
-            preparedStatement.setString(2, kickoff.toString());
-            preparedStatement.setString(3, deadline.toString());
-            preparedStatement.setInt(4, project_leader_id);
-            preparedStatement.setInt(5, customer_id);
-            preparedStatement.execute();
-            success = true;
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return success;
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setString(1, project_name);
+        preparedStatement.setString(2, kickoff.toString());
+        preparedStatement.setString(3, deadline.toString());
+        preparedStatement.setInt(4, project_leader_id);
+        preparedStatement.setInt(5, customer_id);
+        preparedStatement.execute();
     }
 
-    public boolean editProject(int project_id, String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) {
+    public void editProject(int project_id, String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws SQLException {
         Connection connection = connector.getConnection();
         String statement = "UPDATE projects SET project_name=?, kickoff=?, deadline=?, project_leader_id=?, customer_id=? WHERE project_id=?";
-        boolean success = false;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(statement);
-            preparedStatement.setString(1, project_name);
-            preparedStatement.setString(2, kickoff.toString());
-            preparedStatement.setString(3, deadline.toString());
-            preparedStatement.setInt(4, project_leader_id);
-            preparedStatement.setInt(5, customer_id);
-            preparedStatement.setInt(6, project_id);
-            preparedStatement.executeUpdate();
-            success = true;
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return success;
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setString(1, project_name);
+        preparedStatement.setString(2, kickoff.toString());
+        preparedStatement.setString(3, deadline.toString());
+        preparedStatement.setInt(4, project_leader_id);
+        preparedStatement.setInt(5, customer_id);
+        preparedStatement.setInt(6, project_id);
+        preparedStatement.executeUpdate();
     }
 
-    public boolean deleteProject(int project_id) {
+    public void deleteProject(int project_id) throws SQLException {
         Connection connection = connector.getConnection();
         String statement = "UPDATE projects SET project_name=?, kickoff=?, deadline=?, project_leader_id=?, customer_id=? WHERE project_id=?";
-        boolean success = false;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(statement);
-            preparedStatement.execute();
-            success = true;
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return success;
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.execute();
     }
 }
