@@ -32,6 +32,7 @@ public class CustomerController {
         String contactEmail = request.getParameter("conEmail");
         String tel = request.getParameter("tel");
 
+        customerService.createUser(companyName,contactName,contactEmail,tel);
 
         return "customer/listCustomer";
     }
