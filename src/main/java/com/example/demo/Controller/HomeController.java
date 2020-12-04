@@ -30,7 +30,9 @@ public class HomeController {
         String password = request.getParameter("password");
         User user = userService.login(email, password);
         setSessionInfo(request, user);
-        return "authentication/loggedin";
+        User currentUser = (User) request.getAttribute("user" ,WebRequest.SCOPE_SESSION);
+        model.addAttribute("user", currentUser);
+        return "user/currentUser";
     }
 
     @GetMapping("/loggedin")

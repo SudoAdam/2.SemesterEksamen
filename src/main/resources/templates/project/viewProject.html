@@ -20,7 +20,7 @@
         <p>
             Deadline: <span th:text="${project.deadline}"></span>
     </div>
-    <div id="bioright">
+    <div id="bioright" style="text-align: right">
         <a th:href="@{/editProject?id={id}(id=${project.project_id})}">Edit Project</a>
     </div>
     <table class="project-table">
