@@ -1,3 +1,9 @@
+/**
+ @Author Rasmus Berg
+ */
+
+
+
 package com.example.demo.Domain;
 
 public class Customer implements DomainFacade {

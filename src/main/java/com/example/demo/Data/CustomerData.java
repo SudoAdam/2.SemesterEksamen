@@ -1,8 +1,13 @@
+/**
+ @Author Rasmus Berg
+ */
+
+
+
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Customer;
 import com.example.demo.Mapper.CustomerMapper;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

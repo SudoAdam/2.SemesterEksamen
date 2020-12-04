@@ -1,4 +1,7 @@
-//@author Adam
+/**
+ @Author Rasmus Berg and Adam
+ */
+
 package com.example.demo.Controller;
 
 
