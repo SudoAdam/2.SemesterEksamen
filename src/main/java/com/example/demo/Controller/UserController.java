@@ -1,5 +1,5 @@
 /**
- @Author Rasmus Berg and Adam
+ * @Author Rasmus Berg and Adam
  */
 
 package com.example.demo.Controller;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Controller
@@ -30,7 +31,9 @@ public class UserController {
     }
 
     @GetMapping("/createUser")
-    public String createUser() { return "user/createUser";}
+    public String createUser() {
+        return "user/createUser";
+    }
 
     @PostMapping("/createUser")
     public String createUser(WebRequest request) {
@@ -51,6 +54,39 @@ public class UserController {
         return "user/editUser";
     }
 
+
+    @PostMapping("/updateUser")
+    public String updateUser(WebRequest request, Model model) throws SQLException {
+        User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
+        String userId = request.getParameter("uId");
+        String first_name = request.getParameter("fName");
+        String last_name = request.getParameter("lName");
+        String email = request.getParameter("email");
+        String oldPwd = request.getParameter("oPwd");
+        String pwd1 = request.getParameter("pwd1");
+        String pwd2 = request.getParameter("pwd2");
+        int uId = Integer.parseInt(userId);
+        String newPassword;
+        int isAdmin = user.getIs_admin();
+
+
+        // Mangler ordenlig password håndtering
+
+        if (pwd1.equals(pwd2) && oldPwd.equals(user.getPassword())) {
+            newPassword = pwd1;
+        } else {
+            newPassword = user.getPassword();
+        }
+        userService.editUser(uId, email, newPassword, first_name, last_name, isAdmin);
+
+        return "user/currentUser";
+    }
+
+
+
+
+
+
     @RequestMapping(value = "/viewUser", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewUser(@RequestParam int id, Model model, WebRequest request) {
 
@@ -60,7 +96,7 @@ public class UserController {
 
     @GetMapping("/currentUser")
     public String currentUser(Model model, WebRequest request) {
-        User user = (User) request.getAttribute("user" ,WebRequest.SCOPE_SESSION);
+        User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         model.addAttribute("user", user);
         return "user/currentUser";
     }

@@ -11,29 +11,34 @@
 
 
     <!-- work in progress -->
-
-
-
     <div id="bioleft" style="float: left">
-        <h1 style="font-size: 50px"> <!--th:text="${profileName}"> --> Dudeson Dude</h1>
-        <hr class="rounded">
-        Email: <span>email@email.com</span>
-        <p>
-        Active projects: <span>Project no.1, project, no.2.</span>
-        <p>
-        Admin: <span> <input type="checkbox" id="admin" name="admin" value="admin"></span>
-        <p>
-        Job: <label for="jobs">Choose job:</label>
-
-        <select name="jobs" id="jobs">
-            <option value="volvo">Job1</option>
-            <option value="saab">Job2</option>
-            <option value="mercedes">Job3</option>
-            <option value="audi">Job4</option>
-        </select>
     </div>
     <div id="bioright" style="float: right">
-        <img class="pb" src="/images/defaultprofilepic.png"> <!-- th:src="*{'data:image/jpeg;base64,' + profilePic}"> -->
+        <img class="pb" src="/images/defaultprofilepic.png">
+        <!-- th:src="*{'data:image/jpeg;base64,' + profilePic}"> -->
+    </div>
+    <div id="inputform">
+        <form action="/updateUser" method="POST">
+            First Name
+            <p><input type="text" name="fName" th:value="${session.user.first_name}" required>
+            <p>Last Name
+            <p><input type="text" name="lName" th:value="${session.user.last_name}" required>
+            <p>Email
+            <p><input type="email" name="email" th:value="${session.user.e_mail}" required>
+
+            <p>Input only if you wish to change password:
+
+            <p>Old Password
+            <p><input type="password" name="oPwd" >
+            <p>New Password
+            <p><input type="password" name="pwd1">
+            <p>Repeat New Password
+            <p><input type="password" name="pwd2">
+                <input type="hidden" name="uId" th:value="${session.user.user_id}">
+            <div class="button">
+                <input type="Submit" value="  Update!  ">
+            </div>
+        </form>
     </div>
 </div>
 </body>
