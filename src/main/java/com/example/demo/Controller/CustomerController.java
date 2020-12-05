@@ -7,6 +7,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Project;
+import com.example.demo.Domain.User;
 import com.example.demo.Service.CustomerService;
 import com.example.demo.Service.ProjectService;
 import org.springframework.stereotype.Controller;
@@ -43,6 +44,7 @@ public class CustomerController {
 
     @GetMapping("/listCustomer")
     public String listCustomer(Model model) {
+
         ArrayList<Customer> customerList = customerService.getCustomers();
         model.addAttribute("customerList", customerList);
         return "customer/listCustomer";
@@ -67,6 +69,7 @@ public class CustomerController {
     // Responds to /viewCustomer?id=project_id
     @RequestMapping(value = "/viewCustomer", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewCustomer(@RequestParam int id, Model model) throws SQLException {
+
         ArrayList<Project> projectList = projectService.getProjects();
         ArrayList<Project> projectCustomerList = new ArrayList<>();
         for ( Project p : projectList) {

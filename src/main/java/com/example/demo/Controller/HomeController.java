@@ -25,6 +25,11 @@ public class HomeController {
         request.setAttribute("user", user, WebRequest.SCOPE_SESSION);
     }
 
+    public User getSessionInfo(WebRequest request){
+        User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
+        return user;
+    }
+
     @PostMapping("/login")
     public String login(WebRequest request, Model model) {
         String email = request.getParameter("mail");

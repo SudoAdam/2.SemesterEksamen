@@ -21,7 +21,7 @@
             Deadline: <span th:text="${project.deadline}"></span>
     </div>
     <div id="bioright" style="text-align: right">
-        <a th:href="@{/editProject?id={id}(id=${project.project_id})}">Edit Project</a>
+        <a th:if="${session.user.getIs_admin() == 1}" th:href="@{/editProject?id={id}(id=${project.project_id})}">Edit Project</a>
     </div>
     <table class="project-table">
         <thead>
@@ -44,9 +44,9 @@
             <td th:text="${task.kickoff}"></td>
             <td th:text="${task.deadline}"></td>
             <td th:text="${task.task_leader_email}"></td>
-            <td><a th:href="@{/editTask?id={id}(id=${task.task_id})}">&#128736;</a></td>
+            <td th:if="${session.user.getIs_admin() == 1}" ><a th:href="@{/editTask?id={id}(id=${task.task_id})}">&#128736;</a></td>
         </tr>
-        <tr style="background-color: #9EBDD5; text-align: center">
+        <tr th:if="${session.user.getIs_admin() == 1}" style="background-color: #9EBDD5; text-align: center">
             <td colspan="7">
                 <form th:action="@{/createTask?id={id}(id=${project.project_id})}" method="post">
                     <input value="&#10133;" type="submit" style="width: 45px; height: 45px">
