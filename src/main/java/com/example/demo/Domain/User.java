@@ -5,6 +5,8 @@
 
 package com.example.demo.Domain;
 
+import org.apache.tomcat.util.codec.binary.Base64;
+
 public class User implements DomainFacade {
 
     private int user_id;
@@ -13,17 +15,19 @@ public class User implements DomainFacade {
     private String first_name;
     private String last_name;
     private int is_admin;
+    private byte[] img;
 
     public User() {
     }
 
-    public User(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin) {
+    public User(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin, byte[] img) {
         this.user_id = user_id;
         this.e_mail = e_mail;
         this.password = password;
         this.first_name = first_name;
         this.last_name = last_name;
         this.is_admin = is_admin;
+        this.img = img;
     }
 
     public int getUser_id() {
@@ -72,6 +76,10 @@ public class User implements DomainFacade {
 
     public void setIs_admin(int is_admin) {
         this.is_admin = is_admin;
+    }
+
+    public String byteArrayAs64String(){
+        return Base64.encodeBase64String(this.img);
     }
 
     @Override

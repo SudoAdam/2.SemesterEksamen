@@ -5,7 +5,12 @@ package com.example.demo.Service;
 
 import com.example.demo.Data.UserData;
 import com.example.demo.Domain.User;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -49,5 +54,16 @@ public class UserService {
 
     public String findEmailFromUserId(int id){
         return userData.findEmailFromUserId(id);
+    }
+
+
+    public void addProfilePicture(int user_id, MultipartFile file) {
+        try {
+            byte[] fileAsBytes = file.getBytes();
+            Blob fileAsBlob = new SerialBlob(fileAsBytes);
+            userData.uploadImg(user_id, fileAsBlob);
+        } catch (IOException | SQLException ioException) {
+            throw new NullPointerException(ioException.getMessage());
+        }
     }
 }

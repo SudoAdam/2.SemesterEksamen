@@ -13,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.security.PublicKey;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -100,4 +102,13 @@ public class UserController {
         model.addAttribute("user", user);
         return "user/currentUser";
     }
+
+    @PostMapping("/uploadImg")
+    public String uploadImg (@RequestParam("file") MultipartFile file, WebRequest request, Model model){
+        User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
+        userService.addProfilePicture(user.getUser_id(), file);
+        model.addAttribute("user", user);
+        return "user/currentUser";
+    }
+
 }

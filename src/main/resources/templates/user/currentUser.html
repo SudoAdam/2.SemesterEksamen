@@ -18,7 +18,13 @@
     <div id="bioright" style="float: right">
         <a style="text-align: right" th:href="@{/editUser?id={id}(id=${session.user.user_id})}">Edit My Info</a>
         <br>
-        <img class="pb" src="/images/defaultprofilepic.png"> <!-- th:src="*{'data:image/jpeg;base64,' + profilePic}"> -->
+        <img class="pb" th:src="*{'data:image/jpeg;base64,' + session.user.byteArrayAs64String()}">
+        <br>
+        <form method="POST" action="/uploadImg" enctype="multipart/form-data">
+            <th:label path="file">New Profile Picture</th:label>
+            <input type="file" name="file"/>
+            <input type="submit" value="Submit"/>
+        </form>
     </div>
 </div>
 </body>
