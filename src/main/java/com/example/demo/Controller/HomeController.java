@@ -51,7 +51,7 @@ public class HomeController {
     public String loggedin(WebRequest request,Model model){
         User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         if (user != null) {
-            return "loggedin";
+            return "authentication/loggedin";
         } else
             return "redirect:/";
 
