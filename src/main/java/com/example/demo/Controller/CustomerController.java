@@ -8,7 +8,6 @@ import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Project;
 import com.example.demo.Service.CustomerService;
 import com.example.demo.Service.ProjectService;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
