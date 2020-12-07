@@ -119,5 +119,11 @@ public class UserData {
             throw new NullPointerException(sqlException.getMessage());
         }
     }
-
+    public void deleteUser(int id) throws SQLException {
+        Connection connection = connector.getConnection();
+        String statement = "DELETE FROM users WHERE user_id=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setInt(1, id);
+        preparedStatement.executeUpdate();
+    }
 }

@@ -106,4 +106,10 @@ public class UserController {
         userService.addProfilePicture(user.getUser_id(), file);
         return "redirect:/currentUser";
     }
+
+    @RequestMapping(value = "/deleteUser", method = {RequestMethod.GET, RequestMethod.POST})
+    public String deleteUser(@RequestParam int id) throws SQLException{
+        userService.deleteUser(id);
+        return "redirect:/listUser";
+    }
 }

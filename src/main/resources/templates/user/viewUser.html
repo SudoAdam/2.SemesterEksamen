@@ -15,6 +15,9 @@
         <p>
             Email: <span th:text="${user.e_mail}"></span>
     </div>
+    <a th:if="${session.user.getIs_admin() == 1}" th:href="@{/deleteUser?id={id}(id=${user.user_id})}">
+        Delete User
+    </a>
     <div id="bioright" style="float: right">
         <img class="pb" th:src="*{'data:image/jpeg;base64,' + user.byteArrayAs64String()}"> <!-- th:src="*{'data:image/jpeg;base64,' + profilePic}"> -->
     </div>

@@ -65,4 +65,8 @@ public class UserService {
             throw new NullPointerException(ioException.getMessage());
         }
     }
+
+    public void deleteUser(int id) throws SQLException{
+        userData.deleteUser(id);
+    }
 }
