@@ -16,9 +16,9 @@ public class TaskService {
     private final UserService userService;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public TaskService(){
-        this.userService = new UserService();
-        this.taskData = new TaskData();
+    public TaskService(UserService userService, TaskData taskData){
+        this.userService = userService;
+        this.taskData = taskData;
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

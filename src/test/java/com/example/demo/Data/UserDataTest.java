@@ -30,7 +30,7 @@ class UserDataTest {
     void findUserIdFromEmail() {
     }
 
-    @Test
+   @Test
     void findEmailFromUserId() throws SQLException {
         String e_mail = userData.findEmailFromUserId(2);
         assertEquals("dc@gk.dk", e_mail);

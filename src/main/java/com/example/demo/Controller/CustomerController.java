@@ -2,15 +2,13 @@
  @Author Rasmus Berg and Adam
  */
 
-
 package com.example.demo.Controller;
 
-import com.example.demo.DemoConfiguration;
 import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Project;
 import com.example.demo.Service.CustomerService;
 import com.example.demo.Service.ProjectService;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +19,13 @@ import java.util.ArrayList;
 
 @Controller
 public class CustomerController {
-    AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DemoConfiguration.class);
-    CustomerService customerService = (CustomerService) ctx.getBean("customerService");
-    ProjectService projectService = (ProjectService) ctx.getBean("projectService");
+    CustomerService customerService;
+    ProjectService projectService;
 
+    public CustomerController(CustomerService customerService, ProjectService projectService) {
+        this.customerService = customerService;
+        this.projectService = projectService;
+    }
 
     @GetMapping("/createCustomer")
     public String createProject() {
@@ -37,15 +38,12 @@ public class CustomerController {
         String contactName = request.getParameter("conName");
         String contactEmail = request.getParameter("conEmail");
         String tel = request.getParameter("tel");
-
         customerService.createUser(companyName, contactName, contactEmail, tel);
-
         return "customer/listCustomer";
     }
 
     @GetMapping("/listCustomer")
     public String listCustomer(Model model) throws SQLException{
-
         ArrayList<Customer> customerList = customerService.getCustomers();
         model.addAttribute("customerList", customerList);
         return "customer/listCustomer";
@@ -62,15 +60,12 @@ public class CustomerController {
         String contactName = request.getParameter("conName");
         String contactEmail = request.getParameter("conEmail");
         String tel = request.getParameter("tel");
-
-
         return "customer/listCustomer";
     }
 
     // Responds to /viewCustomer?id=project_id
     @RequestMapping(value = "/viewCustomer", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewCustomer(@RequestParam int id, Model model) throws SQLException {
-
         ArrayList<Project> projectList = projectService.getProjects();
         ArrayList<Project> projectCustomerList = new ArrayList<>();
         for ( Project p : projectList) {

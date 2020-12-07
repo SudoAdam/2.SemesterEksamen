@@ -4,29 +4,27 @@
 
 package com.example.demo.Controller;
 
-
-import com.example.demo.DemoConfiguration;
-import com.example.demo.Domain.Project;
 import com.example.demo.Domain.User;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.UserService;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.security.PublicKey;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Controller
 public class UserController {
-    AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DemoConfiguration.class);
-    UserService userService = (UserService) ctx.getBean("userService");
-    ProjectService projectService = (ProjectService) ctx.getBean("projectService");
+    UserService userService;
+    ProjectService projectService;
+
+    public UserController(UserService userService, ProjectService projectService) {
+        this.userService = userService;
+        this.projectService = projectService;
+    }
 
     @GetMapping("/listUser")
     public String showUsers(Model model) throws SQLException{
@@ -49,7 +47,6 @@ public class UserController {
         //vi skal have gjort så når man opretter sig, at den skriver direkte til databasen,
         // og så henter et bruger objekt tilbage fra databasen.
         // For så får vi nemlig userID med. med det samme.
-        UserService userService = new UserService();
         userService.createUser(e_mail, password, first_name, last_name);
         return "user/editUser";
     }
@@ -88,24 +85,20 @@ public class UserController {
     }
 
     @RequestMapping(value = "/viewUser", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewUser(@RequestParam int id, Model model, WebRequest request) throws SQLException {
-
+    public String viewUser(@RequestParam int id, Model model) throws SQLException {
         model.addAttribute("user", userService.getUser(id));
         return "user/viewUser";
     }
 
     @GetMapping("/currentUser")
     public String currentUser(Model model, WebRequest request) {
-        User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
-        model.addAttribute("user", user);
         return "user/currentUser";
     }
 
     @PostMapping("/uploadImg")
-    public String uploadImg (@RequestParam("file") MultipartFile file, WebRequest request, Model model){
+    public String uploadImg (@RequestParam("file") MultipartFile file, WebRequest request){
         User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         userService.addProfilePicture(user.getUser_id(), file);
-        model.addAttribute("user", user);
         return "user/currentUser";
     }
 }

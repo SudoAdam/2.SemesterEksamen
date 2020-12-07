@@ -17,10 +17,9 @@ public class UserData {
     private final Connector connector;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-    public UserData() {
-        userMapper = new UserMapper();
-        connector = new Connector();
+    public UserData(UserMapper userMapper, Connector connector) {
+        this.userMapper = userMapper;
+        this.connector = connector;
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

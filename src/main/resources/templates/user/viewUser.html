@@ -16,7 +16,7 @@
             Email: <span th:text="${user.e_mail}"></span>
     </div>
     <div id="bioright" style="float: right">
-        <img class="pb" src="/images/defaultprofilepic.png"> <!-- th:src="*{'data:image/jpeg;base64,' + profilePic}"> -->
+        <img class="pb" th:src="*{'data:image/jpeg;base64,' + user.byteArrayAs64String()}"> <!-- th:src="*{'data:image/jpeg;base64,' + profilePic}"> -->
     </div>
 </div>
 </body>
