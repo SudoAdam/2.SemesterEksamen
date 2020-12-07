@@ -22,28 +22,7 @@ public class ProjectController {
 
     @GetMapping("/listProject")
     public String showProjects(Model model, WebRequest request) throws SQLException {
-        User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         model.addAttribute("projectList", projectService.getProjects());
-
-        /* Kode til kun at vise de projekter der er tilknyttet ens bruger
-            Hvis bruger er admin vises alle projekter
-
-        ArrayList<Project> allProjectList = projectService.getProjects();
-        ArrayList<Project> userProjectList = new ArrayList<>();
-
-        if (user.getIs_admin() == 0){
-            for(Project p: allProjectList){
-                if(p.getEmployee_id == user.getUser_id()){
-                    userProjectList.add(p);
-                }
-            }
-            model.addAttribute("projectList", userProjectList);
-        } else {
-            model.addAttribute("projectList", allProjectList);
-        }
-
-        model.addAttribute("projectList", projectList);
-        */
         return "project/listProject";
     }
 
@@ -104,10 +83,7 @@ public class ProjectController {
 
     // Responds to /viewProject?id=project_id
     @RequestMapping(value = "/viewProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewProject(@RequestParam int id, WebRequest request, Model model) throws SQLException {
-        User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
-
-
+    public String viewProject(@RequestParam int id, Model model) throws SQLException {
         model.addAttribute("tasks", taskService.getTasks(id));
         model.addAttribute("project", projectService.getProject(id));
         return "project/viewProject";

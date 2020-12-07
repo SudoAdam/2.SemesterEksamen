@@ -20,11 +20,6 @@
         <br>
         <img class="pb" th:src="*{'data:image/jpeg;base64,' + session.user.byteArrayAs64String()}">
         <br>
-        <form method="POST" action="/uploadImg" enctype="multipart/form-data">
-            <th:label path="file">New Profile Picture</th:label>
-            <input type="file" name="file"/>
-            <input type="submit" value="Submit"/>
-        </form>
     </div>
 </div>
 </body>
