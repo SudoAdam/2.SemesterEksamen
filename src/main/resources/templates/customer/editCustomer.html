@@ -24,6 +24,9 @@
             <div class="button">
                 <input type="Submit" value="  Update!  ">
             </div>
+            <a th:if="${session.user.getIs_admin() == 1}" th:href="@{/deleteCustomer?id={id}(id=${customer.customer_id})}">
+                Delete Customer
+            </a>
         </form>
     </div>
 </div>

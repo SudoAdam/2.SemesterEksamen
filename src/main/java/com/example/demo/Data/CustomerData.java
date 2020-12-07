@@ -81,4 +81,12 @@ public class CustomerData {
             id = Integer.parseInt(result);
         return id;
     }
+
+    public void deleteCustomer(int id) throws SQLException {
+        Connection connection = connector.getConnection();
+        String statement = "DELETE FROM customers WHERE customer_id=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setInt(1, id);
+        preparedStatement.executeUpdate();
+    }
 }

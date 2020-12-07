@@ -77,7 +77,11 @@ public class CustomerController {
         model.addAttribute("customer", customerService.getCustomer(id));
         model.addAttribute("customerProjects", projectCustomerList);
         return "customer/viewCustomer";
-
     }
 
+    @RequestMapping(value = "/deleteCustomer", method = {RequestMethod.GET, RequestMethod.POST})
+    public String deleteCustomer(@RequestParam int id) throws SQLException{
+        customerService.deleteCustomer(id);
+        return "redirect:/listCustomer";
+    }
 }

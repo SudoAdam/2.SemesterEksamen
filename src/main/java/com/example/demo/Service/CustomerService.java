@@ -40,4 +40,8 @@ public class CustomerService {
     public Customer getCustomer(int id) throws SQLException{
       return customerData.getCustomer(id);
     }
+
+    public void deleteCustomer(int id) throws SQLException{
+        customerData.deleteCustomer(id);
+    }
 }
