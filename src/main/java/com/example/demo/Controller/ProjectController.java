@@ -1,7 +1,6 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.Project;
-import com.example.demo.Domain.User;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.TaskService;
 import com.example.demo.Service.UserService;

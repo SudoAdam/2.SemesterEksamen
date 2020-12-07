@@ -14,6 +14,8 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -22,13 +24,14 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@SpringBootTest
 class TaskDataTest {
-    /*
-    private final TaskData taskData = new TaskData();
 
     @Test
     @Order(0)
-    void createTask() throws SQLException {
+    void createTask(ApplicationContext ctx) throws SQLException {
+        TaskData taskData = (TaskData) ctx.getBean("taskData");
+
         int project_id = 1;
         String task_name = "Make clean!";
         String task_description = "The software has a lot of mess in it...";
@@ -37,15 +40,14 @@ class TaskDataTest {
         LocalDate deadline = LocalDate.of(2020,12,8);
         int working_hours = 37;
 
-      result = taskData.createTask(project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
+        taskData.createTask(project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
+    }
 
-        // Test return value that should be true
-        assertEquals(result);
-    }*/
-    /*
     @Test
     @Order(1)
-    void getTasks() throws SQLException{
+    void getTasks(ApplicationContext ctx) throws SQLException{
+        TaskData taskData = (TaskData) ctx.getBean("taskData");
+
         ArrayList<Task> list = taskData.getTasks(1);
         Task t = list.get(list.size()-1);
 
@@ -60,7 +62,9 @@ class TaskDataTest {
 
     @Test
     @Order(2)
-    void editTask() throws SQLException{
+    void editTask(ApplicationContext ctx) throws SQLException{
+        TaskData taskData = (TaskData) ctx.getBean("taskData");
+
         ArrayList<Task> list01 = taskData.getTasks(1);
         Task t01 = list01.get(list01.size()-1);
 
@@ -73,11 +77,8 @@ class TaskDataTest {
         LocalDate deadline = LocalDate.of(2020,12,9);
         int working_hours = 48;
 
-       /* boolean result = taskData.editTask(task_id, project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
+        taskData.editTask(task_id, project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
 
-        // Test return result that should be true
-        assertTrue(result);*/
-        /*
         ArrayList<Task> list02 = taskData.getTasks(1);
         Task t02 = list02.get(list02.size()-1);
 
@@ -94,5 +95,4 @@ class TaskDataTest {
         assertEquals(LocalDate.of(2020,12,9),t02.getDeadline());
         assertEquals(48,t02.getWorking_hours());
     }
-    */
 }
