@@ -5,11 +5,12 @@
 
 package com.example.demo.Controller;
 
+import com.example.demo.DemoConfiguration;
 import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Project;
-import com.example.demo.Domain.User;
 import com.example.demo.Service.CustomerService;
 import com.example.demo.Service.ProjectService;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +18,12 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class CustomerController {
-    CustomerService customerService = new CustomerService();
-    ProjectService projectService = new ProjectService();
+    AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DemoConfiguration.class);
+    CustomerService customerService = (CustomerService) ctx.getBean("customerService");
+    ProjectService projectService = (ProjectService) ctx.getBean("projectService");
 
 
     @GetMapping("/createCustomer")

@@ -19,9 +19,9 @@ public class ProjectData {
     private final Connector connector;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ProjectData() {
-        projectMapper = new ProjectMapper();
-        connector = new Connector();
+    public ProjectData(ProjectMapper projectMapper) {
+        this.projectMapper = projectMapper;
+        this.connector = new Connector();
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

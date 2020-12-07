@@ -1,10 +1,12 @@
 package com.example.demo.Controller;
 
+import com.example.demo.DemoConfiguration;
 import com.example.demo.Domain.Project;
 import com.example.demo.Domain.User;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.TaskService;
 import com.example.demo.Service.UserService;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +18,10 @@ import java.util.ArrayList;
 
 @Controller
 public class ProjectController {
-    ProjectService projectService = new ProjectService();
-    TaskService taskService = new TaskService();
-    UserService userService = new UserService();
+    AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DemoConfiguration.class);
+    ProjectService projectService = (ProjectService) ctx.getBean("projectService");
+    TaskService taskService = (TaskService) ctx.getBean("taskService");
+    UserService userService = (UserService) ctx.getBean("userService");
 
     @GetMapping("/listProject")
     public String showProjects(Model model, WebRequest request) throws SQLException {

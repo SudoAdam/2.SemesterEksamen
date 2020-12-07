@@ -12,6 +12,9 @@ import com.example.demo.Data.UserData;
 import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Project;
 import com.example.demo.Domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -24,10 +27,10 @@ public class ProjectService {
     private final CustomerData customerData;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ProjectService() {
-        this.projectData = new ProjectData();
-        this.userData = new UserData();
-        this.customerData = new CustomerData();
+    public ProjectService(ProjectData projectData, UserData userData, CustomerData customerData) {
+        this.projectData = projectData;
+        this.userData = userData;
+        this.customerData = customerData;
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

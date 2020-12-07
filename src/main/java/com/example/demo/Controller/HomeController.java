@@ -1,8 +1,10 @@
 package com.example.demo.Controller;
 
+import com.example.demo.DemoConfiguration;
 import com.example.demo.Domain.User;
 import com.example.demo.Service.UserService;
 import org.springframework.boot.web.servlet.server.Session;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +16,8 @@ import java.sql.SQLException;
 
 @Controller
 public class HomeController {
-    UserService userService = new UserService();
+    AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DemoConfiguration.class);
+    UserService userService = (UserService) ctx.getBean("userService");
 
     @GetMapping("/")
     public String showHome() throws Exception {
