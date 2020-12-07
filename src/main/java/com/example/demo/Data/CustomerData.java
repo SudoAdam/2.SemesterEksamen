@@ -20,9 +20,9 @@ public class CustomerData {
     private final Connector connector;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public CustomerData() {
-        customerMapper = new CustomerMapper();
-        connector = new Connector();
+    public CustomerData(CustomerMapper customerMapper, Connector connector) {
+        this.customerMapper = customerMapper;
+        this.connector = connector;
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -79,8 +79,6 @@ public class CustomerData {
             ResultSet resultSet = preparedStatement.executeQuery();
             String result = "" + resultSet.getObject(1);
             id = Integer.parseInt(result);
-
         return id;
-
     }
 }

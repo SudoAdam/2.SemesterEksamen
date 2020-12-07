@@ -2,15 +2,13 @@
  @Author Rasmus Berg and Adam
  */
 
-
 package com.example.demo.Controller;
 
-import com.example.demo.DemoConfiguration;
 import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Project;
 import com.example.demo.Service.CustomerService;
 import com.example.demo.Service.ProjectService;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +19,13 @@ import java.util.ArrayList;
 
 @Controller
 public class CustomerController {
-    AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DemoConfiguration.class);
-    CustomerService customerService = (CustomerService) ctx.getBean("customerService");
-    ProjectService projectService = (ProjectService) ctx.getBean("projectService");
+    CustomerService customerService;
+    ProjectService projectService;
 
+    public CustomerController(CustomerService customerService, ProjectService projectService) {
+        this.customerService = customerService;
+        this.projectService = projectService;
+    }
 
     @GetMapping("/createCustomer")
     public String createProject() {

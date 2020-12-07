@@ -26,6 +26,9 @@
                 <input type="Submit" value="  Update!  ">
             </div>
         </form>
+        <a th:href="@{/deleteProject?id={id}(id=${project.project_id})}">
+                Delete Project
+        </a>
     </div>
 </div>
 </body>

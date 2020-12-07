@@ -1,23 +1,23 @@
 package com.example.demo.Controller;
 
-import com.example.demo.DemoConfiguration;
 import com.example.demo.Domain.User;
 import com.example.demo.Service.UserService;
-import org.springframework.boot.web.servlet.server.Session;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
-import javax.swing.*;
 import java.sql.SQLException;
 
 @Controller
 public class HomeController {
-    AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DemoConfiguration.class);
-    UserService userService = (UserService) ctx.getBean("userService");
+    UserService userService;
+
+    public HomeController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/")
     public String showHome() throws Exception {
@@ -53,7 +53,5 @@ public class HomeController {
         } else
             return "redirect:/";
     }
-
-
 }
 

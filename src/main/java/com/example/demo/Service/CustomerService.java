@@ -18,8 +18,8 @@ public class CustomerService {
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    public CustomerService(){
-        this.customerData = new CustomerData();
+    public CustomerService(CustomerData customerData){
+        this.customerData = customerData;
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

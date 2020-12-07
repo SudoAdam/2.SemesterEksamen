@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TaskDataTest {
+    /*
     private final TaskData taskData = new TaskData();
 
     @Test
@@ -36,12 +37,12 @@ class TaskDataTest {
         LocalDate deadline = LocalDate.of(2020,12,8);
         int working_hours = 37;
 
-      /*  result = taskData.createTask(project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
+      result = taskData.createTask(project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
 
         // Test return value that should be true
-        assertEquals(result);*/
-    }
-
+        assertEquals(result);
+    }*/
+    /*
     @Test
     @Order(1)
     void getTasks() throws SQLException{
@@ -76,7 +77,7 @@ class TaskDataTest {
 
         // Test return result that should be true
         assertTrue(result);*/
-
+        /*
         ArrayList<Task> list02 = taskData.getTasks(1);
         Task t02 = list02.get(list02.size()-1);
 
@@ -93,4 +94,5 @@ class TaskDataTest {
         assertEquals(LocalDate.of(2020,12,9),t02.getDeadline());
         assertEquals(48,t02.getWorking_hours());
     }
+    */
 }

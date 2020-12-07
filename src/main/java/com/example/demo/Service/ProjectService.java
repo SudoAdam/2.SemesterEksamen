@@ -12,9 +12,6 @@ import com.example.demo.Data.UserData;
 import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Project;
 import com.example.demo.Domain.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -53,7 +50,7 @@ public class ProjectService {
 
     public ArrayList<Project> getProjects() throws SQLException {
         ArrayList<Project> list = projectData.getProjects();
-        finalize(list);
+        // finalize(list);
         return list;
     }
 
@@ -85,5 +82,9 @@ public class ProjectService {
 
     public void editProject(int project_id, String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws SQLException {
         projectData.editProject(project_id, project_name, kickoff, deadline, project_leader_id, customer_id);
+    }
+
+    public void deleteProject(int id) throws SQLException{
+        projectData.deleteProject(id);
     }
 }

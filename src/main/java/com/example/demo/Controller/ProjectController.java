@@ -1,12 +1,10 @@
 package com.example.demo.Controller;
 
-import com.example.demo.DemoConfiguration;
 import com.example.demo.Domain.Project;
 import com.example.demo.Domain.User;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.TaskService;
 import com.example.demo.Service.UserService;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,18 +16,21 @@ import java.util.ArrayList;
 
 @Controller
 public class ProjectController {
-    AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DemoConfiguration.class);
-    ProjectService projectService = (ProjectService) ctx.getBean("projectService");
-    TaskService taskService = (TaskService) ctx.getBean("taskService");
-    UserService userService = (UserService) ctx.getBean("userService");
+    ProjectService projectService;
+    TaskService taskService;
+    UserService userService;
+
+    public ProjectController(ProjectService projectService, TaskService taskService, UserService userService) {
+        this.projectService = projectService;
+        this.taskService = taskService;
+        this.userService = userService;
+    }
 
     @GetMapping("/listProject")
     public String showProjects(Model model, WebRequest request) throws SQLException {
         model.addAttribute("projectList", projectService.getProjects());
         return "project/listProject";
     }
-
-
 
     @GetMapping("/createProject")
     public String createProject() {
@@ -90,5 +91,11 @@ public class ProjectController {
         model.addAttribute("tasks", taskService.getTasks(id));
         model.addAttribute("project", projectService.getProject(id));
         return "project/viewProject";
+    }
+
+    @RequestMapping(value = "/deleteProject", method = {RequestMethod.GET, RequestMethod.POST})
+    public String deleteProject(@RequestParam int id) throws SQLException{
+        projectService.deleteProject(id);
+        return "redirect:/listProject";
     }
 }

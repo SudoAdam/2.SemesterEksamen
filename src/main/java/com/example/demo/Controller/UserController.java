@@ -4,29 +4,27 @@
 
 package com.example.demo.Controller;
 
-
-import com.example.demo.DemoConfiguration;
-import com.example.demo.Domain.Project;
 import com.example.demo.Domain.User;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.UserService;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.security.PublicKey;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Controller
 public class UserController {
-    AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DemoConfiguration.class);
-    UserService userService = (UserService) ctx.getBean("userService");
-    ProjectService projectService = (ProjectService) ctx.getBean("projectService");
+    UserService userService;
+    ProjectService projectService;
+
+    public UserController(UserService userService, ProjectService projectService) {
+        this.userService = userService;
+        this.projectService = projectService;
+    }
 
     private void setSessionInfo(WebRequest request, User user) {
         // Place user info on session
@@ -108,5 +106,4 @@ public class UserController {
         userService.addProfilePicture(user.getUser_id(), file);
         return "user/currentUser";
     }
-
 }

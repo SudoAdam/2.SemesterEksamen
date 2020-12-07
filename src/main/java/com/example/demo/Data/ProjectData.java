@@ -38,11 +38,11 @@ public class ProjectData {
         return projects;
     }
 
-    public Project getProject(int id) throws SQLException {
+    public Project getProject(int project_id) throws SQLException {
         Connection connection = connector.getConnection();
         String statement = "SELECT * FROM projects WHERE project_id=?";
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
-        preparedStatement.setInt(1, id);
+        preparedStatement.setInt(1, project_id);
         ResultSet resultSet = preparedStatement.executeQuery();
         return (Project) projectMapper.create(resultSet);
     }
@@ -72,10 +72,11 @@ public class ProjectData {
         preparedStatement.executeUpdate();
     }
 
-    public void deleteProject(int project_id) throws SQLException {
+    public void deleteProject(int id) throws SQLException {
         Connection connection = connector.getConnection();
-        String statement = "UPDATE projects SET project_name=?, kickoff=?, deadline=?, project_leader_id=?, customer_id=? WHERE project_id=?";
+        String statement = "DELETE FROM projects WHERE project_id=?";
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
-        preparedStatement.execute();
+        preparedStatement.setInt(1, id);
+        preparedStatement.executeUpdate();
     }
 }
