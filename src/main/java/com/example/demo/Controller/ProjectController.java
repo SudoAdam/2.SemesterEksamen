@@ -38,7 +38,7 @@ public class ProjectController {
     }
 
     @PostMapping("/createProject")
-    public String createProject(WebRequest request, Model model) throws SQLException {
+    public String createProject(WebRequest request) throws SQLException {
         //denne funktion er ikke færdig!
         String projectName = request.getParameter("pName");
         String companyName = request.getParameter("comName");
@@ -53,8 +53,7 @@ public class ProjectController {
 
         projectService.createProject(projectName, kickOff, deadline, project_leader_id, customer_id);
         ArrayList<Project> projectList = projectService.getProjects();
-        model.addAttribute("projectList", projectList);
-        return "project/listProject";
+        return "redirect:/listProject";
     }
 
     // Responds to /editProject?id=project_id

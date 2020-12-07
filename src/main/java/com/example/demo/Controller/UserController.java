@@ -53,7 +53,7 @@ public class UserController {
         // og så henter et bruger objekt tilbage fra databasen.
         // For så får vi nemlig userID med. med det samme.
         userService.createUser(e_mail, password, first_name, last_name);
-        return "authentication/login";
+        return "redirect:/login";
     }
 
     @GetMapping("/editUser")
@@ -86,7 +86,7 @@ public class UserController {
         }
         userService.editUser(uId, email, newPassword, first_name, last_name, isAdmin);
         setSessionInfo(request,user);
-        return "user/currentUser";
+        return "redirect:/currentUser";
     }
 
     @RequestMapping(value = "/viewUser", method = {RequestMethod.GET, RequestMethod.POST})
@@ -96,7 +96,7 @@ public class UserController {
     }
 
     @GetMapping("/currentUser")
-    public String currentUser(Model model, WebRequest request) {
+    public String currentUser() {
         return "user/currentUser";
     }
 
@@ -104,6 +104,6 @@ public class UserController {
     public String uploadImg (@RequestParam("file") MultipartFile file, WebRequest request){
         User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         userService.addProfilePicture(user.getUser_id(), file);
-        return "user/currentUser";
+        return "redirect:/currentUser";
     }
 }
