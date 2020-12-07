@@ -26,6 +26,11 @@ public class UserController {
         this.projectService = projectService;
     }
 
+    private void setSessionInfo(WebRequest request, User user) {
+        // Place user info on session
+        request.setAttribute("user", user, WebRequest.SCOPE_SESSION);
+    }
+
     @GetMapping("/listUser")
     public String showUsers(Model model) throws SQLException{
         ArrayList<User> userList = userService.getUsers();
@@ -40,15 +45,15 @@ public class UserController {
 
     @PostMapping("/createUser")
     public String createUser(WebRequest request) throws SQLException{
-        String e_mail = request.getParameter("e_mail");
+        String e_mail = request.getParameter("email");
         String password = request.getParameter("password");
-        String first_name = request.getParameter("first_name");
-        String last_name = request.getParameter("last_name");
+        String first_name = request.getParameter("firstName");
+        String last_name = request.getParameter("lastName");
         //vi skal have gjort så når man opretter sig, at den skriver direkte til databasen,
         // og så henter et bruger objekt tilbage fra databasen.
         // For så får vi nemlig userID med. med det samme.
         userService.createUser(e_mail, password, first_name, last_name);
-        return "user/editUser";
+        return "redirect:/login";
     }
 
     @GetMapping("/editUser")
@@ -80,8 +85,8 @@ public class UserController {
             newPassword = user.getPassword();
         }
         userService.editUser(uId, email, newPassword, first_name, last_name, isAdmin);
-
-        return "user/currentUser";
+        setSessionInfo(request,user);
+        return "redirect:/currentUser";
     }
 
     @RequestMapping(value = "/viewUser", method = {RequestMethod.GET, RequestMethod.POST})
@@ -91,7 +96,7 @@ public class UserController {
     }
 
     @GetMapping("/currentUser")
-    public String currentUser(Model model, WebRequest request) {
+    public String currentUser() {
         return "user/currentUser";
     }
 
@@ -99,6 +104,6 @@ public class UserController {
     public String uploadImg (@RequestParam("file") MultipartFile file, WebRequest request){
         User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         userService.addProfilePicture(user.getUser_id(), file);
-        return "user/currentUser";
+        return "redirect:/currentUser";
     }
 }
