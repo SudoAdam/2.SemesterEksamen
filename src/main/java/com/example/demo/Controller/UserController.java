@@ -53,7 +53,7 @@ public class UserController {
         // og så henter et bruger objekt tilbage fra databasen.
         // For så får vi nemlig userID med. med det samme.
         userService.createUser(e_mail, password, first_name, last_name);
-        return "redirect:/";
+        return "authentication/login";
     }
 
     @GetMapping("/editUser")

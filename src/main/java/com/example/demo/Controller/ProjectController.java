@@ -40,9 +40,6 @@ public class ProjectController {
     public String createProject(WebRequest request) throws SQLException {
         //denne funktion er ikke færdig!
         String projectName = request.getParameter("pName");
-        String companyName = request.getParameter("comName");
-        String contactName = request.getParameter("conName");
-        String contactEmail = request.getParameter("conEmail");
         String kickOffStr = request.getParameter("kickOff");
         String deadlineStr = request.getParameter("deadline");
         int project_leader_id = 1;                                  //request email and get project_leader_id
@@ -51,7 +48,6 @@ public class ProjectController {
         LocalDate deadline = LocalDate.parse(deadlineStr);
 
         projectService.createProject(projectName, kickOff, deadline, project_leader_id, customer_id);
-        ArrayList<Project> projectList = projectService.getProjects();
         return "redirect:/listProject";
     }
 

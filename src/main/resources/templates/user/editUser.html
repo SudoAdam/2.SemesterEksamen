@@ -8,27 +8,13 @@
 <th:block th:include="/includes/header :: header"></th:block>
 <body>
 <div id="container" style="text-align: left">
-    <div id="bioleft" style="float: left">
-        <h1 style="font-size: 50px"><span th:text="${session.user.first_name}"></span>&nbsp;<span th:text="${session.user.last_name}"></span></h1>
-        <hr class="rounded">
-        Email: <span th:text="${session.user.e_mail}"></span>
-        <p>
 
+    <div id="bioleft" style="clear:both;">
+        <a class="backbutton" href="/currentUser">&#11013;</a>
     </div>
-    <div id="bioright" style="float: right">
-        <a style="text-align: right" th:href="@{/editUser?id={id}(id=${session.user.user_id})}">Edit My Info</a>
-        <br>
-        <img class="pb" th:src="*{'data:image/jpeg;base64,' + session.user.byteArrayAs64String()}">
-        <br>
-        <form method="POST" action="/uploadImg" enctype="multipart/form-data">
-            <th:label path="file">New Profile Picture</th:label>
-            <br><input type="file" name="file"/>
-            <br><input type="submit" value="Submit"/>
-        </form>
-    </div>
-    <div style="clear: both" id="inputform">
+    <div style="text-align: left; float: left" id="inputform">
         <form action="/updateUser" method="POST">
-            First Name
+            <p>First Name
             <p><input type="text" name="fName" th:value="${session.user.first_name}" required>
             <p>Last Name
             <p><input type="text" name="lName" th:value="${session.user.last_name}" required>
@@ -38,7 +24,7 @@
             <p>Input only if you wish to change password:
 
             <p>Old Password
-            <p><input type="password" name="oPwd" >
+            <p><input type="password" name="oPwd">
             <p>New Password
             <p><input type="password" name="pwd1">
             <p>Repeat New Password
@@ -49,6 +35,18 @@
             </div>
         </form>
     </div>
+    <div style="float: right">
+
+        <br>
+        <img class="pb" th:src="*{'data:image/jpeg;base64,' + session.user.byteArrayAs64String()}">
+        <p>
+        <form method="POST" action="/uploadImg" enctype="multipart/form-data">
+            <th:label path="file">New Profile Picture</th:label>
+            <br><input type="file" name="file"/>
+            <br><input type="submit" value="Submit"/>
+        </form>
+    </div>
+    <div style="clear: both"></div>
 </div>
 </body>
 <th:block th:include="/includes/footer :: footer"></th:block>

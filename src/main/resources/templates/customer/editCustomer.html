@@ -10,7 +10,7 @@
 <body>
 <div id="container">
     <div id="bioleft" style="float: left">
-        <a style="text-decoration: none" th:href="@{/viewCustomer?id={id}(id=${customer.customer_id})}">&#128281;</a>
+        <a class="backbutton" th:href="@{/viewCustomer?id={id}(id=${customer.customer_id})}">&#11013;</a>
     </div>
     <div id="inputform">
         <form action="/updateCustomer" method="POST">

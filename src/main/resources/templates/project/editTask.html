@@ -9,7 +9,7 @@
 <body>
 <div id="container">
     <div id="bioleft" style="float: left">
-        <a style="text-decoration: none" th:href="@{/viewProject?id={id}(id=${project.project_id})}">&#128281;</a>
+        <a class="backbutton" th:href="@{/viewProject?id={id}(id=${project.project_id})}">&#11013;</a>
     </div>
     <div id="inputform">
         <form action="/updateTask" object="" method="POST">
