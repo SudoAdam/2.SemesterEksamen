@@ -32,7 +32,7 @@
             <th>Start</th>
             <th>End</th>
             <th>Task Manager</th>
-            <th></th>
+            <th th:if="${session.user.getIs_admin() == 1}" style="background-color: #9EBDD5; text-align: center"></th>
         </tr>
         </thead>
         <tbody>

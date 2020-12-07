@@ -38,15 +38,12 @@ public class CustomerController {
         String contactName = request.getParameter("conName");
         String contactEmail = request.getParameter("conEmail");
         String tel = request.getParameter("tel");
-
         customerService.createUser(companyName, contactName, contactEmail, tel);
-
         return "customer/listCustomer";
     }
 
     @GetMapping("/listCustomer")
     public String listCustomer(Model model) throws SQLException{
-
         ArrayList<Customer> customerList = customerService.getCustomers();
         model.addAttribute("customerList", customerList);
         return "customer/listCustomer";
@@ -63,15 +60,12 @@ public class CustomerController {
         String contactName = request.getParameter("conName");
         String contactEmail = request.getParameter("conEmail");
         String tel = request.getParameter("tel");
-
-
         return "customer/listCustomer";
     }
 
     // Responds to /viewCustomer?id=project_id
     @RequestMapping(value = "/viewCustomer", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewCustomer(@RequestParam int id, Model model) throws SQLException {
-
         ArrayList<Project> projectList = projectService.getProjects();
         ArrayList<Project> projectCustomerList = new ArrayList<>();
         for ( Project p : projectList) {

@@ -84,30 +84,21 @@ public class UserController {
         return "user/currentUser";
     }
 
-
-
-
-
-
     @RequestMapping(value = "/viewUser", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewUser(@RequestParam int id, Model model, WebRequest request) throws SQLException {
-
+    public String viewUser(@RequestParam int id, Model model) throws SQLException {
         model.addAttribute("user", userService.getUser(id));
         return "user/viewUser";
     }
 
     @GetMapping("/currentUser")
     public String currentUser(Model model, WebRequest request) {
-        User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
-        model.addAttribute("user", user);
         return "user/currentUser";
     }
 
     @PostMapping("/uploadImg")
-    public String uploadImg (@RequestParam("file") MultipartFile file, WebRequest request, Model model){
+    public String uploadImg (@RequestParam("file") MultipartFile file, WebRequest request){
         User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         userService.addProfilePicture(user.getUser_id(), file);
-        model.addAttribute("user", user);
         return "user/currentUser";
     }
 
