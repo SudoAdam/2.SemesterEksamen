@@ -38,14 +38,14 @@ public class HomeController {
     }
 
     @GetMapping("/logout")
-    public String logout(WebRequest request){
+    public String logout(WebRequest request) {
         // en hurtig tanke... Ser ud til at virke. men skal testet godt igennem
-        request.removeAttribute("user",WebRequest.SCOPE_SESSION);
+        request.removeAttribute("user", WebRequest.SCOPE_SESSION);
         return "redirect:/";
     }
 
     @GetMapping("/loggedin")
-    public String loggedin(WebRequest request,Model model){
+    public String loggedin(WebRequest request, Model model) {
         User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         if (user != null) {
             return "authentication/loggedin";

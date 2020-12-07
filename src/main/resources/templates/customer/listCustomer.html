@@ -22,13 +22,11 @@
         </thead>
         <tbody>
         <tr th:each="customer : ${customerList}">
-            <!-- Table value Examples. Replace with thymeleaf values. -->
             <td th:text="${customer.name}"></td>
             <td th:text="${customer.contact_name}"></td>
             <td th:text="${customer.contact_email}"></td>
-            <td> <a th:href="@{/viewCustomer?id={id}(id=${customer.customer_id})}">View Customer</a></td>
+            <td><a th:href="@{/viewCustomer?id={id}(id=${customer.customer_id})}">View Customer</a></td>
         </tr>
-
         <tr th:if="${session.user.getIs_admin() == 1}" style="background-color: #9EBDD5">
             <td colspan="6">
                 <form action="/createCustomer" method="get">

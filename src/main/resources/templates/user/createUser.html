@@ -12,23 +12,23 @@
     <div id="bioleft" style="float: left">
         <a style="text-decoration: none" href="/">&#128281;</a>
     </div>
-<div id="inputform">
-    <form action="/createUser" method="POST">
-        Email
-        <p><input type="email" name="email" required>
-        <p>Password
-        <p><input type="password" name="password" required>
-        <p>Fornavn
-        <p><input type="text" name="firstName" required>
-        <p>Efternavn
-        <p><input type="text" name="lastName" required>
-        <div class="button">
-            <input type="Submit" value="  Create!  ">
-        </div>
-        <p>
-            <a href="/"> Login her </a>
-    </form>
-</div>
+    <div id="inputform">
+        <form action="/createUser" method="POST">
+            Email
+            <p><input type="email" name="email" required>
+            <p>Password
+            <p><input type="password" name="password" required>
+            <p>Fornavn
+            <p><input type="text" name="firstName" required>
+            <p>Efternavn
+            <p><input type="text" name="lastName" required>
+            <div class="button">
+                <input type="Submit" value="  Create!  ">
+            </div>
+            <p>
+                <a href="/"> Login her </a>
+        </form>
+    </div>
 </div>
 </body>
 <th:block th:include="/includes/footer :: footer"></th:block>

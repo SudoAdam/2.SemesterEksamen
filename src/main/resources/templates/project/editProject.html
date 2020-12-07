@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="main_style.css"/>
-    <title>Edit Project</title>
+    <title th:text="${project.project_name}"></title>
 </head>
 <th:block th:include="/includes/header :: header"></th:block>
 <body>
@@ -11,7 +11,7 @@
     <div id="bioleft" style="float: left">
         <a class="backbutton" th:href="@{/viewProject?id={id}(id=${project.project_id})}">&#11013;</a>
     </div>
-    <div id="inputform">
+    <div id="inputform" style="clear: both">
         <form action="/updateProject" method="POST">
             Project name
             <p><input type="text" name="pName" th:value="${project.project_name}" required>

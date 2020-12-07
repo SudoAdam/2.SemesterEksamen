@@ -88,7 +88,7 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "/deleteProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteProject(@RequestParam int id) throws SQLException{
+    public String deleteProject(@RequestParam int id) throws SQLException {
         projectService.deleteProject(id);
         return "redirect:/listProject";
     }

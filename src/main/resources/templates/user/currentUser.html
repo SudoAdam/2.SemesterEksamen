@@ -9,11 +9,11 @@
 <body>
 <div id="container" style="text-align: left">
     <div id="bioleft" style="float: left">
-        <h1 style="font-size: 50px"><span th:text="${session.user.first_name}"></span>&nbsp;<span th:text="${session.user.last_name}"></span></h1>
+        <h1 style="font-size: 50px"><span th:text="${session.user.first_name}"></span>&nbsp;<span
+                th:text="${session.user.last_name}"></span></h1>
         <hr class="rounded">
         Email: <span th:text="${session.user.e_mail}"></span>
         <p>
-
     </div>
     <div id="bioright" style="float: right">
         <a style="text-align: right" th:href="@{/editUser?id={id}(id=${session.user.user_id})}">Edit My Info</a>

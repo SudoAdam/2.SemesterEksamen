@@ -1,10 +1,10 @@
 /**
  * This class is the abstraction for all Mapper classes.
- *
+ * <p>
  * A single abstract method is required to be overridden by derived classes. This is
  * the mapping() method that simply describes how information from the ResultSet is
  * transferred to the designated business object.
- *
+ * <p>
  * Reference: Larman: Template Method Pattern
  *
  * @author Patrick Vincent Højstrøm

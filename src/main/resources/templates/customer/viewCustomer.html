@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="main_style.css"/>
-    <title>View Customer</title>
+    <title th:text="${customer.name}"></title>
 </head>
 <th:block th:include="/includes/header :: header"></th:block>
 <body>
@@ -19,10 +19,10 @@
             Phone: <span th:text="${customer.contact_phone}"></span>
     </div>
     <div id="bioright" style="float: right">
-        <a th:if="${session.user.getIs_admin() == 1}" th:href="@{/editCustomer?id={id}(id=${customer.customer_id})}">Edit Customer</a>
+        <a th:if="${session.user.getIs_admin() == 1}" th:href="@{/editCustomer?id={id}(id=${customer.customer_id})}">Edit
+            Customer</a>
         <br>
         <img class="pb" src="/images/defaultprofilepic.png">
-
     </div>
     <table class="project-table">
         <thead>

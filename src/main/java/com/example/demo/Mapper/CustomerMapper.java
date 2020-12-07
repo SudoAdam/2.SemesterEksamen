@@ -1,5 +1,5 @@
 /**
- @Author Rasmus Berg and Patrick Vincent Højstrøm
+ * @Author Rasmus Berg and Patrick Vincent Højstrøm
  */
 
 
@@ -11,7 +11,7 @@ import com.example.demo.Domain.DomainFacade;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CustomerMapper extends AbstractMapper{
+public class CustomerMapper extends AbstractMapper {
     @Override
     public Customer mapping(ResultSet resultSet) throws SQLException {
         int customer_id = resultSet.getInt("customer_id");

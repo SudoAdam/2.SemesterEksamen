@@ -23,7 +23,7 @@
         </thead>
         <tbody>
         <tr th:each="user : ${userList}">
-            <td> <img class="pblist" th:src="*{'data:image/jpeg;base64,' + user.byteArrayAs64String()}"></td>
+            <td><img class="pblist" th:src="*{'data:image/jpeg;base64,' + user.byteArrayAs64String()}"></td>
             <td th:text="${user.e_mail}"></td>
             <td th:text="${user.first_name}"></td>
             <td th:text="${user.last_name}"></td>

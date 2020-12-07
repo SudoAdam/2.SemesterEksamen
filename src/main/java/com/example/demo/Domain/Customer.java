@@ -1,19 +1,19 @@
 /**
- @Author Rasmus Berg
+ * @Author Rasmus Berg
  */
-
 
 
 package com.example.demo.Domain;
 
 public class Customer implements DomainFacade {
-
+    // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private int customer_id;
     private String name;
     private String contact_name;
     private String contact_email;
     private String contact_phone;
 
+    // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public Customer() {
     }
 
@@ -25,6 +25,7 @@ public class Customer implements DomainFacade {
         this.contact_phone = contact_phone;
     }
 
+    // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public int getCustomer_id() {
         return customer_id;
     }

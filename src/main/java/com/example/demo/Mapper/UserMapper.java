@@ -18,7 +18,7 @@ import java.util.Date;
 public class UserMapper extends AbstractMapper {
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Override
-    public User mapping(ResultSet resultSet) throws SQLException{
+    public User mapping(ResultSet resultSet) throws SQLException {
         int user_id = resultSet.getInt("user_id");
         String e_mail = resultSet.getString("e_mail");
         String password = resultSet.getString("password");

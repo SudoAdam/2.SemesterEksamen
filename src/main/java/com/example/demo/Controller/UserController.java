@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @GetMapping("/listUser")
-    public String showUsers(Model model) throws SQLException{
+    public String showUsers(Model model) throws SQLException {
         ArrayList<User> userList = userService.getUsers();
         model.addAttribute("userList", userList);
         return "user/listUser";
@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping("/createUser")
-    public String createUser(WebRequest request) throws SQLException{
+    public String createUser(WebRequest request) throws SQLException {
         String e_mail = request.getParameter("email");
         String password = request.getParameter("password");
         String first_name = request.getParameter("firstName");
@@ -86,7 +86,7 @@ public class UserController {
         userService.editUser(uId, email, newPassword, first_name, last_name, isAdmin);
 
         User updatedUser = userService.getUser(uId);
-        setSessionInfo(request,updatedUser);
+        setSessionInfo(request, updatedUser);
         return "redirect:/currentUser";
     }
 
@@ -102,16 +102,16 @@ public class UserController {
     }
 
     @PostMapping("/uploadImg")
-    public String uploadImg (@RequestParam("file") MultipartFile file, WebRequest request) throws SQLException {
+    public String uploadImg(@RequestParam("file") MultipartFile file, WebRequest request) throws SQLException {
         User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         userService.addProfilePicture(user.getUser_id(), file);
         User updatedUser = userService.getUser(user.getUser_id());
-        setSessionInfo(request,updatedUser);
+        setSessionInfo(request, updatedUser);
         return "redirect:/currentUser";
     }
 
     @RequestMapping(value = "/deleteUser", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteUser(@RequestParam int id) throws SQLException{
+    public String deleteUser(@RequestParam int id) throws SQLException {
         userService.deleteUser(id);
         return "redirect:/listUser";
     }

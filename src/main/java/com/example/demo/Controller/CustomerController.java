@@ -56,7 +56,7 @@ public class CustomerController {
 
     @PostMapping("/updateCustomer")
     public String updateCustomer(WebRequest request, Model model) throws SQLException {
-        int customerID =Integer.parseInt(request.getParameter("cId"));
+        int customerID = Integer.parseInt(request.getParameter("cId"));
         String companyName = request.getParameter("comName");
         String contactName = request.getParameter("conName");
         String contactEmail = request.getParameter("conEmail");
@@ -80,7 +80,7 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/deleteCustomer", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteCustomer(@RequestParam int id) throws SQLException{
+    public String deleteCustomer(@RequestParam int id) throws SQLException {
         customerService.deleteCustomer(id);
         return "redirect:/listCustomer";
     }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="main_style.css"/>
-    <title>Project</title>
+    <title th:text="${project.project_name}"></title>
 </head>
 <th:block th:include="/includes/header :: header"></th:block>
 <body>
@@ -21,7 +21,8 @@
             Deadline: <span th:text="${project.deadline}"></span>
     </div>
     <div id="bioright" style="text-align: right">
-        <a th:if="${session.user.getIs_admin() == 1}" th:href="@{/editProject?id={id}(id=${project.project_id})}">Edit Project</a>
+        <a th:if="${session.user.getIs_admin() == 1}" th:href="@{/editProject?id={id}(id=${project.project_id})}">Edit
+            Project</a>
     </div>
     <table class="project-table">
         <thead>
@@ -37,14 +38,14 @@
         </thead>
         <tbody>
         <tr th:each="task : ${tasks}">
-            <!-- Table value Examples. Replace with thymeleaf values. -->
             <td th:text="${task.task_name}"></td>
             <td th:text="${task.task_description}"></td>
             <td th:text="${task.working_hours}"></td>
             <td th:text="${task.kickoff}"></td>
             <td th:text="${task.deadline}"></td>
             <td th:text="${task.task_leader_email}"></td>
-            <td th:if="${session.user.getIs_admin() == 1}" ><a th:href="@{/editTask?id={id}(id=${task.task_id})}">&#128736;</a></td>
+            <td th:if="${session.user.getIs_admin() == 1}"><a th:href="@{/editTask?id={id}(id=${task.task_id})}">&#128736;</a>
+            </td>
         </tr>
         <tr th:if="${session.user.getIs_admin() == 1}" style="background-color: #9EBDD5; text-align: center">
             <td colspan="7">
@@ -53,7 +54,6 @@
                 </form>
             </td>
         </tr>
-
         </tbody>
     </table>
 </div>
