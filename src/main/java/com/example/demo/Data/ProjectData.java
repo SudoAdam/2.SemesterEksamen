@@ -38,11 +38,11 @@ public class ProjectData {
         return projects;
     }
 
-    public Project getProject(int id) throws SQLException {
+    public Project getProject(int project_id) throws SQLException {
         Connection connection = connector.getConnection();
         String statement = "SELECT * FROM projects WHERE project_id=?";
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
-        preparedStatement.setInt(1, id);
+        preparedStatement.setInt(1, project_id);
         ResultSet resultSet = preparedStatement.executeQuery();
         return (Project) projectMapper.create(resultSet);
     }

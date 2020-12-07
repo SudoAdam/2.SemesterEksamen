@@ -20,9 +20,9 @@ public class CustomerData {
     private final Connector connector;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public CustomerData() {
-        customerMapper = new CustomerMapper();
-        connector = new Connector();
+    public CustomerData(CustomerMapper customerMapper, Connector connector) {
+        this.customerMapper = customerMapper;
+        this.connector = connector;
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

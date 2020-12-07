@@ -1,11 +1,10 @@
 package com.example.demo;
 
-import com.example.demo.Data.CustomerData;
-import com.example.demo.Data.ProjectData;
-import com.example.demo.Data.TaskData;
-import com.example.demo.Data.UserData;
+import com.example.demo.Data.*;
+import com.example.demo.Mapper.CustomerMapper;
 import com.example.demo.Mapper.ProjectMapper;
 import com.example.demo.Mapper.TaskMapper;
+import com.example.demo.Mapper.UserMapper;
 import com.example.demo.Service.CustomerService;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.TaskService;
@@ -16,74 +15,68 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DemoConfiguration {
 
-    private TaskMapper taskMapper;
-    private TaskData taskData;
-    private TaskService taskService;
-    private CustomerData customerData;
-    private CustomerService customerService;
-    private UserData userData;
-    private UserService userService;
-    private ProjectMapper projectMapper;
-    private ProjectData projectData;
-    private ProjectService projectService;
+    @Bean
+    public Connector connector() {
+        return new Connector();
+    }
 
     @Bean
     public TaskMapper taskMapper() {
-        this.taskMapper = new TaskMapper();
-        return taskMapper;
+        return new TaskMapper();
     }
 
     @Bean
-    public TaskData taskData() {
-        this.taskData = new TaskData();
-        return taskData;
+    public TaskData taskData(TaskMapper taskMapper, Connector connector) {
+        return new TaskData(taskMapper, connector);
     }
 
     @Bean
-    public TaskService taskService() {
-        this.taskService = new TaskService();
-        return taskService;
+    public TaskService taskService(UserService userService, TaskData taskData) {
+        return new TaskService(userService, taskData);
     }
 
     @Bean
-    public CustomerData customerData() {
-        this.customerData = new CustomerData();
-        return customerData;
+    public CustomerMapper customerMapper() {
+        return new CustomerMapper();
     }
 
     @Bean
-    public CustomerService customerService() {
-        this.customerService = new CustomerService();
-        return customerService;
+    public CustomerData customerData(CustomerMapper customerMapper, Connector connector) {
+        return new CustomerData(customerMapper, connector);
     }
 
     @Bean
-    public UserData userData() {
-        this.userData = new UserData();
-        return userData;
+    public CustomerService customerService(CustomerData customerData) {
+        return new CustomerService(customerData);
     }
 
     @Bean
-    public UserService userService() {
-        this.userService = new UserService();
-        return userService;
+    public UserMapper userMapper() {
+        return new UserMapper();
+    }
+
+    @Bean
+    public UserData userData(UserMapper userMapper, Connector connector) {
+        return new UserData(userMapper, connector);
+    }
+
+    @Bean
+    public UserService userService(UserData userData) {
+        return new UserService(userData);
     }
 
     @Bean
     public ProjectMapper projectMapper() {
-        this.projectMapper = new ProjectMapper();
-        return projectMapper;
+        return new ProjectMapper();
     }
 
     @Bean
-    public ProjectData projectData() {
-        this.projectData = new ProjectData(projectMapper);
-        return projectData;
+    public ProjectData projectData(ProjectMapper projectMapper) {
+        return new ProjectData(projectMapper);
     }
 
     @Bean
-    public ProjectService projectService() {
-        this.projectService = new ProjectService(projectData, userData, customerData);
-        return projectService;
+    public ProjectService projectService(ProjectData projectData, UserData userData, CustomerData customerData) {
+        return new ProjectService(projectData, userData, customerData);
     }
 }

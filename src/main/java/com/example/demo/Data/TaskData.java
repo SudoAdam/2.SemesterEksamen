@@ -20,9 +20,9 @@ public class TaskData {
     private final Connector connector;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public TaskData() {
-        taskMapper = new TaskMapper();
-        connector = new Connector();
+    public TaskData(TaskMapper taskMapper, Connector connector) {
+        this.taskMapper = taskMapper;
+        this.connector = connector;
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

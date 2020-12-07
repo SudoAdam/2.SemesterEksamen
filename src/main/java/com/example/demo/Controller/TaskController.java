@@ -1,10 +1,8 @@
 package com.example.demo.Controller;
 
-import com.example.demo.DemoConfiguration;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.TaskService;
 import com.example.demo.Service.UserService;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +13,15 @@ import java.time.LocalDate;
 
 @Controller
 public class TaskController {
-    AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DemoConfiguration.class);
-    TaskService taskService = (TaskService) ctx.getBean("taskService");
-    UserService userService = (UserService) ctx.getBean("userService");
-    ProjectService projectService = (ProjectService) ctx.getBean("projectService");
+    TaskService taskService;
+    UserService userService;
+    ProjectService projectService;
+
+    public TaskController(TaskService taskService, UserService userService, ProjectService projectService) {
+        this.taskService = taskService;
+        this.userService = userService;
+        this.projectService = projectService;
+    }
 
     // Responds to /editTask?id=task_id
     @RequestMapping(value = "/editTask", method = {RequestMethod.GET, RequestMethod.POST})
