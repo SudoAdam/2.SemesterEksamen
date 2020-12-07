@@ -31,7 +31,7 @@ public class CustomerController {
     }
 
     @PostMapping("/createCustomer")
-    public String createProject(WebRequest request, Model model) {
+    public String createProject(WebRequest request, Model model) throws SQLException{
         String companyName = request.getParameter("comName");
         String contactName = request.getParameter("conName");
         String contactEmail = request.getParameter("conEmail");
@@ -43,7 +43,7 @@ public class CustomerController {
     }
 
     @GetMapping("/listCustomer")
-    public String listCustomer(Model model) {
+    public String listCustomer(Model model) throws SQLException{
 
         ArrayList<Customer> customerList = customerService.getCustomers();
         model.addAttribute("customerList", customerList);
