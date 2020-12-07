@@ -33,12 +33,12 @@ public class CustomerController {
     }
 
     @PostMapping("/createCustomer")
-    public String createProject(WebRequest request, Model model) throws SQLException {
+    public String createCustomer(WebRequest request, Model model) throws SQLException {
         String companyName = request.getParameter("comName");
         String contactName = request.getParameter("conName");
         String contactEmail = request.getParameter("conEmail");
         String tel = request.getParameter("tel");
-        customerService.createUser(companyName, contactName, contactEmail, tel);
+        customerService.createCustomer(companyName, contactName, contactEmail, tel);
         return "customer/listCustomer";
     }
 
