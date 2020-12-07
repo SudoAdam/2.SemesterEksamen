@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.swing.*;
+import java.sql.SQLException;
 
 @Controller
 public class HomeController {
@@ -31,7 +32,7 @@ public class HomeController {
     }
 
     @PostMapping("/login")
-    public String login(WebRequest request, Model model) {
+    public String login(WebRequest request, Model model) throws SQLException {
         String email = request.getParameter("mail");
         String password = request.getParameter("password");
         User user = userService.login(email, password);

@@ -26,10 +26,9 @@ public class TaskData {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<Task> getTasks(int project_id) {
+    public ArrayList<Task> getTasks(int project_id) throws SQLException{
         Connection connection = connector.getConnection();
         String statement = "SELECT * FROM tasks WHERE project_id=?;";
-        try {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, project_id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -39,31 +38,20 @@ public class TaskData {
                 tasks.add((Task) taskMapper.create(resultSet));
             }
             return tasks;
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return null;
     }
 
-    public Task getTask(int task_id){
+    public Task getTask(int task_id) throws SQLException{
         Connection connection = connector.getConnection();
         String statement = "SELECT * FROM tasks WHERE task_id = ?";
-        try{
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, task_id);
             ResultSet resultSet = preparedStatement.executeQuery();
             return (Task) taskMapper.create(resultSet);
-        } catch(SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return null;
     }
 
-    public boolean createTask(int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) {
+    public void createTask(int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws SQLException {
         Connection connection = connector.getConnection();
         String statement = "INSERT INTO tasks (project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours) VALUES (?,?,?,?,?,?,?);";
-        boolean success = false;
-        try {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, project_id);
             preparedStatement.setString(2, task_name);
@@ -73,18 +61,11 @@ public class TaskData {
             preparedStatement.setString(6, deadline.toString());
             preparedStatement.setInt(7, working_hours);
             preparedStatement.execute();
-            success = true;
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return success;
     }
 
-    public boolean editTask(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) {
+    public void editTask(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws SQLException{
         Connection connection = connector.getConnection();
         String statement = "UPDATE tasks SET project_id=?, task_name=?, task_description=?, task_leader_id=?, kickoff=?, deadline=?, working_hours=? WHERE task_id=?;";
-        boolean success = false;
-        try {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, project_id);
             preparedStatement.setString(2, task_name);
@@ -95,11 +76,6 @@ public class TaskData {
             preparedStatement.setInt(7, working_hours);
             preparedStatement.setInt(8, task_id);
             preparedStatement.executeUpdate();
-            success = true;
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return success;
     }
 }
 
