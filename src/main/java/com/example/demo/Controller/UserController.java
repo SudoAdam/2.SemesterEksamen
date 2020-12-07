@@ -88,10 +88,6 @@ public class UserController {
     }
 
 
-
-
-
-
     @RequestMapping(value = "/viewUser", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewUser(@RequestParam int id, Model model, WebRequest request) throws SQLException {
 
@@ -107,7 +103,7 @@ public class UserController {
     }
 
     @PostMapping("/uploadImg")
-    public String uploadImg (@RequestParam("file") MultipartFile file, WebRequest request, Model model){
+    public String uploadImg(@RequestParam("file") MultipartFile file, WebRequest request, Model model) {
         User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         userService.addProfilePicture(user.getUser_id(), file);
         model.addAttribute("user", user);
