@@ -11,6 +11,8 @@ package com.example.demo.Data;
 
 import com.example.demo.Domain.Project;
 import org.junit.jupiter.api.*;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -19,13 +21,13 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@SpringBootTest
 class ProjectDataTest {
-    /*
-    private final ProjectData projectData = new ProjectData();
 
     @Test
     @Order(0)
-    void createProject() throws SQLException {
+    void createProject(ApplicationContext ctx) throws SQLException {
+        ProjectData projectData = (ProjectData) ctx.getBean("projectData");
         String project_name = "The newest Deal";
         LocalDate kickoff = LocalDate.of(2020,12,2);
         LocalDate deadline = LocalDate.of(2020,12,21);
@@ -36,7 +38,8 @@ class ProjectDataTest {
 
     @Test
     @Order(1)
-    void getProjects() throws SQLException {
+    void getProjects(ApplicationContext ctx) throws SQLException {
+        ProjectData projectData = (ProjectData) ctx.getBean("projectData");
         ArrayList<Project> list = projectData.getProjects();
         Project p = list.get(list.size()-1);
 
@@ -53,7 +56,9 @@ class ProjectDataTest {
 
     @Test
     @Order(2)
-    void getProject() throws SQLException {
+    void getProject(ApplicationContext ctx) throws SQLException {
+        ProjectData projectData = (ProjectData) ctx.getBean("projectData");
+
         // For the sake of test, we need the project for the last row in the DBMS
         ArrayList<Project> list = projectData.getProjects();
 
@@ -73,7 +78,9 @@ class ProjectDataTest {
 
     @Test
     @Order(3)
-    void editProject() throws SQLException {
+    void editProject(ApplicationContext ctx) throws SQLException {
+        ProjectData projectData = (ProjectData) ctx.getBean("projectData");
+
         // Select the last project in list and apply changes
         ArrayList<Project> list = projectData.getProjects();
         Project p = list.get(list.size()-1);
@@ -96,5 +103,4 @@ class ProjectDataTest {
         assertEquals(1, p_new.getProject_leader_id());
         assertEquals(2, p_new.getCustomer_id());
     }
-    */
 }

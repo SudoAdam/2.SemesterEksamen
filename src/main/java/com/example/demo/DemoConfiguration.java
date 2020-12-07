@@ -1,14 +1,8 @@
 package com.example.demo;
 
 import com.example.demo.Data.*;
-import com.example.demo.Mapper.CustomerMapper;
-import com.example.demo.Mapper.ProjectMapper;
-import com.example.demo.Mapper.TaskMapper;
-import com.example.demo.Mapper.UserMapper;
-import com.example.demo.Service.CustomerService;
-import com.example.demo.Service.ProjectService;
-import com.example.demo.Service.TaskService;
-import com.example.demo.Service.UserService;
+import com.example.demo.Mapper.*;
+import com.example.demo.Service.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

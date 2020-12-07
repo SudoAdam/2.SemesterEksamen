@@ -1,14 +1,15 @@
 package com.example.demo.Data;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class UserDataTest {
-    /*
-    UserData userData = new UserData();
 
     @Test
     void getUsers() {
@@ -31,9 +32,9 @@ class UserDataTest {
     }
 
    @Test
-    void findEmailFromUserId() throws SQLException {
+    void findEmailFromUserId(ApplicationContext ctx) throws SQLException {
+        UserData userData = (UserData) ctx.getBean("userData");
         String e_mail = userData.findEmailFromUserId(2);
         assertEquals("dc@gk.dk", e_mail);
     }
-    */
 }
