@@ -5,10 +5,12 @@
 package com.example.demo.Controller;
 
 
+import com.example.demo.DemoConfiguration;
 import com.example.demo.Domain.Project;
 import com.example.demo.Domain.User;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.UserService;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +24,9 @@ import java.util.ArrayList;
 
 @Controller
 public class UserController {
-    UserService userService = new UserService();
-    ProjectService projectService = new ProjectService();
+    AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DemoConfiguration.class);
+    UserService userService = (UserService) ctx.getBean("userService");
+    ProjectService projectService = (ProjectService) ctx.getBean("projectService");
 
     @GetMapping("/listUser")
     public String showUsers(Model model) throws SQLException{

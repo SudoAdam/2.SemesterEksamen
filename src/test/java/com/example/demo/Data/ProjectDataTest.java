@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProjectDataTest {
+    /*
     private final ProjectData projectData = new ProjectData();
 
     @Test
@@ -95,6 +96,5 @@ class ProjectDataTest {
         assertEquals(1, p_new.getProject_leader_id());
         assertEquals(2, p_new.getCustomer_id());
     }
-
-
+    */
 }
