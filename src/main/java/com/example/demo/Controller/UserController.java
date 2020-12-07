@@ -53,7 +53,7 @@ public class UserController {
         // og så henter et bruger objekt tilbage fra databasen.
         // For så får vi nemlig userID med. med det samme.
         userService.createUser(e_mail, password, first_name, last_name);
-        return "authentication/login";
+        return "redirect:/login";
     }
 
     @GetMapping("/editUser")
@@ -76,17 +76,18 @@ public class UserController {
         String newPassword;
         int isAdmin = user.getIs_admin();
 
-
         // Mangler ordenlig password håndtering
-
         if (pwd1.equals(pwd2) && oldPwd.equals(user.getPassword())) {
             newPassword = pwd1;
         } else {
             newPassword = user.getPassword();
         }
+
         userService.editUser(uId, email, newPassword, first_name, last_name, isAdmin);
-        setSessionInfo(request,user);
-        return "user/currentUser";
+
+        User updatedUser = userService.getUser(uId);
+        setSessionInfo(request,updatedUser);
+        return "redirect:/currentUser";
     }
 
     @RequestMapping(value = "/viewUser", method = {RequestMethod.GET, RequestMethod.POST})
@@ -96,14 +97,16 @@ public class UserController {
     }
 
     @GetMapping("/currentUser")
-    public String currentUser(Model model, WebRequest request) {
+    public String currentUser() {
         return "user/currentUser";
     }
 
     @PostMapping("/uploadImg")
-    public String uploadImg (@RequestParam("file") MultipartFile file, WebRequest request){
+    public String uploadImg (@RequestParam("file") MultipartFile file, WebRequest request) throws SQLException {
         User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         userService.addProfilePicture(user.getUser_id(), file);
-        return "user/currentUser";
+        User updatedUser = userService.getUser(user.getUser_id());
+        setSessionInfo(request,updatedUser);
+        return "redirect:/currentUser";
     }
 }

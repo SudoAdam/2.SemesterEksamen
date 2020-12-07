@@ -34,14 +34,14 @@ public class HomeController {
         String password = request.getParameter("password");
         User user = userService.login(email, password);
         setSessionInfo(request, user);
-        return "user/currentUser";
+        return "redirect:/currentUser";
     }
 
     @GetMapping("/logout")
     public String logout(WebRequest request){
         // en hurtig tanke... Ser ud til at virke. men skal testet godt igennem
         request.removeAttribute("user",WebRequest.SCOPE_SESSION);
-        return "authentication/login";
+        return "redirect:/";
     }
 
     @GetMapping("/loggedin")

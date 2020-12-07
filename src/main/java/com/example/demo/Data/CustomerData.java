@@ -58,7 +58,7 @@ public class CustomerData {
             preparedStatement.execute();
     }
 
-    public void editCustomer(int customer_id, String name, String contact_name, String contact_email, String contact_phone) throws SQLException{
+     public void editCustomer(int customer_id, String name, String contact_name, String contact_email, String contact_phone) throws SQLException{
         Connection connection = connector.getConnection();
         String statement = "UPDATE customers SET name=?, contact_name=?, contact_email=?, contact_phone=? WHERE customer_id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(statement);

@@ -24,7 +24,7 @@ public class CustomerService {
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    public void createUser(String name, String contact_name, String contact_email, String contact_phone) throws SQLException {
+    public void createCustomer(String name, String contact_name, String contact_email, String contact_phone) throws SQLException {
         customerData.createCustomer(name, contact_name, contact_email, contact_phone);
     }
 
