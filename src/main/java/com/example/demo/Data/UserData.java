@@ -58,7 +58,7 @@ public class UserData {
 
     public void createUser(String e_mail, String password, String first_name, String last_name) throws SQLException{
         Connection connection = connector.getConnection();
-        String statement = "INSERT INTO users (e_mail, password, first_name, last_name) VALUES (?,?,?,?,?)";
+        String statement = "INSERT INTO users (e_mail, password, first_name, last_name) VALUES (?,?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
         preparedStatement.setString(1, e_mail);
         preparedStatement.setString(2, password);

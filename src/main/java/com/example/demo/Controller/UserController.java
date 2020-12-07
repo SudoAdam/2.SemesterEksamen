@@ -53,7 +53,7 @@ public class UserController {
         // og så henter et bruger objekt tilbage fra databasen.
         // For så får vi nemlig userID med. med det samme.
         userService.createUser(e_mail, password, first_name, last_name);
-        return "redirect:/login";
+        return "redirect:/";
     }
 
     @GetMapping("/editUser")
@@ -63,7 +63,7 @@ public class UserController {
 
 
     @PostMapping("/updateUser")
-    public String updateUser(WebRequest request, Model model) throws SQLException {
+    public String updateUser(WebRequest request) throws SQLException {
         User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         String userId = request.getParameter("uId");
         String first_name = request.getParameter("fName");
