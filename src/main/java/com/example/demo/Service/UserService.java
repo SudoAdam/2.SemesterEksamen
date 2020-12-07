@@ -25,34 +25,34 @@ public class UserService {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<User> getUsers(){
+    public ArrayList<User> getUsers() throws SQLException{
         ArrayList<User> list = userData.getUsers();
         return list;
     }
 
-    public User login(String email, String password){
+    public User login(String email, String password) throws SQLException{
         User user = userData.login(email,password);
         return user;
     }
 
-    public User getUser(int id){
+    public User getUser(int id) throws SQLException {
         return userData.getUser(id);
     }
 
-    public boolean createUser(String e_mail, String password, String first_name, String last_name){
-        return userData.createUser(e_mail, password, first_name, last_name);
+    public void createUser(String e_mail, String password, String first_name, String last_name) throws SQLException{
+        userData.createUser(e_mail, password, first_name, last_name);
     }
 
-    public boolean editUser(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin) {
-        return userData.editUser(user_id, e_mail, password, first_name, last_name, is_admin);
+    public void editUser(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin) throws SQLException{
+        userData.editUser(user_id, e_mail, password, first_name, last_name, is_admin);
     }
 
-    public int findUserIdFromEmail(String email){
+    public int findUserIdFromEmail(String email) throws SQLException{
         return userData.findUserIdFromEmail(email);
 
     }
 
-    public String findEmailFromUserId(int id){
+    public String findEmailFromUserId(int id) throws SQLException{
         return userData.findEmailFromUserId(id);
     }
 

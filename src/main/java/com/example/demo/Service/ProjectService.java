@@ -31,7 +31,7 @@ public class ProjectService {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    private void finalize(Project project) {
+    private void finalize(Project project) throws SQLException{
         // Late dependency injection for single domain objects
         int project_leader_id = project.getProject_leader_id();
         int customer_id = project.getCustomer_id();
@@ -41,7 +41,7 @@ public class ProjectService {
         project.setCustomer(customer);
     }
 
-    private void finalize(ArrayList<Project> list) {
+    private void finalize(ArrayList<Project> list) throws SQLException{
         // Late dependency injection for collections of domain objects
         for (Project p: list) {
             finalize(p);

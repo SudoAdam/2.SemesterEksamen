@@ -26,7 +26,7 @@ public class UserController {
     ProjectService projectService = new ProjectService();
 
     @GetMapping("/listUser")
-    public String showUsers(Model model) {
+    public String showUsers(Model model) throws SQLException{
         ArrayList<User> userList = userService.getUsers();
         model.addAttribute("userList", userList);
         return "user/listUser";
@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping("/createUser")
-    public String createUser(WebRequest request) {
+    public String createUser(WebRequest request) throws SQLException{
         String e_mail = request.getParameter("e_mail");
         String password = request.getParameter("password");
         String first_name = request.getParameter("first_name");
@@ -90,7 +90,7 @@ public class UserController {
 
 
     @RequestMapping(value = "/viewUser", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewUser(@RequestParam int id, Model model, WebRequest request) {
+    public String viewUser(@RequestParam int id, Model model, WebRequest request) throws SQLException {
 
         model.addAttribute("user", userService.getUser(id));
         return "user/viewUser";

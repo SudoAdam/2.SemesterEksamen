@@ -40,6 +40,7 @@ public class HomeController {
         model.addAttribute("user", currentUser);
         return "user/currentUser";
     }
+
     @GetMapping("/logout")
     public String logout(WebRequest request){
         // en hurtig tanke... Ser ud til at virke. men skal testet godt igennem
@@ -54,8 +55,6 @@ public class HomeController {
             return "authentication/loggedin";
         } else
             return "redirect:/";
-
     }
-
 }
 

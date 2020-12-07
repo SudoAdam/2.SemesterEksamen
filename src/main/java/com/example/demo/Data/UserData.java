@@ -24,127 +24,88 @@ public class UserData {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<User> getUsers() {
+    public ArrayList<User> getUsers() throws SQLException{
         Connection connection = connector.getConnection();
         String statement = "SELECT * FROM users";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(statement);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        ResultSet resultSet = preparedStatement.executeQuery();
 
-            ArrayList<User> users = new ArrayList<>();
-            while (resultSet.next()) {
-                users.add((User) userMapper.create(resultSet));
-            }
-            return users;
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+        ArrayList<User> users = new ArrayList<>();
+        while (resultSet.next()) {
+            users.add((User) userMapper.create(resultSet));
         }
-        return null;
+        return users;
     }
 
-    public User getUser(int id) {
+    public User getUser(int id) throws SQLException {
         Connection connection = connector.getConnection();
         String statement = "SELECT * FROM users WHERE user_id = ?";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(statement);
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return (User) userMapper.create(resultSet);
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return null;
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setInt(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return (User) userMapper.create(resultSet);
     }
 
-    public User login(String email, String password) {
+    public User login(String email, String password) throws SQLException {
         Connection connection = connector.getConnection();
         String statement = "SELECT * FROM users WHERE e_mail=? and password=?";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(statement);
-            preparedStatement.setString(1, email);
-            preparedStatement.setString(2, password);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return (User) userMapper.create(resultSet);
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return null;
+
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setString(1, email);
+        preparedStatement.setString(2, password);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return (User) userMapper.create(resultSet);
     }
 
-    public boolean createUser(String e_mail, String password, String first_name, String last_name) {
+    public void createUser(String e_mail, String password, String first_name, String last_name) throws SQLException{
         Connection connection = connector.getConnection();
         String statement = "INSERT INTO users (e_mail, password, first_name, last_name) VALUES (?,?,?,?,?)";
-        boolean success = false;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(statement);
-            preparedStatement.setString(1, e_mail);
-            preparedStatement.setString(2, password);
-            preparedStatement.setString(3, first_name);
-            preparedStatement.setString(4, last_name);
-            preparedStatement.execute();
-            success = true;
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return success;
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setString(1, e_mail);
+        preparedStatement.setString(2, password);
+        preparedStatement.setString(3, first_name);
+        preparedStatement.setString(4, last_name);
+        preparedStatement.execute();
     }
 
-    public boolean editUser(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin) {
+    public void editUser(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin) throws SQLException {
         Connection connection = connector.getConnection();
         String statement = "UPDATE users SET e_mail=?, password=?, first_name=?, last_name=?, is_admin=? WHERE user_id=?";
-        boolean success = false;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(statement);
-            preparedStatement.setString(1, e_mail);
-            preparedStatement.setString(2, password);
-            preparedStatement.setString(3, first_name);
-            preparedStatement.setString(4, last_name);
-            preparedStatement.setInt(5, is_admin);
-            preparedStatement.setInt(6, user_id);
-            preparedStatement.executeUpdate();
-            success = true;
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return success;
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setString(1, e_mail);
+        preparedStatement.setString(2, password);
+        preparedStatement.setString(3, first_name);
+        preparedStatement.setString(4, last_name);
+        preparedStatement.setInt(5, is_admin);
+        preparedStatement.setInt(6, user_id);
+        preparedStatement.executeUpdate();
     }
 
-    public int findUserIdFromEmail(String e_mail) {
+    public int findUserIdFromEmail(String e_mail) throws SQLException{
         int id = -1;
         Connection connection = connector.getConnection();
         String statement = "SELECT user_id from users where e_mail = ?";
-        try {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setString(1, e_mail);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             String result = "" + resultSet.getObject(1);
             id = Integer.parseInt(result);
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-
         return id;
 
     }
 
-    public String findEmailFromUserId(int id) {
+    public String findEmailFromUserId(int id) throws SQLException{
         String e_mail = "";
         Connection connection = connector.getConnection();
         String statement = "SELECT e_mail from users where user_id = ?";
-        try {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             String result = "" + resultSet.getString("e_mail");
             e_mail = result;
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-
         return e_mail;
-
     }
 
     public void uploadImg(int user_id, Blob img) {
