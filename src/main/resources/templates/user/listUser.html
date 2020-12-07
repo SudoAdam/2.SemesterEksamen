@@ -14,6 +14,7 @@
     <table class="project-table">
         <thead>
         <tr>
+            <th></th>
             <th>E-mail</th>
             <th>First Name</th>
             <th>Last Name</th>
@@ -22,7 +23,7 @@
         </thead>
         <tbody>
         <tr th:each="user : ${userList}">
-            <!-- Table value Examples. Replace with thymeleaf values. -->
+            <td> <img class="pblist" th:src="*{'data:image/jpeg;base64,' + user.byteArrayAs64String()}"></td>
             <td th:text="${user.e_mail}"></td>
             <td th:text="${user.first_name}"></td>
             <td th:text="${user.last_name}"></td>

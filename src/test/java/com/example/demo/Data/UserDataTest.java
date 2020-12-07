@@ -2,6 +2,8 @@ package com.example.demo.Data;
 
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserDataTest {
@@ -29,7 +31,7 @@ class UserDataTest {
     }
 
     @Test
-    void findEmailFromUserId() {
+    void findEmailFromUserId() throws SQLException {
         String e_mail = userData.findEmailFromUserId(2);
         assertEquals("dc@gk.dk", e_mail);
     }
