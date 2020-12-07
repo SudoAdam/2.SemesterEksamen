@@ -8,6 +8,7 @@ package com.example.demo.Data;
 
 import com.example.demo.Domain.Project;
 import com.example.demo.Mapper.ProjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.*;
 import java.time.LocalDate;

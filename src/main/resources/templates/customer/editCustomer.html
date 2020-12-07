@@ -13,7 +13,7 @@
         <a style="text-decoration: none" th:href="@{/viewCustomer?id={id}(id=${customer.customer_id})}">&#128281;</a>
     </div>
     <div id="inputform">
-        <form action="/createCustomer" object="" method="POST">
+        <form action="/createCustomer" method="POST">
             <p>Customer Name
             <p><input type="text" name="comName" th:value="${customer.comName}" required>
             <p>Customer Contact

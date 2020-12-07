@@ -12,7 +12,7 @@
         <a style="text-decoration: none" th:href="@{/viewProject?id={id}(id=${project.project_id})}">&#128281;</a>
     </div>
     <div id="inputform">
-        <form action="/updateProject" object="" method="POST">
+        <form action="/updateProject" method="POST">
             Project name
             <p><input type="text" name="pName" th:value="${project.project_name}" required>
             <p>Kick-off
