@@ -86,4 +86,8 @@ public class ProjectService {
     public void editProject(int project_id, String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws SQLException {
         projectData.editProject(project_id, project_name, kickoff, deadline, project_leader_id, customer_id);
     }
+
+    public void deleteProject(int id) throws SQLException{
+        projectData.deleteProject(id);
+    }
 }

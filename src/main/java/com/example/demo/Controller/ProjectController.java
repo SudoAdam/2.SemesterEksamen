@@ -115,4 +115,10 @@ public class ProjectController {
         model.addAttribute("project", projectService.getProject(id));
         return "project/viewProject";
     }
+
+    @RequestMapping(value = "/deleteProject", method = {RequestMethod.GET, RequestMethod.POST})
+    public String deleteProject(@RequestParam int id) throws SQLException{
+        projectService.deleteProject(id);
+        return "redirect:/listProject";
+    }
 }

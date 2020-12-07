@@ -79,8 +79,6 @@ public class CustomerData {
             ResultSet resultSet = preparedStatement.executeQuery();
             String result = "" + resultSet.getObject(1);
             id = Integer.parseInt(result);
-
         return id;
-
     }
 }

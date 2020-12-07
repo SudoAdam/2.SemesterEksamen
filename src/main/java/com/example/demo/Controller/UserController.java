@@ -87,11 +87,6 @@ public class UserController {
         return "user/currentUser";
     }
 
-
-
-
-
-
     @RequestMapping(value = "/viewUser", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewUser(@RequestParam int id, Model model, WebRequest request) throws SQLException {
 
@@ -113,5 +108,4 @@ public class UserController {
         model.addAttribute("user", user);
         return "user/currentUser";
     }
-
 }

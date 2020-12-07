@@ -72,10 +72,11 @@ public class ProjectData {
         preparedStatement.executeUpdate();
     }
 
-    public void deleteProject(int project_id) throws SQLException {
+    public void deleteProject(int id) throws SQLException {
         Connection connection = connector.getConnection();
-        String statement = "UPDATE projects SET project_name=?, kickoff=?, deadline=?, project_leader_id=?, customer_id=? WHERE project_id=?";
+        String statement = "DELETE FROM projects WHERE project_id=?";
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
-        preparedStatement.execute();
+        preparedStatement.setInt(1, id);
+        preparedStatement.executeUpdate();
     }
 }
