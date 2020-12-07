@@ -60,6 +60,22 @@ public class ProjectService {
         return p;
     }
 
+ /*   public ArrayList<Project> getUserProjects(User user) throws SQLException {
+        ArrayList<Project> allProjectList = getProjects();
+        ArrayList<Project> userProjectList = new ArrayList<>();
+
+        if (user.getIs_admin() == 0) {
+            for (Project p : allProjectList) {
+                if (p.getEmployee_id == user.getUser_id()) {
+                    userProjectList.add(p);
+                }
+            }
+            return userProjectList;
+        } else {
+            return allProjectList;
+        }
+    } */
+
     public void createProject(String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws SQLException {
         projectData.createProject(project_name, kickoff, deadline, project_leader_id, customer_id);
     }
