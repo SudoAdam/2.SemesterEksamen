@@ -8,8 +8,8 @@
 <th:block th:include="/includes/header :: header"></th:block>
 <body>
 <div id="container" style="text-align: left">
-    <div id="bioleft" style="float: left">
-        <a class="backbutton" href="/listProject">&#11013;</a>
+    <div id="bio-left" style="float: left">
+        <a class="back-button" href="/listProject">&#11013;</a>
         <h1 style="font-size: 50px" th:text="${project.project_name}"></h1>
         <hr class="rounded">
         Customer: <span th:text="${project.customer_id}"></span>
@@ -20,7 +20,7 @@
         <p>
             Deadline: <span th:text="${project.deadline}"></span>
     </div>
-    <div id="bioright" style="text-align: right">
+    <div id="bio-right" style="text-align: right">
         <a th:if="${session.user.getIs_admin() == 1}" th:href="@{/editProject?id={id}(id=${project.project_id})}">Edit
             Project</a>
     </div>

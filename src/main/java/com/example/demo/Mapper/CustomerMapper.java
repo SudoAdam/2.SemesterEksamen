@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CustomerMapper extends AbstractMapper {
+    // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Override
     public Customer mapping(ResultSet resultSet) throws SQLException {
         int customer_id = resultSet.getInt("customer_id");

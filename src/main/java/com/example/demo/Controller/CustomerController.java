@@ -38,7 +38,7 @@ public class CustomerController {
         String contactEmail = request.getParameter("conEmail");
         String tel = request.getParameter("tel");
         customerService.createCustomer(companyName, contactName, contactEmail, tel);
-        return "customer/listCustomer";
+        return "redirect:/listCustomer";
     }
 
     @GetMapping("/listCustomer")
