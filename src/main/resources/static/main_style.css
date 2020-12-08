@@ -124,7 +124,7 @@ footer{
     font-size: 20px;
 }
 
-.project-table {
+.list-table {
     text-align: left;
     border-collapse: collapse;
     top: 0;
@@ -136,7 +136,7 @@ footer{
     overflow: hidden;
 }
 
-.project-table thead tr {
+.list-table thead tr {
     font-size: 20px;
     background-color:#9EBDD5;
     color: #f2f2f2;
@@ -145,22 +145,22 @@ footer{
     border-radius: 15px 15px 15px 15px;
 }
 
-.project-table th,
-.project-table td {
+.list-table th,
+.list-table td {
     font-size: 20px;
     padding: 12px 15px;
 }
 
-.project-table tbody tr {
+.list-table tbody tr {
     height: 50px;
 }
 
-.project-table tbody tr:nth-of-type(even) {
+.list-table tbody tr:nth-of-type(even) {
     background-color: #E5E5E5;
     border-radius: 15px 15px 15px 15px;
 }
 
-.project-table tbody tr:last-of-type {
+.list-table tbody tr:last-of-type {
     border-radius: 15px 15px 15px 15px;
 }
 

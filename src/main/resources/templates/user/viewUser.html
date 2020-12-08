@@ -24,6 +24,13 @@
             <button type="submit">Update Role</button>
         </div>
         </form>
+        <p>
+        <form action="/resetUserPassword" method="POST" th:if="${session.user.getIs_admin() == 1}">
+            <input type="hidden" name="user_id" th:value="${user.user_id}">
+        <div>
+            <button type="submit">Reset Password</button>
+        </div>
+        </form>
     </div>
     <div id="bio-right" style="float: right">
         <a th:if="${session.user.getIs_admin() == 1}" th:href="@{/deleteUser?id={id}(id=${user.user_id})}">Delete User</a>

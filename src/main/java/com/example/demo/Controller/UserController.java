@@ -98,6 +98,12 @@ public class UserController {
         return "redirect:/listUser";
     }
 
+    @PostMapping("/resetUserPassword")
+    public String resetUserPassword(WebRequest request) throws SQLException {
+        String userId = request.getParameter("user_id");
+        userService.resetPassword(Integer.parseInt(userId));
+        return "redirect:/listUser";
+    }
 
     @RequestMapping(value = "/deleteUser", method = {RequestMethod.GET, RequestMethod.POST})
     public String deleteUser(@RequestParam int id) throws SQLException {
