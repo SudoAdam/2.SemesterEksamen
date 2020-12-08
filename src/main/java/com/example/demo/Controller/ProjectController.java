@@ -1,7 +1,8 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Project;
-import com.example.demo.Domain.Task;
+import com.example.demo.Service.CustomerService;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.TaskService;
 import com.example.demo.Service.UserService;
@@ -19,11 +20,13 @@ public class ProjectController {
     ProjectService projectService;
     TaskService taskService;
     UserService userService;
+    CustomerService customerService;
 
-    public ProjectController(ProjectService projectService, TaskService taskService, UserService userService) {
+    public ProjectController(ProjectService projectService, TaskService taskService, UserService userService, CustomerService customerService) {
         this.projectService = projectService;
         this.taskService = taskService;
         this.userService = userService;
+        this.customerService = customerService;
     }
 
     @GetMapping("/listProject")
@@ -33,7 +36,9 @@ public class ProjectController {
     }
 
     @GetMapping("/createProject")
-    public String createProject() {
+    public String createProject(Model model) throws SQLException {
+        model.addAttribute("customers", customerService.getCustomers());
+        model.addAttribute("users", userService.getUsers());
         return "project/createProject";
     }
 
@@ -43,8 +48,11 @@ public class ProjectController {
         String projectName = request.getParameter("pName");
         String kickOffStr = request.getParameter("kickOff");
         String deadlineStr = request.getParameter("deadline");
-        int project_leader_id = 1;                                  //request email and get project_leader_id
-        int customer_id = 1;
+        String pLId = request.getParameter("pLId");
+        String cId = request.getParameter("cId");
+
+        int project_leader_id = Integer.parseInt(pLId);                                  //request email and get project_leader_id
+        int customer_id = Integer.parseInt(cId);
         LocalDate kickOff = LocalDate.parse(kickOffStr);
         LocalDate deadline = LocalDate.parse(deadlineStr);
 
@@ -55,7 +63,12 @@ public class ProjectController {
     // Responds to /editProject?id=project_id
     @RequestMapping(value = "/editProject", method = {RequestMethod.GET, RequestMethod.POST})
     public String editProject(@RequestParam int id, Model model) throws SQLException {
-        model.addAttribute("project", projectService.getProject(id));
+        Project p = projectService.getProject(id);
+        model.addAttribute("customers", customerService.getCustomers());
+        model.addAttribute("users", userService.getUsers());
+        model.addAttribute("projectmanager", userService.getUser(p.getProject_leader_id()));
+        model.addAttribute("currentcustomer", customerService.getCustomer(p.getCustomer_id()));
+        model.addAttribute("project", p);
         return "project/editProject";
     }
 
@@ -66,7 +79,7 @@ public class ProjectController {
         String kickOffStr = request.getParameter("kickOff");
         String deadlineStr = request.getParameter("deadline");
         String pLeaderId = request.getParameter("plId");
-        String CustomerId = request.getParameter("cid");
+        String CustomerId = request.getParameter("cId");
 
         int pId = Integer.parseInt(projectId);
         LocalDate kickoff = LocalDate.parse(kickOffStr);
@@ -77,16 +90,17 @@ public class ProjectController {
         projectService.editProject(pId, projectName, kickoff, deadline, pLId, cId);
         model.addAttribute("project", projectService.getProject(Integer.parseInt(projectId)));
 
-        return "project/viewProject";
+        return "redirect:/viewProject?id=" + pId;
     }
 
     // Responds to /viewProject?id=project_id
     @RequestMapping(value = "/viewProject", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewProject(@RequestParam int id, Model model) throws SQLException {
-        ArrayList<Task> tasks = taskService.getTasks(id);
-        Project project = projectService.getProject(id);
-        model.addAttribute("tasks", tasks);
-        model.addAttribute("project", project);
+        Project p = projectService.getProject(id);
+        model.addAttribute("projectmanager", userService.getUser(p.getProject_leader_id()));
+        model.addAttribute("customer", customerService.getCustomer(p.getCustomer_id()));
+        model.addAttribute("tasks", taskService.getTasks(id));
+        model.addAttribute("project", p);
         return "project/viewProject";
     }
 

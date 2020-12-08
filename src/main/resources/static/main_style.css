@@ -120,6 +120,10 @@ footer{
     clear: both;
 }
 
+.form-control {
+    font-size: 20px;
+}
+
 .project-table {
     text-align: left;
     border-collapse: collapse;

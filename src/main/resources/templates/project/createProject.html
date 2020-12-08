@@ -16,14 +16,18 @@
         <form action="/createProject" method="POST">
             <p>Project Name
             <p><input type="text" name="pName" required>
-            <p>Customer
-            <p><input type="text" name="comName" placeholder="Company name" required>
-            <p>Customer Contact
-            <p><input type="text" name="conName" placeholder="Name" required>
-            <p><input type="email" name="cEmail" placeholder="E-mail" required>
-            <p><input type="tel" name="tel" placeholder="Phone number" required>
-            <p>Project manager
-            <p><input type="text" name="PMName" placeholder="E-mail" required>
+            <p><select class="form-control" name="cId" required>
+                <option value="">Select Customer</option>
+                <option th:each="customer : ${customers}"
+                        th:value="${customer.customer_id}"
+                        th:text="${customer.name}"></option>
+            </select>
+            <p><select class="form-control" name="pLId" required>
+                <option value="">Select Project Manager</option>
+                <option th:each="user : ${users}"
+                        th:value="${user.user_id}"
+                        th:text="${user.first_name}+' '+ ${user.last_name}+' '+${user.e_mail}"></option>
+            </select>
             <p>Kick-off
             <p><input type="date" name="kickOff" required>
             <p>Deadline
