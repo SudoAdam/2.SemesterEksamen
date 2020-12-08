@@ -2,6 +2,7 @@ package com.example.demo.Data;
 
 import com.example.demo.Domain.Participant;
 import com.example.demo.Domain.Project;
+import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Mapper.ParticipantMapper;
 
 import java.sql.Connection;
@@ -20,7 +21,7 @@ public class ParticipantData {
         this.connector = connector;
     }
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<Participant> getParticipants() throws SQLException {
+    public ArrayList<Participant> getParticipants() throws SQLException, QueryDeniedException {
         Connection connection = connector.getConnection();
         String statement = "SELECT * FROM project_participants";
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
