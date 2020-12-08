@@ -28,7 +28,7 @@
         <a th:if="${session.user.getIs_admin() == 1}" th:href="@{/editProject?id={id}(id=${project.project_id})}">Edit
             Project</a>
     </div>
-    <table class="project-table">
+    <table class="list-table">
         <thead>
         <tr>
             <th>Tasks</th>
