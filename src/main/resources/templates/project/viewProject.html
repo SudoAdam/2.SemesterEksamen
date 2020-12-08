@@ -12,12 +12,16 @@
         <a class="back-button" href="/listProject">&#11013;</a>
         <h1 style="font-size: 50px" th:text="${project.project_name}"></h1>
         <hr class="rounded">
-        Customer: <span th:text="${project.customer_id}"></span>
+        <h3>Customer: </h3><span th:text="${customer.name}"></span>
+        <br th:text="${customer.contact_name}">
+        <span th:text="${customer.contact_email}"></span>
+        <br th:text="${customer.contact_phone}">
         <p>
-            Project Leader: <span th:text="${project.project_leader_id}"></span>
+        <h3>Project Leader: </h3><span th:text="${projectmanager.first_name}+ ' '+${projectmanager.last_name}"></span>
+        <br th:text="${projectmanager.e_mail}">
         <p>
             Kick Off: <span th:text="${project.kickoff}"></span>
-        <p>
+        <br>
             Deadline: <span th:text="${project.deadline}"></span>
     </div>
     <div id="bio-right" style="text-align: right">

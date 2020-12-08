@@ -21,7 +21,18 @@
             <p><input type="date" name="deadline" th:value="${project.deadline}" required>
             <input type="hidden" name="id" th:value="${project.project_id}" required>
             <input type="hidden" name="plId" th:value="${project.project_leader_id}" required>
-            <input type="hidden" name="cid" th:value="${project.customer_id}" required>
+            <p><select class="form-control" name="cId" required>
+                <option th:value="${currentcustomer.customer_id}" th:text="${currentcustomer.name}"></option>
+                <option th:each="customer : ${customers}"
+                        th:value="${customer.customer_id}"
+                        th:text="${customer.name}"></option>
+            </select>
+            <p><select class="form-control" name="pLId" required>
+                <option th:value="${projectmanager.user_id}" th:text="${projectmanager.first_name}+' '+${projectmanager.last_name}"></option>
+                <option th:each="user : ${users}"
+                        th:value="${user.user_id}"
+                        th:text="${user.first_name}+' '+ ${user.last_name}+' '+${user.e_mail}"></option>
+            </select>
             <div class="button">
                 <input type="Submit" value="  Update!  ">
             </div>
