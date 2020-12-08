@@ -29,7 +29,7 @@ public class HomeController {
     }
 
     @PostMapping("/login")
-    public String login(WebRequest request, Model model) throws SQLException {
+    public String login(WebRequest request) throws SQLException {
         String email = request.getParameter("mail");
         String password = request.getParameter("password");
         User user = userService.login(email, password);

@@ -86,7 +86,7 @@ public class ProjectData {
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
         preparedStatement.setInt(1, user_id);
         preparedStatement.setInt(2, project_id);
-        preparedStatement.setInt(3,project_role_id);
+        preparedStatement.setInt(3, project_role_id);
         preparedStatement.execute();
     }
 }

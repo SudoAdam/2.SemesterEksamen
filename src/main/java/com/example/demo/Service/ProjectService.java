@@ -7,6 +7,7 @@
 package com.example.demo.Service;
 
 import com.example.demo.Data.CustomerData;
+import com.example.demo.Data.ParticipantData;
 import com.example.demo.Data.ProjectData;
 import com.example.demo.Data.UserData;
 import com.example.demo.Domain.Customer;
@@ -22,13 +23,15 @@ public class ProjectService {
     private final ProjectData projectData;
     private final UserData userData;
     private final CustomerData customerData;
+    private final ParticipantData participantData;
 
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ProjectService(ProjectData projectData, UserData userData, CustomerData customerData) {
+    public ProjectService(ProjectData projectData, UserData userData, CustomerData customerData, ParticipantData participantData) {
         this.projectData = projectData;
         this.userData = userData;
         this.customerData = customerData;
+        this.participantData = participantData;
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
