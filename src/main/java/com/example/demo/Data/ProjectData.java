@@ -7,8 +7,8 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Project;
+import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Mapper.ProjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -26,7 +26,7 @@ public class ProjectData {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<Project> getProjects() throws SQLException {
+    public ArrayList<Project> getProjects() throws SQLException, QueryDeniedException {
         Connection connection = connector.getConnection();
         String statement = "SELECT * FROM projects";
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
@@ -39,7 +39,7 @@ public class ProjectData {
         return projects;
     }
 
-    public Project getProject(int project_id) throws SQLException {
+    public Project getProject(int project_id) throws SQLException, QueryDeniedException {
         Connection connection = connector.getConnection();
         String statement = "SELECT * FROM projects WHERE project_id=?";
         PreparedStatement preparedStatement = connection.prepareStatement(statement);

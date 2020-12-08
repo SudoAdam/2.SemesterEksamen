@@ -2,6 +2,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Domain.Project;
 import com.example.demo.Domain.Task;
+import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.TaskService;
 import com.example.demo.Service.UserService;
@@ -27,7 +28,7 @@ public class ProjectController {
     }
 
     @GetMapping("/listProject")
-    public String showProjects(Model model, WebRequest request) throws SQLException {
+    public String showProjects(Model model, WebRequest request) throws SQLException, QueryDeniedException {
         model.addAttribute("projectList", projectService.getProjects());
         return "project/listProject";
     }
@@ -54,13 +55,13 @@ public class ProjectController {
 
     // Responds to /editProject?id=project_id
     @RequestMapping(value = "/editProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String editProject(@RequestParam int id, Model model) throws SQLException {
+    public String editProject(@RequestParam int id, Model model) throws SQLException, QueryDeniedException {
         model.addAttribute("project", projectService.getProject(id));
         return "project/editProject";
     }
 
     @PostMapping("/updateProject")
-    public String updateProject(WebRequest request, Model model) throws SQLException {
+    public String updateProject(WebRequest request, Model model) throws SQLException, QueryDeniedException {
         String projectId = request.getParameter("id");
         String projectName = request.getParameter("pName");
         String kickOffStr = request.getParameter("kickOff");
@@ -82,7 +83,7 @@ public class ProjectController {
 
     // Responds to /viewProject?id=project_id
     @RequestMapping(value = "/viewProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewProject(@RequestParam int id, Model model) throws SQLException {
+    public String viewProject(@RequestParam int id, Model model) throws SQLException, QueryDeniedException {
         ArrayList<Task> tasks = taskService.getTasks(id);
         Project project = projectService.getProject(id);
         model.addAttribute("tasks", tasks);

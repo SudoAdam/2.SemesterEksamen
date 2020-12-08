@@ -12,6 +12,7 @@ import com.example.demo.Data.UserData;
 import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Project;
 import com.example.demo.Domain.User;
+import com.example.demo.Exceptions.QueryDeniedException;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -32,7 +33,7 @@ public class ProjectService {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    private void finalize(Project project) throws SQLException {
+    private void finalize(Project project) throws SQLException, QueryDeniedException {
         // Late dependency injection for single domain objects
         int project_leader_id = project.getProject_leader_id();
         int customer_id = project.getCustomer_id();
@@ -42,20 +43,20 @@ public class ProjectService {
         project.setCustomer(customer);
     }
 
-    private void finalize(ArrayList<Project> list) throws SQLException {
+    private void finalize(ArrayList<Project> list) throws SQLException, QueryDeniedException {
         // Late dependency injection for collections of domain objects
         for (Project p : list) {
             finalize(p);
         }
     }
 
-    public ArrayList<Project> getProjects() throws SQLException {
+    public ArrayList<Project> getProjects() throws SQLException, QueryDeniedException {
         ArrayList<Project> list = projectData.getProjects();
         // finalize(list);
         return list;
     }
 
-    public Project getProject(int id) throws SQLException {
+    public Project getProject(int id) throws SQLException, QueryDeniedException {
         Project p = projectData.getProject(id);
         finalize(p);
         return p;

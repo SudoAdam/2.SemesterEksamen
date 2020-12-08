@@ -8,12 +8,10 @@
  */
 package com.example.demo.Mapper;
 
-import com.example.demo.Domain.Project;
 import com.example.demo.Domain.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 
 public class UserMapper extends AbstractMapper {
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

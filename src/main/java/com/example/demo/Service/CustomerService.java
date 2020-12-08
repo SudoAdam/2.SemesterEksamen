@@ -7,6 +7,7 @@ package com.example.demo.Service;
 
 import com.example.demo.Data.CustomerData;
 import com.example.demo.Domain.Customer;
+import com.example.demo.Exceptions.QueryDeniedException;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,12 +33,12 @@ public class CustomerService {
         customerData.editCustomer(customer_id, name, contact_name, contact_email, contact_phone);
     }
 
-    public ArrayList<Customer> getCustomers() throws SQLException {
+    public ArrayList<Customer> getCustomers() throws SQLException, QueryDeniedException {
         ArrayList<Customer> customerlist = customerData.getCustomers();
         return customerlist;
     }
 
-    public Customer getCustomer(int id) throws SQLException {
+    public Customer getCustomer(int id) throws SQLException, QueryDeniedException {
         return customerData.getCustomer(id);
     }
 

@@ -1,9 +1,9 @@
 package com.example.demo.Service;
 
 import com.example.demo.Data.TaskData;
-import com.example.demo.Domain.Project;
 import com.example.demo.Domain.Task;
 import com.example.demo.Domain.User;
+import com.example.demo.Exceptions.QueryDeniedException;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -22,7 +22,7 @@ public class TaskService {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    private void finalize(Task task) throws SQLException {
+    private void finalize(Task task) throws SQLException, QueryDeniedException {
         int task_leader_id = task.getTask_leader_id();
         User task_leader = userService.getUser(task_leader_id);
         task.setTask_leader(task_leader);
@@ -30,20 +30,20 @@ public class TaskService {
         task.setTask_leader_email(e_mail);
     }
 
-    private void finalize(ArrayList<Task> list) throws SQLException {
+    private void finalize(ArrayList<Task> list) throws SQLException, QueryDeniedException {
         // Late dependency injection for collections of domain objects
         for (Task t : list) {
             finalize(t);
         }
     }
 
-    public ArrayList<Task> getTasks(int project_id) throws SQLException {
+    public ArrayList<Task> getTasks(int project_id) throws SQLException, QueryDeniedException {
         ArrayList<Task> list = taskData.getTasks(project_id);
         finalize(list);
         return list;
     }
 
-    public Task getTask(int task_id) throws SQLException {
+    public Task getTask(int task_id) throws SQLException, QueryDeniedException {
         Task t = taskData.getTask(task_id);
         finalize(t);
         return (t);

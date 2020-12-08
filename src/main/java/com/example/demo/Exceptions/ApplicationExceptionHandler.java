@@ -29,7 +29,12 @@ public class ApplicationExceptionHandler {
 
     @ExceptionHandler(LoginException.class)
     public String handleLoginException(Model model, LoginException e) {
-        return "";
+        String title = "Login error was encountered;";
+        model.addAttribute("title", title);
+        model.addAttribute("exception", e.getClass());
+        model.addAttribute("message", e.getMessage());
+        model.addAttribute("stacktrace", Arrays.toString(e.getStackTrace()));
+        return "redirect:/";
     }
 
     @ExceptionHandler(Exception.class)

@@ -6,6 +6,7 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Customer;
+import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Mapper.CustomerMapper;
 
 import java.sql.Connection;
@@ -26,7 +27,7 @@ public class CustomerData {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<Customer> getCustomers() throws SQLException {
+    public ArrayList<Customer> getCustomers() throws SQLException, QueryDeniedException {
         Connection connection = connector.getConnection();
         String statement = "SELECT * FROM customers";
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
@@ -38,7 +39,7 @@ public class CustomerData {
         return customers;
     }
 
-    public Customer getCustomer(int id) throws SQLException {
+    public Customer getCustomer(int id) throws SQLException, QueryDeniedException {
         Connection connection = connector.getConnection();
         String statement = "SELECT * FROM customers WHERE customer_id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(statement);

@@ -5,6 +5,8 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.User;
+import com.example.demo.Exceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.UserService;
 import org.springframework.stereotype.Controller;
@@ -32,7 +34,7 @@ public class UserController {
     }
 
     @GetMapping("/listUser")
-    public String showUsers(Model model) throws SQLException {
+    public String showUsers(Model model) throws SQLException, QueryDeniedException {
         ArrayList<User> userList = userService.getUsers();
         model.addAttribute("userList", userList);
         return "user/listUser";
@@ -45,7 +47,7 @@ public class UserController {
 
 
     @PostMapping("/updateUser")
-    public String updateUser(WebRequest request) throws SQLException {
+    public String updateUser(WebRequest request) throws SQLException, QueryDeniedException {
         User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         String userId = request.getParameter("uId");
         String first_name = request.getParameter("fName");
@@ -73,7 +75,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/viewUser", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewUser(@RequestParam int id, Model model) throws SQLException {
+    public String viewUser(@RequestParam int id, Model model) throws QueryDeniedException {
         model.addAttribute("user", userService.getUser(id));
         return "user/viewUser";
     }
@@ -84,7 +86,7 @@ public class UserController {
     }
 
     @PostMapping("/uploadImg")
-    public String uploadImg(@RequestParam("file") MultipartFile file, WebRequest request) throws SQLException {
+    public String uploadImg(@RequestParam("file") MultipartFile file, WebRequest request) throws QueryDeniedException, ExecuteDeniedException {
         User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         userService.addProfilePicture(user.getUser_id(), file);
         User updatedUser = userService.getUser(user.getUser_id());
