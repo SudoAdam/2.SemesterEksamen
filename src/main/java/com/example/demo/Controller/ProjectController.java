@@ -43,7 +43,7 @@ public class ProjectController {
     }
 
     @PostMapping("/createProject")
-    public String createProject(WebRequest request) throws SQLException {
+    public String createProject(WebRequest request) throws Exception {
         //denne funktion er ikke færdig!
         String projectName = request.getParameter("pName");
         String kickOffStr = request.getParameter("kickOff");
@@ -90,7 +90,7 @@ public class ProjectController {
         projectService.editProject(pId, projectName, kickoff, deadline, pLId, cId);
         model.addAttribute("project", projectService.getProject(Integer.parseInt(projectId)));
 
-        return "project/viewProject";
+        return "redirect:/viewProject?id=" + pId;
     }
 
     // Responds to /viewProject?id=project_id
