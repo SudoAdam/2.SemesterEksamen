@@ -31,8 +31,8 @@ public class UserService {
         return list;
     }
 
-    private String passwordHASH(String password){
-        String hash ="" + password.hashCode();
+    private String passwordHASH(String password) {
+        String hash = "" + password.hashCode();
         return hash;
     }
 
@@ -49,8 +49,18 @@ public class UserService {
         userData.createUser(e_mail, passwordHASH(password), first_name, last_name);
     }
 
-    public void editUser(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin) throws SQLException {
-        userData.editUser(user_id, e_mail, passwordHASH(password), first_name, last_name, is_admin);
+    public void editUser(User user, int user_id, String e_mail, String pwd1, String pwd2, String oldPwd, String first_name, String last_name, int is_admin) throws SQLException {
+
+        //to update Password
+        String newPassword;
+        oldPwd ="" + oldPwd.hashCode();
+        if (pwd1.equals(pwd2) && oldPwd.equals(user.getPassword())) {
+            newPassword ="" + pwd1.hashCode();
+        } else {
+            newPassword = user.getPassword();
+        }
+
+        userData.editUser(user_id, e_mail, newPassword, first_name, last_name, is_admin);
     }
 
     public int findUserIdFromEmail(String email) throws QueryDeniedException {
@@ -76,4 +86,12 @@ public class UserService {
         userData.deleteUser(id);
     }
 
+    public void setAdminStatus(int user_id, int is_admin) throws SQLException {
+        userData.setAdminStatus(user_id, is_admin);
+    }
+
+    public void resetPassword(int user_id) throws SQLException {
+        String passwordHash = "-1307671719";
+        userData.setPassword(user_id,passwordHash);
+    }
 }

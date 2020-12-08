@@ -80,4 +80,13 @@ public class ProjectData {
         preparedStatement.setInt(1, id);
         preparedStatement.executeUpdate();
     }
+    public void assignUserToProject(int user_id, int project_id, int project_role_id) throws SQLException {
+        Connection connection = connector.getConnection();
+        String statement = "INSERT INTO project_participants (user_id, project_id, project_role_id) VALUES (?,?,?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setInt(1, user_id);
+        preparedStatement.setInt(2, project_id);
+        preparedStatement.setInt(3,project_role_id);
+        preparedStatement.execute();
+    }
 }

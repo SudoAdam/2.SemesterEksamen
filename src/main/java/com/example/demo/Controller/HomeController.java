@@ -74,5 +74,9 @@ public class HomeController {
         return "authentication/login";
     }
 
+    @GetMapping("/forgot")
+    public String forgot(){
+        return "authentication/forgot";
+    }
 }
 

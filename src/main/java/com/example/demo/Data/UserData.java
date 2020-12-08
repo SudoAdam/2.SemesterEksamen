@@ -172,4 +172,23 @@ public class UserData {
         preparedStatement.setString(1, e_mail);
         preparedStatement.executeUpdate();
     }
+
+    public void setAdminStatus(int user_id, int is_admin) throws SQLException {
+        Connection connection = connector.getConnection();
+        String statement = "UPDATE users SET is_admin=? WHERE user_id=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setInt(1, is_admin);
+        preparedStatement.setInt(2, user_id);
+        preparedStatement.executeUpdate();
+    }
+
+    public void setPassword(int user_id, String password) throws SQLException {
+        Connection connection = connector.getConnection();
+        String statement = "UPDATE users SET password=? WHERE user_id=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setString(1, password);
+        preparedStatement.setInt(2, user_id);
+        preparedStatement.executeUpdate();
+    }
+
 }

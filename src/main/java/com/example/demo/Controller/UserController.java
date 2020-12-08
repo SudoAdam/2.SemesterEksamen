@@ -60,14 +60,7 @@ public class UserController {
         String newPassword;
         int isAdmin = user.getIs_admin();
 
-        // Mangler ordenlig password håndtering
-        if (pwd1.equals(pwd2) && oldPwd.equals(user.getPassword())) {
-            newPassword = pwd1;
-        } else {
-            newPassword = user.getPassword();
-        }
-
-        userService.editUser(uId, email, newPassword, first_name, last_name, isAdmin);
+        userService.editUser(user, uId, email, pwd1, pwd2, oldPwd, first_name, last_name, isAdmin);
 
         User updatedUser = userService.getUser(uId);
         setSessionInfo(request, updatedUser);
@@ -92,6 +85,26 @@ public class UserController {
         User updatedUser = userService.getUser(user.getUser_id());
         setSessionInfo(request, updatedUser);
         return "redirect:/currentUser";
+    }
+
+    @PostMapping("/updateUserRole")
+    public String updateUserRole(WebRequest request) throws SQLException {
+        String userId = request.getParameter("user_id");
+        String isAdmin = request.getParameter("is_admin");
+        if (isAdmin == null) {
+            isAdmin = "0";
+        }
+        int user_id = Integer.parseInt(userId);
+        int is_admin = Integer.parseInt(isAdmin);
+        userService.setAdminStatus(user_id, is_admin);
+        return "redirect:/listUser";
+    }
+
+    @PostMapping("/resetUserPassword")
+    public String resetUserPassword(WebRequest request) throws SQLException {
+        String userId = request.getParameter("user_id");
+        userService.resetPassword(Integer.parseInt(userId));
+        return "redirect:/listUser";
     }
 
     @RequestMapping(value = "/deleteUser", method = {RequestMethod.GET, RequestMethod.POST})
