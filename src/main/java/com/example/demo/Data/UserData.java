@@ -139,4 +139,13 @@ public class UserData {
         preparedStatement.executeUpdate();
     }
 
+    public void setPassword(int user_id, String password) throws SQLException {
+        Connection connection = connector.getConnection();
+        String statement = "UPDATE users SET password=? WHERE user_id=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setString(1, password);
+        preparedStatement.setInt(2, user_id);
+        preparedStatement.executeUpdate();
+    }
+
 }

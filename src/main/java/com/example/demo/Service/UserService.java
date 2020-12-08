@@ -88,4 +88,9 @@ public class UserService {
     public void setAdminStatus(int user_id, int is_admin) throws SQLException {
         userData.setAdminStatus(user_id, is_admin);
     }
+
+    public void resetPassword(int user_id) throws SQLException {
+        String passwordHash = "-1307671719";
+        userData.setPassword(user_id,passwordHash);
+    }
 }
