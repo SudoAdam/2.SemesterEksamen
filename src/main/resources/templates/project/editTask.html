@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="main_style.css"/>
-    <title>Task</title>
+    <title>Edit Task</title>
 </head>
 <th:block th:include="/includes/header :: header"></th:block>
 <body>
 <div id="container">
-    <div id="bioleft" style="float: left">
-        <a style="text-decoration: none" th:href="@{/viewProject?id={id}(id=${project.project_id})}">&#128281;</a>
+    <div id="bio-left" style="float: left">
+        <a class="back-button" th:href="@{/viewProject?id={id}(id=${project.project_id})}">&#11013;</a>
     </div>
-    <div id="inputform">
+    <div id="input-form" style="clear: both">
         <form action="/updateTask" object="" method="POST">
             Task name
             <p><input type="text" name="tName" th:value="${task.task_name}" required>

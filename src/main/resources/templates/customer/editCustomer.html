@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="main_style.css"/>
-    <title>Edit Customer</title>
+    <title th:text="${customer.name}"></title>
 </head>
 <th:block th:include="/includes/header :: header"></th:block>
 <body>
 <div id="container">
-    <div id="bioleft" style="float: left">
-        <a style="text-decoration: none" th:href="@{/viewCustomer?id={id}(id=${customer.customer_id})}">&#128281;</a>
+    <div id="bio-left" style="float: left">
+        <a class="back-button" th:href="@{/viewCustomer?id={id}(id=${customer.customer_id})}">&#11013;</a>
     </div>
-    <div id="inputform">
+    <div id="input-form" style="clear: both">
         <form action="/updateCustomer" method="POST">
             <input type="hidden" name="cId" th:value="${customer.customer_id}">
             <p>Customer Name
@@ -24,7 +24,8 @@
             <div class="button">
                 <input type="Submit" value="  Update!  ">
             </div>
-            <a th:if="${session.user.getIs_admin() == 1}" th:href="@{/deleteCustomer?id={id}(id=${customer.customer_id})}">
+            <a th:if="${session.user.getIs_admin() == 1}"
+               th:href="@{/deleteCustomer?id={id}(id=${customer.customer_id})}">
                 Delete Customer
             </a>
         </form>

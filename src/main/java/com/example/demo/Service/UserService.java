@@ -19,18 +19,23 @@ public class UserService {
     private final UserData userData;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public UserService(UserData userData){
+    public UserService(UserData userData) {
         this.userData = userData;
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<User> getUsers() throws SQLException{
+    public ArrayList<User> getUsers() throws SQLException {
         ArrayList<User> list = userData.getUsers();
         return list;
     }
 
+    private String passwordHASH(String password){
+        String hash ="" + password.hashCode();
+        return hash;
+    }
+
     public User login(String email, String password) throws LoginException, SQLException {
-        User user = userData.login(email,password);
+        User user = userData.login(email, passwordHASH(password));
         return user;
     }
 
@@ -38,20 +43,20 @@ public class UserService {
         return userData.getUser(id);
     }
 
-    public void createUser(String e_mail, String password, String first_name, String last_name) throws SQLException{
-        userData.createUser(e_mail, password, first_name, last_name);
+    public void createUser(String e_mail, String password, String first_name, String last_name) throws SQLException {
+        userData.createUser(e_mail, passwordHASH(password), first_name, last_name);
     }
 
-    public void editUser(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin) throws SQLException{
-        userData.editUser(user_id, e_mail, password, first_name, last_name, is_admin);
+    public void editUser(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin) throws SQLException {
+        userData.editUser(user_id, e_mail, passwordHASH(password), first_name, last_name, is_admin);
     }
 
-    public int findUserIdFromEmail(String email) throws SQLException{
+    public int findUserIdFromEmail(String email) throws SQLException {
         return userData.findUserIdFromEmail(email);
 
     }
 
-    public String findEmailFromUserId(int id) throws SQLException{
+    public String findEmailFromUserId(int id) throws SQLException {
         return userData.findEmailFromUserId(id);
     }
 
@@ -65,7 +70,7 @@ public class UserService {
         }
     }
 
-    public void deleteUser(int id) throws SQLException{
+    public void deleteUser(int id) throws SQLException {
         userData.deleteUser(id);
     }
 }

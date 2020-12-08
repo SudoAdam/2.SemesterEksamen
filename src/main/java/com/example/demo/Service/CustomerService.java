@@ -1,5 +1,5 @@
 /**
-@Author Rasmus Berg
+ * @Author Rasmus Berg
  */
 
 
@@ -18,7 +18,7 @@ public class CustomerService {
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    public CustomerService(CustomerData customerData){
+    public CustomerService(CustomerData customerData) {
         this.customerData = customerData;
     }
 
@@ -28,20 +28,20 @@ public class CustomerService {
         customerData.createCustomer(name, contact_name, contact_email, contact_phone);
     }
 
-    public void editCustomer(int customer_id, String name, String contact_name, String contact_email, String contact_phone) throws SQLException{
+    public void editCustomer(int customer_id, String name, String contact_name, String contact_email, String contact_phone) throws SQLException {
         customerData.editCustomer(customer_id, name, contact_name, contact_email, contact_phone);
     }
 
-    public ArrayList<Customer> getCustomers() throws SQLException{
+    public ArrayList<Customer> getCustomers() throws SQLException {
         ArrayList<Customer> customerlist = customerData.getCustomers();
         return customerlist;
     }
 
-    public Customer getCustomer(int id) throws SQLException{
-      return customerData.getCustomer(id);
+    public Customer getCustomer(int id) throws SQLException {
+        return customerData.getCustomer(id);
     }
 
-    public void deleteCustomer(int id) throws SQLException{
+    public void deleteCustomer(int id) throws SQLException {
         customerData.deleteCustomer(id);
     }
 }

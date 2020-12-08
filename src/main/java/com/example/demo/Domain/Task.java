@@ -68,13 +68,21 @@ public class Task implements DomainFacade {
         this.task_leader_id = task_leader_id;
     }
 
-    public User getTask_leader() { return task_leader; }
+    public User getTask_leader() {
+        return task_leader;
+    }
 
-    public void setTask_leader(User task_leader) { this.task_leader = task_leader; }
+    public void setTask_leader(User task_leader) {
+        this.task_leader = task_leader;
+    }
 
-    public String getTask_leader_email() { return task_leader_email; }
+    public String getTask_leader_email() {
+        return task_leader_email;
+    }
 
-    public void setTask_leader_email(String task_leader_email) { this.task_leader_email = task_leader_email; }
+    public void setTask_leader_email(String task_leader_email) {
+        this.task_leader_email = task_leader_email;
+    }
 
     public LocalDate getKickoff() {
         return kickoff;

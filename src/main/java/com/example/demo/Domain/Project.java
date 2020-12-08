@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public class Project implements DomainFacade {
+    // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private final int project_id;
     private final String project_name;
     private final LocalDate kickoff;
@@ -13,6 +14,7 @@ public class Project implements DomainFacade {
     private User project_leader;
     private Customer customer;
 
+    // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public Project(int project_id, String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) {
         this.project_id = project_id;
         this.project_name = project_name;
@@ -21,7 +23,7 @@ public class Project implements DomainFacade {
         this.project_leader_id = project_leader_id;
         this.customer_id = customer_id;
     }
-
+    // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public User getProject_leader() {
         return project_leader;
     }

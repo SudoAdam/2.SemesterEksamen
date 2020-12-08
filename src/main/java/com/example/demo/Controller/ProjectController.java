@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.Project;
+import com.example.demo.Domain.Task;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.TaskService;
 import com.example.demo.Service.UserService;
@@ -37,12 +38,9 @@ public class ProjectController {
     }
 
     @PostMapping("/createProject")
-    public String createProject(WebRequest request) throws SQLException {
+    public String createProject(WebRequest request) throws Exception {
         //denne funktion er ikke færdig!
         String projectName = request.getParameter("pName");
-        String companyName = request.getParameter("comName");
-        String contactName = request.getParameter("conName");
-        String contactEmail = request.getParameter("conEmail");
         String kickOffStr = request.getParameter("kickOff");
         String deadlineStr = request.getParameter("deadline");
         int project_leader_id = 1;                                  //request email and get project_leader_id
@@ -51,7 +49,6 @@ public class ProjectController {
         LocalDate deadline = LocalDate.parse(deadlineStr);
 
         projectService.createProject(projectName, kickOff, deadline, project_leader_id, customer_id);
-        ArrayList<Project> projectList = projectService.getProjects();
         return "redirect:/listProject";
     }
 
@@ -86,13 +83,15 @@ public class ProjectController {
     // Responds to /viewProject?id=project_id
     @RequestMapping(value = "/viewProject", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewProject(@RequestParam int id, Model model) throws SQLException {
-        model.addAttribute("tasks", taskService.getTasks(id));
-        model.addAttribute("project", projectService.getProject(id));
+        ArrayList<Task> tasks = taskService.getTasks(id);
+        Project project = projectService.getProject(id);
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("project", project);
         return "project/viewProject";
     }
 
     @RequestMapping(value = "/deleteProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteProject(@RequestParam int id) throws SQLException{
+    public String deleteProject(@RequestParam int id) throws SQLException {
         projectService.deleteProject(id);
         return "redirect:/listProject";
     }

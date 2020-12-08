@@ -39,19 +39,39 @@ public class HomeController {
     }
 
     @GetMapping("/logout")
-    public String logout(WebRequest request){
+    public String logout(WebRequest request) {
         // en hurtig tanke... Ser ud til at virke. men skal testet godt igennem
-        request.removeAttribute("user",WebRequest.SCOPE_SESSION);
+        request.removeAttribute("user", WebRequest.SCOPE_SESSION);
         return "redirect:/";
     }
 
     @GetMapping("/loggedin")
-    public String loggedin(WebRequest request,Model model){
+    public String loggedin(WebRequest request, Model model) {
         User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         if (user != null) {
             return "authentication/loggedin";
         } else
             return "redirect:/";
     }
+
+
+    @GetMapping("/createUser")
+    public String createUser() {
+        return "user/createUser";
+    }
+
+    @PostMapping("/createUser")
+    public String createUser(WebRequest request) throws SQLException {
+        String e_mail = request.getParameter("email");
+        String password = request.getParameter("password");
+        String first_name = request.getParameter("firstName");
+        String last_name = request.getParameter("lastName");
+        //vi skal have gjort så når man opretter sig, at den skriver direkte til databasen,
+        // og så henter et bruger objekt tilbage fra databasen.
+        // For så får vi nemlig userID med. med det samme.
+        userService.createUser(e_mail, password, first_name, last_name);
+        return "authentication/login";
+    }
+
 }
 

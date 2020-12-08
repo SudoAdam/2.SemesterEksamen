@@ -8,18 +8,18 @@
 <th:block th:include="/includes/header :: header"></th:block>
 <body>
 <div id="container" style="text-align: left">
-    <div id="bioleft" style="float: left">
-        <a style="text-decoration: none" href="/listUser">&#128281;</a>
+    <div id="bio-left" style="float: left">
+        <a class="back-button" href="/listUser">&#11013;</a>
         <h1 style="font-size: 50px"><span th:text="${user.first_name}"></span>&nbsp;&nbsp;<span th:text="${user.last_name}"></span></h1>
         <hr class="rounded">
         <p>
             Email: <span th:text="${user.e_mail}"></span>
     </div>
-    <a th:if="${session.user.getIs_admin() == 1}" th:href="@{/deleteUser?id={id}(id=${user.user_id})}">
-        Delete User
-    </a>
-    <div id="bioright" style="float: right">
-        <img class="pb" th:src="*{'data:image/jpeg;base64,' + user.byteArrayAs64String()}"> <!-- th:src="*{'data:image/jpeg;base64,' + profilePic}"> -->
+
+    <div id="bio-right" style="float: right">
+        <a th:if="${session.user.getIs_admin() == 1}" th:href="@{/deleteUser?id={id}(id=${user.user_id})}">Delete User</a>
+        <br>
+        <img class="pb" th:src="*{'data:image/jpeg;base64,' + user.byteArrayAs64String()}">
     </div>
 </div>
 </body>

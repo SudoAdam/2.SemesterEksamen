@@ -9,24 +9,24 @@
 <th:block th:include="/includes/header :: header"></th:block>
 <body>
 <div id="container">
-    <div id="bioleft" style="float: left">
-        <a style="text-decoration: none" th:href="@{/viewProject?id={id}(id=${project.project_id})}">&#128281;</a>
+    <div id="bio-left" style="float: left">
+        <a class="back-button" th:href="@{/viewProject?id={id}(id=${project.project_id})}">&#11013;</a>
     </div>
-    <div id="inputform">
+    <div id="input-form">
         <form th:action="@{/createTaskPost?id={id}(id=${project.project_id})}" method="POST">
             <p>Task Name
             <p><input type="text" name="taskName" required>
             <p>Description
             <p><input type="text" name="taskDesc" required>
             <p>Task Leader
-            <p><input type="email" name="taskLeaderEmail" placeholder="E-mail"  required>
+            <p><input type="email" name="taskLeaderEmail" placeholder="E-mail" required>
             <p>Kick-off
-            <p><input type="date" name="kickoff"  required>
+            <p><input type="date" name="kickoff" required>
             <p>Deadline
             <p><input type="date" name="deadline" required>
             <p>Working Hours
             <p><input type="number" name="workingHours" required>
-            <input type="hidden" name="projectId" th:value="${project.project_id}">
+                <input type="hidden" name="projectId" th:value="${project.project_id}">
             <div class="button">
                 <input type="Submit" value="  Create!  ">
             </div>

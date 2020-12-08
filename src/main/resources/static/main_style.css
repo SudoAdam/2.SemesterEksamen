@@ -16,12 +16,14 @@ body {
     width: 100vw;
 }
 
+
+
 hr.rounded {
     border-top: 2px solid #6B7A99;
     border-radius: 2px;
 }
 
-.profilepiclist{
+.profilepic-list{
     width:150px;
     height:150px;
 }
@@ -31,13 +33,28 @@ hr.rounded {
     height:300px;
 }
 
-.pblist{
+.pb-list{
     width:50px;
     height:50px;
 }
 
-footer{
+.back-button {
+    text-decoration: none;
+    color: #35455D;
+    font-size: 300%;
+    font-weight: bold;
+}
 
+.plus-button {
+    width: 45px;
+    height: 45px;
+    color: #5F9A6F;
+    font-size: 150%;
+    font-weight: bold;
+    margin: auto;
+}
+
+footer{
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -80,26 +97,31 @@ footer{
     margin: 15px 30px 0px 0px;
 }
 
-
-
 #container {
-    background-color: #EDEDED;
-    padding: 50px;
-    width: 900px;
-    min-height: 80vh;
-    margin: auto;
-    text-align: center;
+     background-color: #EDEDED;
+     padding: 50px;
+     width: 900px;
+     min-height: 80vh;
+     margin: auto;
+     text-align: center;
+ }
+
+#bio-left{
+
 }
 
+#bio-right{
 
-#inputform {
+}
+
+#input-form {
     font-size: 20px;
     text-align: center;
-
+    clear: both;
 }
 
-
 .project-table {
+    text-align: left;
     border-collapse: collapse;
     top: 0;
     margin-left: auto;
@@ -117,14 +139,12 @@ footer{
     text-align: left;
     font-weight: bold;
     border-radius: 15px 15px 15px 15px;
-
 }
 
 .project-table th,
 .project-table td {
     font-size: 20px;
     padding: 12px 15px;
-    border: 2px solid #9EBDD5;
 }
 
 .project-table tbody tr {
@@ -132,9 +152,11 @@ footer{
 }
 
 .project-table tbody tr:nth-of-type(even) {
+    background-color: #E5E5E5;
     border-radius: 15px 15px 15px 15px;
 }
 
 .project-table tbody tr:last-of-type {
     border-radius: 15px 15px 15px 15px;
 }
+

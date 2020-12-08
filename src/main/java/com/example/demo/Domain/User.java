@@ -1,5 +1,5 @@
 /**
- @Author Rasmus Berg
+ * @Author Rasmus Berg
  */
 
 
@@ -8,7 +8,7 @@ package com.example.demo.Domain;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 public class User implements DomainFacade {
-
+    // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private int user_id;
     private String e_mail;
     private String password;
@@ -19,7 +19,7 @@ public class User implements DomainFacade {
 
     public User() {
     }
-
+    // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public User(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin, byte[] img) {
         this.user_id = user_id;
         this.e_mail = e_mail;
@@ -29,7 +29,7 @@ public class User implements DomainFacade {
         this.is_admin = is_admin;
         this.img = img;
     }
-
+    // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public int getUser_id() {
         return user_id;
     }
@@ -78,7 +78,7 @@ public class User implements DomainFacade {
         this.is_admin = is_admin;
     }
 
-    public String byteArrayAs64String(){
+    public String byteArrayAs64String() {
         return Base64.encodeBase64String(this.img);
     }
 

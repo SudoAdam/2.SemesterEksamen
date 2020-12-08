@@ -16,7 +16,7 @@ public class TaskService {
     private final UserService userService;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public TaskService(UserService userService, TaskData taskData){
+    public TaskService(UserService userService, TaskData taskData) {
         this.userService = userService;
         this.taskData = taskData;
     }
@@ -30,30 +30,41 @@ public class TaskService {
         task.setTask_leader_email(e_mail);
     }
 
-    private void finalize(ArrayList<Task> list) throws SQLException{
+    private void finalize(ArrayList<Task> list) throws SQLException {
         // Late dependency injection for collections of domain objects
-        for (Task t: list) {
+        for (Task t : list) {
             finalize(t);
         }
     }
 
-    public ArrayList<Task> getTasks(int project_id) throws SQLException{
+    public ArrayList<Task> getTasks(int project_id) throws SQLException {
         ArrayList<Task> list = taskData.getTasks(project_id);
         finalize(list);
         return list;
     }
 
-    public Task getTask(int task_id) throws SQLException{
+    public Task getTask(int task_id) throws SQLException {
         Task t = taskData.getTask(task_id);
         finalize(t);
         return (t);
     }
 
-    public void createTask(int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws SQLException{
+    public void createTask(int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws SQLException, Exception {
+        if (correctDate(kickoff, deadline) == false) {
+            throw new Exception();
+        }
         taskData.createTask(project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
     }
 
-    public void editTask(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws SQLException{
+    private boolean correctDate(LocalDate kickoff, LocalDate deadline) {
+        boolean result = false;
+        if (kickoff.isBefore(deadline)) {
+            result = true;
+        }
+        return result;
+    }
+
+    public void editTask(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws SQLException {
         taskData.editTask(task_id, project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
     }
 }
