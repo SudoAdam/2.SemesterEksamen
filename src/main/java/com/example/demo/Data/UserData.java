@@ -2,16 +2,16 @@
  * @Author Rasmus Berg
  */
 
-
 package com.example.demo.Data;
 
 import com.example.demo.Domain.User;
+import com.example.demo.Exceptions.ExecutionDeniedException;
+import com.example.demo.Exceptions.LoginException;
+import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Mapper.UserMapper;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 
 public class UserData {
     // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -25,48 +25,78 @@ public class UserData {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<User> getUsers() throws SQLException {
-        Connection connection = connector.getConnection();
-        String statement = "SELECT * FROM users";
-        PreparedStatement preparedStatement = connection.prepareStatement(statement);
-        ResultSet resultSet = preparedStatement.executeQuery();
+    public ArrayList<User> getUsers() throws QueryDeniedException {
+        try {
+            Connection connection = connector.getConnection();
+            String statement = "SELECT * FROM users";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-        ArrayList<User> users = new ArrayList<>();
-        while (resultSet.next()) {
-            users.add((User) userMapper.create(resultSet));
+            ArrayList<User> users = new ArrayList<>();
+            while (resultSet.next()) {
+                users.add((User) userMapper.create(resultSet));
+            }
+            return users;
+        } catch (SQLException e) {
+            throw new QueryDeniedException("Error when querying database: SQLException message: " + e.getMessage());
         }
-        return users;
     }
 
-    public User getUser(int id) throws SQLException {
-        Connection connection = connector.getConnection();
-        String statement = "SELECT * FROM users WHERE user_id = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(statement);
-        preparedStatement.setInt(1, id);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        return (User) userMapper.create(resultSet);
+    public User getUser(int id) throws QueryDeniedException {
+        try {
+            Connection connection = connector.getConnection();
+            String statement = "SELECT * FROM users WHERE user_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return (User) userMapper.create(resultSet);
+        } catch (SQLException e) {
+            throw new QueryDeniedException("Error when querying database: SQLException message: " + e.getMessage());
+        }
     }
 
-    public User login(String email, String password) throws SQLException {
-        Connection connection = connector.getConnection();
-        String statement = "SELECT * FROM users WHERE e_mail=? and password=?";
-
-        PreparedStatement preparedStatement = connection.prepareStatement(statement);
-        preparedStatement.setString(1, email);
-        preparedStatement.setString(2, password);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        return (User) userMapper.create(resultSet);
+    public User getUser(String e_mail) throws QueryDeniedException {
+        try {
+            Connection connection = connector.getConnection();
+            String statement = "SELECT * FROM users WHERE e_mail = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, e_mail);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return (User) userMapper.create(resultSet);
+        } catch (SQLException e) {
+            throw new QueryDeniedException("Error when querying database: SQLException message: " + e.getMessage());
+        }
     }
 
-    public void createUser(String e_mail, String password, String first_name, String last_name) throws SQLException {
-        Connection connection = connector.getConnection();
-        String statement = "INSERT INTO users (e_mail, password, first_name, last_name) VALUES (?,?,?,?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(statement);
-        preparedStatement.setString(1, e_mail);
-        preparedStatement.setString(2, password);
-        preparedStatement.setString(3, first_name);
-        preparedStatement.setString(4, last_name);
-        preparedStatement.execute();
+    public User login(String email, String password) throws LoginException, QueryDeniedException {
+        try {
+            Connection connection = connector.getConnection();
+            String statement = "SELECT * FROM users WHERE e_mail=? and password=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return (User) userMapper.create(resultSet);
+        } catch (QueryDeniedException e) {
+            throw new LoginException("password or credentials where incorrect");
+        } catch (SQLException e) {
+            throw new QueryDeniedException("Error when querying database: SQLException message: " + e.getMessage());
+        }
+    }
+
+    public void createUser(String e_mail, String password, String first_name, String last_name) throws ExecutionDeniedException {
+        try {
+            Connection connection = connector.getConnection();
+            String statement = "INSERT INTO users (e_mail, password, first_name, last_name) VALUES (?,?,?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, e_mail);
+            preparedStatement.setString(2, password);
+            preparedStatement.setString(3, first_name);
+            preparedStatement.setString(4, last_name);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new ExecutionDeniedException("Error when executing statement to database: SQLException message: " + e.getMessage());
+        }
     }
 
     public void editUser(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin) throws SQLException {
@@ -82,43 +112,48 @@ public class UserData {
         preparedStatement.executeUpdate();
     }
 
-    public int findUserIdFromEmail(String e_mail) throws SQLException {
-        int id = -1;
-        Connection connection = connector.getConnection();
-        String statement = "SELECT user_id from users where e_mail = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(statement);
-        preparedStatement.setString(1, e_mail);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        resultSet.next();
-        String result = "" + resultSet.getObject(1);
-        id = Integer.parseInt(result);
-        return id;
-
-    }
-
-    public String findEmailFromUserId(int id) throws SQLException {
-        String e_mail = "";
-        Connection connection = connector.getConnection();
-        String statement = "SELECT e_mail from users where user_id = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(statement);
-        preparedStatement.setInt(1, id);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        resultSet.next();
-        String result = "" + resultSet.getString("e_mail");
-        e_mail = result;
-        return e_mail;
-    }
-
-    public void uploadImg(int user_id, Blob img) {
-        String statement = "UPDATE users SET img=? WHERE user_id=?;";
-        Connection connection = connector.getConnection();
+    public int findUserIdFromEmail(String e_mail) throws QueryDeniedException {
         try {
+            Connection connection = connector.getConnection();
+            String statement = "SELECT user_id from users where e_mail = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, e_mail);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                throw new QueryDeniedException("Error when querying resultSet: Empty resultset");
+            }
+            return resultSet.getInt("user_id");
+        } catch (SQLException e) {
+            throw new QueryDeniedException("Error when querying database: SQLException message: " + e.getMessage());
+        }
+    }
+
+    public String findEmailFromUserId(int id) throws QueryDeniedException {
+        try {
+            Connection connection = connector.getConnection();
+            String statement = "SELECT e_mail from users where user_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                throw new QueryDeniedException("Error when querying resultSet: Empty resultset");
+            }
+            return resultSet.getString("e_mail");
+        } catch (SQLException e) {
+            throw new QueryDeniedException("Error when querying database: SQLException message: " + e.getMessage());
+        }
+    }
+
+    public void uploadImg(int user_id, Blob img) throws ExecutionDeniedException {
+        try {
+            String statement = "UPDATE users SET img=? WHERE user_id=?;";
+            Connection connection = connector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setBlob(1, img);
             preparedStatement.setInt(2, user_id);
             preparedStatement.executeUpdate();
-        } catch (SQLException sqlException) {
-            throw new NullPointerException(sqlException.getMessage());
+        } catch (SQLException e) {
+            throw new ExecutionDeniedException("Error when querying database: SQLException message: " + e.getMessage());
         }
     }
 
@@ -127,6 +162,14 @@ public class UserData {
         String statement = "DELETE FROM users WHERE user_id=?";
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
         preparedStatement.setInt(1, id);
+        preparedStatement.executeUpdate();
+    }
+
+    public void deleteUser(String e_mail) throws SQLException {
+        Connection connection = connector.getConnection();
+        String statement = "DELETE FROM users WHERE e_mail=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setString(1, e_mail);
         preparedStatement.executeUpdate();
     }
 

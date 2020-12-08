@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.TaskService;
 import com.example.demo.Service.UserService;
@@ -25,7 +26,7 @@ public class TaskController {
 
     // Responds to /editTask?id=task_id
     @RequestMapping(value = "/editTask", method = {RequestMethod.GET, RequestMethod.POST})
-    public String editTask(@RequestParam int id, Model model) throws SQLException {
+    public String editTask(@RequestParam int id, Model model) throws SQLException, QueryDeniedException {
         int project_id = taskService.getTask(id).getProject_id();
         model.addAttribute("project", projectService.getProject(project_id));
         model.addAttribute("task", taskService.getTask(id));
@@ -33,7 +34,8 @@ public class TaskController {
     }
 
     @PostMapping("/updateTask")
-    public String updateTask(WebRequest request, Model model) throws SQLException {
+    public String updateTask(WebRequest request, Model model) throws SQLException, QueryDeniedException {
+        // Consider refactoring to handle mapping in either Data or Mapping layer
         String taskId = request.getParameter("tId");
         String projectId = request.getParameter("pId");
         String taskName = request.getParameter("tName");
@@ -57,13 +59,13 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/createTask", method = {RequestMethod.GET, RequestMethod.POST})
-    public String createTask(@RequestParam int id, Model model) throws SQLException {
+    public String createTask(@RequestParam int id, Model model) throws SQLException, QueryDeniedException {
         model.addAttribute("project", projectService.getProject(id));
         return "project/createTask";
     }
 
     @RequestMapping(value = "/createTaskPost", method = {RequestMethod.GET, RequestMethod.POST})
-    public String createTaskPost(@RequestParam int id, WebRequest request, Model model) throws Exception {
+    public String createTaskPost(@RequestParam int id, WebRequest request, Model model) throws Exception, QueryDeniedException {
 
         String taskName = request.getParameter("taskName");
         String taskDesc = request.getParameter("taskDesc");

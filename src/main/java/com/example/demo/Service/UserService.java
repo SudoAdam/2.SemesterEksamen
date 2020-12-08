@@ -5,6 +5,9 @@ package com.example.demo.Service;
 
 import com.example.demo.Data.UserData;
 import com.example.demo.Domain.User;
+import com.example.demo.Exceptions.ExecutionDeniedException;
+import com.example.demo.Exceptions.LoginException;
+import com.example.demo.Exceptions.QueryDeniedException;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -14,7 +17,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class UserService {
-
     // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private final UserData userData;
 
@@ -24,7 +26,7 @@ public class UserService {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<User> getUsers() throws SQLException {
+    public ArrayList<User> getUsers() throws QueryDeniedException {
         ArrayList<User> list = userData.getUsers();
         return list;
     }
@@ -34,16 +36,16 @@ public class UserService {
         return hash;
     }
 
-    public User login(String email, String password) throws SQLException {
+    public User login(String email, String password) throws LoginException, QueryDeniedException {
         User user = userData.login(email, passwordHASH(password));
         return user;
     }
 
-    public User getUser(int id) throws SQLException {
+    public User getUser(int id) throws QueryDeniedException {
         return userData.getUser(id);
     }
 
-    public void createUser(String e_mail, String password, String first_name, String last_name) throws SQLException {
+    public void createUser(String e_mail, String password, String first_name, String last_name) throws ExecutionDeniedException {
         userData.createUser(e_mail, passwordHASH(password), first_name, last_name);
     }
 
@@ -61,17 +63,16 @@ public class UserService {
         userData.editUser(user_id, e_mail, newPassword, first_name, last_name, is_admin);
     }
 
-    public int findUserIdFromEmail(String email) throws SQLException {
+    public int findUserIdFromEmail(String email) throws QueryDeniedException {
         return userData.findUserIdFromEmail(email);
 
     }
 
-    public String findEmailFromUserId(int id) throws SQLException {
+    public String findEmailFromUserId(int id) throws QueryDeniedException {
         return userData.findEmailFromUserId(id);
     }
 
-
-    public void addProfilePicture(int user_id, MultipartFile file) {
+    public void addProfilePicture(int user_id, MultipartFile file) throws ExecutionDeniedException {
         try {
             byte[] fileAsBytes = file.getBytes();
             Blob fileAsBlob = new SerialBlob(fileAsBytes);

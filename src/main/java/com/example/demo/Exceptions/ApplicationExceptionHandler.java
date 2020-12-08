@@ -27,6 +27,16 @@ public class ApplicationExceptionHandler {
         return "error";
     }
 
+    @ExceptionHandler(LoginException.class)
+    public String handleLoginException(Model model, LoginException e) {
+        String title = "Login error was encountered;";
+        model.addAttribute("title", title);
+        model.addAttribute("exception", e.getClass());
+        model.addAttribute("message", e.getMessage());
+        model.addAttribute("stacktrace", Arrays.toString(e.getStackTrace()));
+        return "redirect:/";
+    }
+
     @ExceptionHandler(Exception.class)
     public String handleException(Model model, Exception e) {
         String title = "Request failed error was encountered";

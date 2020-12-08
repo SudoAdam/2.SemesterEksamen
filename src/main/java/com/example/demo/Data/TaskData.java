@@ -7,7 +7,7 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Task;
-import com.example.demo.Domain.User;
+import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Mapper.TaskMapper;
 
 import java.sql.*;
@@ -26,7 +26,7 @@ public class TaskData {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<Task> getTasks(int project_id) throws SQLException {
+    public ArrayList<Task> getTasks(int project_id) throws SQLException, QueryDeniedException {
         Connection connection = connector.getConnection();
         String statement = "SELECT * FROM tasks WHERE project_id=?;";
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
@@ -40,7 +40,7 @@ public class TaskData {
         return tasks;
     }
 
-    public Task getTask(int task_id) throws SQLException {
+    public Task getTask(int task_id) throws SQLException, QueryDeniedException {
         Connection connection = connector.getConnection();
         String statement = "SELECT * FROM tasks WHERE task_id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(statement);

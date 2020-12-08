@@ -6,6 +6,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Project;
+import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Service.CustomerService;
 import com.example.demo.Service.ProjectService;
 import org.springframework.stereotype.Controller;
@@ -42,14 +43,14 @@ public class CustomerController {
     }
 
     @GetMapping("/listCustomer")
-    public String listCustomer(Model model) throws SQLException {
+    public String listCustomer(Model model) throws SQLException, QueryDeniedException {
         ArrayList<Customer> customerList = customerService.getCustomers();
         model.addAttribute("customerList", customerList);
         return "customer/listCustomer";
     }
 
     @RequestMapping(value = "/editCustomer", method = {RequestMethod.GET, RequestMethod.POST})
-    public String editCustomer(@RequestParam int id, Model model) throws SQLException {
+    public String editCustomer(@RequestParam int id, Model model) throws SQLException, QueryDeniedException {
         model.addAttribute("customer", customerService.getCustomer(id));
         return "customer/editCustomer";
     }
@@ -67,7 +68,7 @@ public class CustomerController {
 
     // Responds to /viewCustomer?id=project_id
     @RequestMapping(value = "/viewCustomer", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewCustomer(@RequestParam int id, Model model) throws SQLException {
+    public String viewCustomer(@RequestParam int id, Model model) throws SQLException, QueryDeniedException {
         ArrayList<Project> projectList = projectService.getProjects();
         ArrayList<Project> projectCustomerList = new ArrayList<>();
         for (Project p : projectList) {

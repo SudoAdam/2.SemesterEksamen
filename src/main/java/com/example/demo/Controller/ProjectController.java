@@ -1,7 +1,7 @@
 package com.example.demo.Controller;
 
-import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Project;
+import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Service.CustomerService;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.TaskService;
@@ -13,7 +13,6 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 @Controller
 public class ProjectController {
@@ -30,13 +29,13 @@ public class ProjectController {
     }
 
     @GetMapping("/listProject")
-    public String showProjects(Model model, WebRequest request) throws SQLException {
+    public String showProjects(Model model, WebRequest request) throws SQLException, QueryDeniedException {
         model.addAttribute("projectList", projectService.getProjects());
         return "project/listProject";
     }
 
     @GetMapping("/createProject")
-    public String createProject(Model model) throws SQLException {
+    public String createProject(Model model) throws SQLException, QueryDeniedException {
         model.addAttribute("customers", customerService.getCustomers());
         model.addAttribute("users", userService.getUsers());
         return "project/createProject";
@@ -62,7 +61,7 @@ public class ProjectController {
 
     // Responds to /editProject?id=project_id
     @RequestMapping(value = "/editProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String editProject(@RequestParam int id, Model model) throws SQLException {
+    public String editProject(@RequestParam int id, Model model) throws SQLException, QueryDeniedException {
         Project p = projectService.getProject(id);
         model.addAttribute("customers", customerService.getCustomers());
         model.addAttribute("users", userService.getUsers());
@@ -73,7 +72,7 @@ public class ProjectController {
     }
 
     @PostMapping("/updateProject")
-    public String updateProject(WebRequest request, Model model) throws SQLException {
+    public String updateProject(WebRequest request, Model model) throws SQLException, QueryDeniedException {
         String projectId = request.getParameter("id");
         String projectName = request.getParameter("pName");
         String kickOffStr = request.getParameter("kickOff");
@@ -95,7 +94,7 @@ public class ProjectController {
 
     // Responds to /viewProject?id=project_id
     @RequestMapping(value = "/viewProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewProject(@RequestParam int id, Model model) throws SQLException {
+    public String viewProject(@RequestParam int id, Model model) throws SQLException, QueryDeniedException {
         Project p = projectService.getProject(id);
         model.addAttribute("projectmanager", userService.getUser(p.getProject_leader_id()));
         model.addAttribute("customer", customerService.getCustomer(p.getCustomer_id()));

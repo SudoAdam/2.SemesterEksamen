@@ -10,6 +10,7 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Task;
+import com.example.demo.Exceptions.QueryDeniedException;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -45,7 +46,7 @@ class TaskDataTest {
 
     @Test
     @Order(1)
-    void getTasks(ApplicationContext ctx) throws SQLException{
+    void getTasks(ApplicationContext ctx) throws SQLException, QueryDeniedException {
         TaskData taskData = (TaskData) ctx.getBean("taskData");
 
         ArrayList<Task> list = taskData.getTasks(1);
@@ -62,7 +63,7 @@ class TaskDataTest {
 
     @Test
     @Order(2)
-    void editTask(ApplicationContext ctx) throws SQLException{
+    void editTask(ApplicationContext ctx) throws SQLException, QueryDeniedException {
         TaskData taskData = (TaskData) ctx.getBean("taskData");
 
         ArrayList<Task> list01 = taskData.getTasks(1);

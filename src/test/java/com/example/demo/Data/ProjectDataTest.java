@@ -10,6 +10,7 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Project;
+import com.example.demo.Exceptions.QueryDeniedException;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
@@ -38,7 +39,7 @@ class ProjectDataTest {
 
     @Test
     @Order(1)
-    void getProjects(ApplicationContext ctx) throws SQLException {
+    void getProjects(ApplicationContext ctx) throws SQLException, QueryDeniedException {
         ProjectData projectData = (ProjectData) ctx.getBean("projectData");
         ArrayList<Project> list = projectData.getProjects();
         Project p = list.get(list.size()-1);
@@ -56,7 +57,7 @@ class ProjectDataTest {
 
     @Test
     @Order(2)
-    void getProject(ApplicationContext ctx) throws SQLException {
+    void getProject(ApplicationContext ctx) throws SQLException, QueryDeniedException {
         ProjectData projectData = (ProjectData) ctx.getBean("projectData");
 
         // For the sake of test, we need the project for the last row in the DBMS
@@ -78,7 +79,7 @@ class ProjectDataTest {
 
     @Test
     @Order(3)
-    void editProject(ApplicationContext ctx) throws SQLException {
+    void editProject(ApplicationContext ctx) throws SQLException, QueryDeniedException {
         ProjectData projectData = (ProjectData) ctx.getBean("projectData");
 
         // Select the last project in list and apply changes
