@@ -58,14 +58,7 @@ public class UserController {
         String newPassword;
         int isAdmin = user.getIs_admin();
 
-        // Mangler ordenlig password håndtering
-        if (pwd1.equals(pwd2) && oldPwd.equals(user.getPassword())) {
-            newPassword = pwd1;
-        } else {
-            newPassword = user.getPassword();
-        }
-
-        userService.editUser(uId, email, newPassword, first_name, last_name, isAdmin);
+        userService.editUser(user, uId, email, pwd1, pwd2, oldPwd, first_name, last_name, isAdmin);
 
         User updatedUser = userService.getUser(uId);
         setSessionInfo(request, updatedUser);
