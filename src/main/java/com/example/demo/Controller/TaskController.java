@@ -63,7 +63,7 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/createTaskPost", method = {RequestMethod.GET, RequestMethod.POST})
-    public String createTaskPost(@RequestParam int id, WebRequest request, Model model) throws SQLException {
+    public String createTaskPost(@RequestParam int id, WebRequest request, Model model) throws Exception {
 
         String taskName = request.getParameter("taskName");
         String taskDesc = request.getParameter("taskDesc");

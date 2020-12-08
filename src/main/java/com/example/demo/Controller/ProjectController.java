@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.Project;
+import com.example.demo.Domain.Task;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.TaskService;
 import com.example.demo.Service.UserService;
@@ -37,7 +38,7 @@ public class ProjectController {
     }
 
     @PostMapping("/createProject")
-    public String createProject(WebRequest request) throws SQLException {
+    public String createProject(WebRequest request) throws Exception {
         //denne funktion er ikke færdig!
         String projectName = request.getParameter("pName");
         String kickOffStr = request.getParameter("kickOff");
@@ -82,8 +83,10 @@ public class ProjectController {
     // Responds to /viewProject?id=project_id
     @RequestMapping(value = "/viewProject", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewProject(@RequestParam int id, Model model) throws SQLException {
-        model.addAttribute("tasks", taskService.getTasks(id));
-        model.addAttribute("project", projectService.getProject(id));
+        ArrayList<Task> tasks = taskService.getTasks(id);
+        Project project = projectService.getProject(id);
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("project", project);
         return "project/viewProject";
     }
 

@@ -23,6 +23,7 @@ public class ProjectService {
     private final UserData userData;
     private final CustomerData customerData;
 
+
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public ProjectService(ProjectData projectData, UserData userData, CustomerData customerData) {
         this.projectData = projectData;
@@ -60,6 +61,14 @@ public class ProjectService {
         return p;
     }
 
+    private boolean correctDate(LocalDate kickoff, LocalDate deadline){
+        boolean result = false;
+        if (kickoff.isBefore(deadline)){
+            result = true;
+        }
+        return result;
+    }
+
  /*   public ArrayList<Project> getUserProjects(User user) throws SQLException {
         ArrayList<Project> allProjectList = getProjects();
         ArrayList<Project> userProjectList = new ArrayList<>();
@@ -76,7 +85,10 @@ public class ProjectService {
         }
     } */
 
-    public void createProject(String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws SQLException {
+    public void createProject(String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws SQLException, Exception {
+      if (correctDate(kickoff, deadline) == false){
+          throw new Exception();
+      }
         projectData.createProject(project_name, kickoff, deadline, project_leader_id, customer_id);
     }
 
