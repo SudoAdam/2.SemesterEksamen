@@ -5,7 +5,7 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.User;
-import com.example.demo.Exceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.ExecutionDeniedException;
 import com.example.demo.Exceptions.LoginException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Mapper.UserMapper;
@@ -84,7 +84,7 @@ public class UserData {
         }
     }
 
-    public void createUser(String e_mail, String password, String first_name, String last_name) throws ExecuteDeniedException {
+    public void createUser(String e_mail, String password, String first_name, String last_name) throws ExecutionDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "INSERT INTO users (e_mail, password, first_name, last_name) VALUES (?,?,?,?)";
@@ -95,7 +95,7 @@ public class UserData {
             preparedStatement.setString(4, last_name);
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when executing statement to database: SQLException message: " + e.getMessage());
+            throw new ExecutionDeniedException("Error when executing statement to database: SQLException message: " + e.getMessage());
         }
     }
 
@@ -144,7 +144,7 @@ public class UserData {
         }
     }
 
-    public void uploadImg(int user_id, Blob img) throws ExecuteDeniedException {
+    public void uploadImg(int user_id, Blob img) throws ExecutionDeniedException {
         try {
             String statement = "UPDATE users SET img=? WHERE user_id=?;";
             Connection connection = connector.getConnection();
@@ -153,7 +153,7 @@ public class UserData {
             preparedStatement.setInt(2, user_id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when querying database: SQLException message: " + e.getMessage());
+            throw new ExecutionDeniedException("Error when querying database: SQLException message: " + e.getMessage());
         }
     }
 

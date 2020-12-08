@@ -5,7 +5,7 @@ package com.example.demo.Service;
 
 import com.example.demo.Data.UserData;
 import com.example.demo.Domain.User;
-import com.example.demo.Exceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.ExecutionDeniedException;
 import com.example.demo.Exceptions.LoginException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,7 +45,7 @@ public class UserService {
         return userData.getUser(id);
     }
 
-    public void createUser(String e_mail, String password, String first_name, String last_name) throws ExecuteDeniedException {
+    public void createUser(String e_mail, String password, String first_name, String last_name) throws ExecutionDeniedException {
         userData.createUser(e_mail, passwordHASH(password), first_name, last_name);
     }
 
@@ -72,7 +72,7 @@ public class UserService {
         return userData.findEmailFromUserId(id);
     }
 
-    public void addProfilePicture(int user_id, MultipartFile file) throws ExecuteDeniedException {
+    public void addProfilePicture(int user_id, MultipartFile file) throws ExecutionDeniedException {
         try {
             byte[] fileAsBytes = file.getBytes();
             Blob fileAsBlob = new SerialBlob(fileAsBytes);

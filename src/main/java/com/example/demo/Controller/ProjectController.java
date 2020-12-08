@@ -35,7 +35,7 @@ public class ProjectController {
     }
 
     @GetMapping("/createProject")
-    public String createProject(Model model) throws SQLException {
+    public String createProject(Model model) throws SQLException, QueryDeniedException {
         model.addAttribute("customers", customerService.getCustomers());
         model.addAttribute("users", userService.getUsers());
         return "project/createProject";

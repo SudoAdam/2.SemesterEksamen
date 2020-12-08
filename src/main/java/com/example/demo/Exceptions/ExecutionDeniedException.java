@@ -1,13 +1,13 @@
 package com.example.demo.Exceptions;
 
-public class ExecuteDeniedException extends Throwable {
+public class ExecutionDeniedException extends Throwable {
     private final String message;
 
-    public ExecuteDeniedException(String message) {
+    public ExecutionDeniedException(String message) {
         this.message = message;
     }
 
-    public ExecuteDeniedException() {
+    public ExecutionDeniedException() {
         // Default message
         this.message = "Request could not be sent";
     }

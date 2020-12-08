@@ -1,7 +1,7 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.User;
-import com.example.demo.Exceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.ExecutionDeniedException;
 import com.example.demo.Exceptions.LoginException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import org.junit.jupiter.api.AfterEach;
@@ -43,7 +43,7 @@ class UserDataTest {
     }
 
     @BeforeEach
-    void init() throws SQLException, QueryDeniedException, ExecuteDeniedException {
+    void init() throws SQLException, QueryDeniedException, ExecutionDeniedException {
         // Every test requires a user object, we will make it for every test.
         userData.deleteUser(e_mail);
         userData.createUser(e_mail, password, first_name, last_name);
@@ -105,7 +105,7 @@ class UserDataTest {
 
     @Test
     void createUser_exception() {
-        assertThrows(ExecuteDeniedException.class, ()->{userData.createUser("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "", "", "");});
+        assertThrows(ExecutionDeniedException.class, ()->{userData.createUser("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "", "", "");});
     }
 
     @Test

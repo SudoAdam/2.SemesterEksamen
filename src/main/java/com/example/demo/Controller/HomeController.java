@@ -1,7 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.User;
-import com.example.demo.Exceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.ExecutionDeniedException;
 import com.example.demo.Exceptions.LoginException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Service.UserService;
@@ -10,8 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
-
-import java.sql.SQLException;
 
 @Controller
 public class HomeController {
@@ -62,7 +60,7 @@ public class HomeController {
     }
 
     @PostMapping("/createUser")
-    public String createUser(WebRequest request) throws ExecuteDeniedException {
+    public String createUser(WebRequest request) throws ExecutionDeniedException {
         String e_mail = request.getParameter("email");
         String password = request.getParameter("password");
         String first_name = request.getParameter("firstName");

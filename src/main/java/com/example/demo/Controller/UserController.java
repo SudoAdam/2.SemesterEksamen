@@ -5,7 +5,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.User;
-import com.example.demo.Exceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.ExecutionDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.UserService;
@@ -79,7 +79,7 @@ public class UserController {
     }
 
     @PostMapping("/uploadImg")
-    public String uploadImg(@RequestParam("file") MultipartFile file, WebRequest request) throws QueryDeniedException, ExecuteDeniedException {
+    public String uploadImg(@RequestParam("file") MultipartFile file, WebRequest request) throws QueryDeniedException, ExecutionDeniedException {
         User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         userService.addProfilePicture(user.getUser_id(), file);
         User updatedUser = userService.getUser(user.getUser_id());
