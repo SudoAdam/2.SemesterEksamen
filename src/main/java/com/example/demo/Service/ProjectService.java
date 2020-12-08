@@ -99,4 +99,8 @@ public class ProjectService {
     public void deleteProject(int id) throws SQLException {
         projectData.deleteProject(id);
     }
+
+    public void assignUserToProject(int user_id, int project_id, int project_role_id) throws SQLException {
+    projectData.assignUserToProject(user_id, project_id, project_role_id);
+    }
 }
