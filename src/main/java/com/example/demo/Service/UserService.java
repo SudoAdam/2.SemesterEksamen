@@ -49,7 +49,6 @@ public class UserService {
 
     public void editUser(User user, int user_id, String e_mail, String pwd1, String pwd2, String oldPwd, String first_name, String last_name, int is_admin) throws SQLException {
 
-
         //to update Password
         String newPassword;
         oldPwd ="" + oldPwd.hashCode();
@@ -58,7 +57,6 @@ public class UserService {
         } else {
             newPassword = user.getPassword();
         }
-
 
         userData.editUser(user_id, e_mail, newPassword, first_name, last_name, is_admin);
     }
@@ -85,5 +83,9 @@ public class UserService {
 
     public void deleteUser(int id) throws SQLException {
         userData.deleteUser(id);
+    }
+
+    public void setAdminStatus(int user_id, int is_admin) throws SQLException {
+        userData.setAdminStatus(user_id, is_admin);
     }
 }

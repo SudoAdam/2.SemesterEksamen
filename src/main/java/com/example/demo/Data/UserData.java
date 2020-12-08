@@ -130,4 +130,13 @@ public class UserData {
         preparedStatement.executeUpdate();
     }
 
+    public void setAdminStatus(int user_id, int is_admin) throws SQLException {
+        Connection connection = connector.getConnection();
+        String statement = "UPDATE users SET is_admin=? WHERE user_id=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setInt(1, is_admin);
+        preparedStatement.setInt(2, user_id);
+        preparedStatement.executeUpdate();
+    }
+
 }
