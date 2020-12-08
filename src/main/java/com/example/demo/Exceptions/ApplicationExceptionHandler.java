@@ -27,6 +27,11 @@ public class ApplicationExceptionHandler {
         return "error";
     }
 
+    @ExceptionHandler(LoginException.class)
+    public String handleLoginException(Model model, LoginException e) {
+        return "";
+    }
+
     @ExceptionHandler(Exception.class)
     public String handleException(Model model, Exception e) {
         String title = "Request failed error was encountered";

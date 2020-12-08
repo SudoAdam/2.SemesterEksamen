@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.User;
+import com.example.demo.Exceptions.LoginException;
 import com.example.demo.Service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +30,7 @@ public class HomeController {
     }
 
     @PostMapping("/login")
-    public String login(WebRequest request, Model model) throws SQLException {
+    public String login(WebRequest request) throws LoginException, SQLException {
         String email = request.getParameter("mail");
         String password = request.getParameter("password");
         User user = userService.login(email, password);

@@ -2,10 +2,10 @@
  * @Author Rasmus Berg
  */
 
-
 package com.example.demo.Data;
 
 import com.example.demo.Domain.User;
+import com.example.demo.Exceptions.LoginException;
 import com.example.demo.Mapper.UserMapper;
 
 import java.sql.*;
@@ -23,7 +23,7 @@ public class UserData {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<User> getUsers() throws SQLException{
+    public ArrayList<User> getUsers() throws SQLException {
         Connection connection = connector.getConnection();
         String statement = "SELECT * FROM users";
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
@@ -45,18 +45,20 @@ public class UserData {
         return (User) userMapper.create(resultSet);
     }
 
-    public User login(String email, String password) throws SQLException {
+    public User login(String email, String password) throws LoginException, SQLException {
         Connection connection = connector.getConnection();
         String statement = "SELECT * FROM users WHERE e_mail=? and password=?";
-
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
         preparedStatement.setString(1, email);
         preparedStatement.setString(2, password);
         ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.isAfterLast()) {
+            throw new LoginException("password or credentials was incorrect");
+        }
         return (User) userMapper.create(resultSet);
     }
 
-    public void createUser(String e_mail, String password, String first_name, String last_name) throws SQLException{
+    public void createUser(String e_mail, String password, String first_name, String last_name) throws SQLException {
         Connection connection = connector.getConnection();
         String statement = "INSERT INTO users (e_mail, password, first_name, last_name) VALUES (?,?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
@@ -80,30 +82,30 @@ public class UserData {
         preparedStatement.executeUpdate();
     }
 
-    public int findUserIdFromEmail(String e_mail) throws SQLException{
+    public int findUserIdFromEmail(String e_mail) throws SQLException {
         int id = -1;
         Connection connection = connector.getConnection();
         String statement = "SELECT user_id from users where e_mail = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(statement);
-            preparedStatement.setString(1, e_mail);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            String result = "" + resultSet.getObject(1);
-            id = Integer.parseInt(result);
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setString(1, e_mail);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        String result = "" + resultSet.getObject(1);
+        id = Integer.parseInt(result);
         return id;
 
     }
 
-    public String findEmailFromUserId(int id) throws SQLException{
+    public String findEmailFromUserId(int id) throws SQLException {
         String e_mail = "";
         Connection connection = connector.getConnection();
         String statement = "SELECT e_mail from users where user_id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(statement);
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            String result = "" + resultSet.getString("e_mail");
-            e_mail = result;
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setInt(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        String result = "" + resultSet.getString("e_mail");
+        e_mail = result;
         return e_mail;
     }
 
@@ -126,5 +128,9 @@ public class UserData {
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
         preparedStatement.setInt(1, id);
         preparedStatement.executeUpdate();
+    }
+
+    public void deleteUser(String e_mail) throws SQLException {
+
     }
 }

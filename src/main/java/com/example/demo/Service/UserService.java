@@ -5,6 +5,7 @@ package com.example.demo.Service;
 
 import com.example.demo.Data.UserData;
 import com.example.demo.Domain.User;
+import com.example.demo.Exceptions.LoginException;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -14,7 +15,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class UserService {
-
     // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private final UserData userData;
 
@@ -29,7 +29,7 @@ public class UserService {
         return list;
     }
 
-    public User login(String email, String password) throws SQLException{
+    public User login(String email, String password) throws LoginException, SQLException {
         User user = userData.login(email,password);
         return user;
     }
@@ -54,7 +54,6 @@ public class UserService {
     public String findEmailFromUserId(int id) throws SQLException{
         return userData.findEmailFromUserId(id);
     }
-
 
     public void addProfilePicture(int user_id, MultipartFile file) {
         try {
