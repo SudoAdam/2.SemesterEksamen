@@ -1,6 +1,6 @@
 package com.example.demo.Exceptions;
 
-public class LoginException extends Throwable {
+public class LoginException extends Exception {
     private final String message;
 
     public LoginException(String message) {
