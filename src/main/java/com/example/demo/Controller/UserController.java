@@ -38,24 +38,6 @@ public class UserController {
         return "user/listUser";
     }
 
-    @GetMapping("/createUser")
-    public String createUser() {
-        return "user/createUser";
-    }
-
-    @PostMapping("/createUser")
-    public String createUser(WebRequest request) throws SQLException {
-        String e_mail = request.getParameter("email");
-        String password = request.getParameter("password");
-        String first_name = request.getParameter("firstName");
-        String last_name = request.getParameter("lastName");
-        //vi skal have gjort så når man opretter sig, at den skriver direkte til databasen,
-        // og så henter et bruger objekt tilbage fra databasen.
-        // For så får vi nemlig userID med. med det samme.
-        userService.createUser(e_mail, password, first_name, last_name);
-        return "authentication/login";
-    }
-
     @GetMapping("/editUser")
     public String editUser() {
         return "user/editUser";

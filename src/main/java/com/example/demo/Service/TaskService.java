@@ -49,8 +49,19 @@ public class TaskService {
         return (t);
     }
 
-    public void createTask(int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws SQLException {
+    public void createTask(int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws SQLException, Exception {
+        if (correctDate(kickoff, deadline) == false) {
+            throw new Exception();
+        }
         taskData.createTask(project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
+    }
+
+    private boolean correctDate(LocalDate kickoff, LocalDate deadline) {
+        boolean result = false;
+        if (kickoff.isBefore(deadline)) {
+            result = true;
+        }
+        return result;
     }
 
     public void editTask(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws SQLException {

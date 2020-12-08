@@ -29,8 +29,13 @@ public class UserService {
         return list;
     }
 
+    private String passwordHASH(String password){
+        String hash ="" + password.hashCode();
+        return hash;
+    }
+
     public User login(String email, String password) throws SQLException {
-        User user = userData.login(email, password);
+        User user = userData.login(email, passwordHASH(password));
         return user;
     }
 
@@ -39,11 +44,11 @@ public class UserService {
     }
 
     public void createUser(String e_mail, String password, String first_name, String last_name) throws SQLException {
-        userData.createUser(e_mail, password, first_name, last_name);
+        userData.createUser(e_mail, passwordHASH(password), first_name, last_name);
     }
 
     public void editUser(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin) throws SQLException {
-        userData.editUser(user_id, e_mail, password, first_name, last_name, is_admin);
+        userData.editUser(user_id, e_mail, passwordHASH(password), first_name, last_name, is_admin);
     }
 
     public int findUserIdFromEmail(String email) throws SQLException {
