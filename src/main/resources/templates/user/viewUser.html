@@ -14,8 +14,17 @@
         <hr class="rounded">
         <p>
             Email: <span th:text="${user.e_mail}"></span>
-    </div>
 
+        <form action="/updateUserRole" th:if="${session.user.getIs_admin() == 1}" method="POST">
+            <input th:if="${user.getIs_admin() == 0}" type="checkbox" name="is_admin" value="1">
+            <input th:if="${user.getIs_admin() == 1}" type="checkbox" checked="checked" name="is_admin" value="1">
+            <label>Admin</label>
+            <input type="hidden" name="user_id" th:value="${user.user_id}">
+        <div>
+            <button type="submit">Update Role</button>
+        </div>
+        </form>
+    </div>
     <div id="bio-right" style="float: right">
         <a th:if="${session.user.getIs_admin() == 1}" th:href="@{/deleteUser?id={id}(id=${user.user_id})}">Delete User</a>
         <br>

@@ -85,6 +85,20 @@ public class UserController {
         return "redirect:/currentUser";
     }
 
+    @PostMapping("/updateUserRole")
+    public String updateUserRole(WebRequest request) throws SQLException {
+        String userId = request.getParameter("user_id");
+        String isAdmin = request.getParameter("is_admin");
+        if (isAdmin == null) {
+            isAdmin = "0";
+        }
+        int user_id = Integer.parseInt(userId);
+        int is_admin = Integer.parseInt(isAdmin);
+        userService.setAdminStatus(user_id, is_admin);
+        return "redirect:/listUser";
+    }
+
+
     @RequestMapping(value = "/deleteUser", method = {RequestMethod.GET, RequestMethod.POST})
     public String deleteUser(@RequestParam int id) throws SQLException {
         userService.deleteUser(id);
