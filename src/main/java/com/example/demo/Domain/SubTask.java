@@ -8,13 +8,13 @@ package com.example.demo.Domain;
 public class SubTask implements DomainFacade {
 
     private int task_id;
-    private String sub_task_discription;
+    private String sub_task_description;
     private int sub_task_id;
     private String sub_task_name;
 
-    public SubTask(int sub_task_id, String sub_task_name, String sub_task_discription, int task_id) {
+    public SubTask(int sub_task_id, String sub_task_name, String sub_task_description, int task_id) {
         this.task_id = task_id;
-        this.sub_task_discription = sub_task_discription;
+        this.sub_task_description = sub_task_description;
         this.sub_task_id = sub_task_id;
         this.sub_task_name = sub_task_name;
     }
@@ -27,12 +27,12 @@ public class SubTask implements DomainFacade {
         this.task_id = task_id;
     }
 
-    public String getSub_task_discription() {
-        return sub_task_discription;
+    public String getSub_task_description() {
+        return sub_task_description;
     }
 
-    public void setSub_task_discription(String sub_task_discription) {
-        this.sub_task_discription = sub_task_discription;
+    public void setSub_task_description(String sub_task_description) {
+        this.sub_task_description = sub_task_description;
     }
 
     public int getSub_task_id() {
