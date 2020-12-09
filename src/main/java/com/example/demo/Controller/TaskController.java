@@ -30,8 +30,6 @@ public class TaskController {
     @RequestMapping(value = "/editTask", method = {RequestMethod.GET, RequestMethod.POST})
     public String editTask(@RequestParam int id, Model model) throws SQLException, QueryDeniedException {
         int project_id = taskService.getTask(id).getProject_id();
-
-
         model.addAttribute("participants", projectService.getProjectParticipants(project_id));
         model.addAttribute("project", projectService.getProject(project_id));
         model.addAttribute("task", taskService.getTask(id));
@@ -45,14 +43,14 @@ public class TaskController {
         String projectId = request.getParameter("pId");
         String taskName = request.getParameter("tName");
         String taskDesc = request.getParameter("tDesc");
-        String taskLeaderEmail = request.getParameter("taskLeaderEmail");
+        String taskLeader = request.getParameter("taskLeader");
         String kickOffStr = request.getParameter("kickoff");
         String deadlineStr = request.getParameter("deadline");
         String workingHours = request.getParameter("wh");
 
         int tId = Integer.parseInt(taskId);
         int pId = Integer.parseInt(projectId);
-        int project_leader_id = userService.findUserIdFromEmail(taskLeaderEmail);
+        int project_leader_id = userService.findUserIdFromEmail(taskLeader);
         LocalDate kickoff = LocalDate.parse(kickOffStr);
         LocalDate deadline = LocalDate.parse(deadlineStr);
         int wh = Integer.parseInt(workingHours);
@@ -60,7 +58,7 @@ public class TaskController {
         taskService.editTask(tId, pId, taskName, taskDesc, project_leader_id, kickoff, deadline, wh);
         model.addAttribute("project", projectService.getProject(Integer.parseInt(projectId)));
         model.addAttribute("tasks", taskService.getTasks(pId));
-        return "project/viewProject";
+        return "redirect:/viewProject?id=" + pId;
     }
 
     @RequestMapping(value = "/createTask", method = {RequestMethod.GET, RequestMethod.POST})
