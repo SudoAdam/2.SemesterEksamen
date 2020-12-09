@@ -1,4 +1,9 @@
 package com.example.demo.Domain;
+/**
+ * @author Adam Madsen
+ * @version 1.0
+ * @since 09-12-2020
+ */
 
 public class SubTask implements DomainFacade {
 
