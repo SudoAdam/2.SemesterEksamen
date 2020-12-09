@@ -77,5 +77,13 @@ public class TaskData {
         preparedStatement.setInt(8, task_id);
         preparedStatement.executeUpdate();
     }
+
+    public void deleteTask(int id) throws SQLException {
+        Connection connection = connector.getConnection();
+        String statement = "DELETE FROM tasks WHERE task_id=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setInt(1, id);
+        preparedStatement.executeUpdate();
+    }
 }
 

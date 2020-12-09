@@ -67,4 +67,8 @@ public class TaskService {
     public void editTask(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws SQLException {
         taskData.editTask(task_id, project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
     }
+
+    public void deleteTask(int id) throws SQLException {
+        taskData.deleteTask(id);
+    }
 }
