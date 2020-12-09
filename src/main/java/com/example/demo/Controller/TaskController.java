@@ -107,4 +107,9 @@ public class TaskController {
         return "project/viewProject";
     }*/
 
+    @RequestMapping(value = "/deleteTask", method = {RequestMethod.GET, RequestMethod.POST})
+    public String deleteTask(@RequestParam int id) throws SQLException {
+        taskService.deleteTask(id);
+        return "redirect:/listUser";
+    }
 }

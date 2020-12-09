@@ -31,6 +31,7 @@
                 <input type="Submit" value="  Update!  ">
             </div>
         </form>
+        <a th:if="${session.user.getIs_admin() == 1}" th:href="@{/deleteTaskid={id}(id=${task.task_id})}">Delete User</a>
     </div>
 </div>
 </body>
