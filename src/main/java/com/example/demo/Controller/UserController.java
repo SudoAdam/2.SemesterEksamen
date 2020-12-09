@@ -4,6 +4,7 @@
 
 package com.example.demo.Controller;
 
+import com.example.demo.Domain.Project;
 import com.example.demo.Domain.User;
 import com.example.demo.Exceptions.ExecutionDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
@@ -68,7 +69,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/viewUser", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewUser(@RequestParam int id, Model model) throws QueryDeniedException {
+    public String viewUser(@RequestParam int id, Model model) throws QueryDeniedException, SQLException {
+        ArrayList<Project> allProjects = projectService.getProjects();
+        ArrayList<Project> userProjects = new ArrayList<>();
         model.addAttribute("user", userService.getUser(id));
         return "user/viewUser";
     }

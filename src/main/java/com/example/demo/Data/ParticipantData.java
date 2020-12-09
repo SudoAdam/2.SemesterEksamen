@@ -45,6 +45,7 @@ public class ParticipantData {
         return (Participant) participantMapper.create(resultSet);
     }
 
+
     public void assignUserToProject(int user_id, int project_id, int project_role_id) throws SQLException {
         Connection connection = connector.getConnection();
         String statement = "INSERT INTO project_participants (user_id, project_id, project_role_id) VALUES (?,?,?)";

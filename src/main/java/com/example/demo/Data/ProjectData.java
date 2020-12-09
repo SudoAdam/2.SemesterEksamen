@@ -48,6 +48,21 @@ public class ProjectData {
         return (Project) projectMapper.create(resultSet);
     }
 
+    public ArrayList<Project> getUserProjects(int user_id) throws SQLException, QueryDeniedException {
+        Connection connection = connector.getConnection();
+        String statement = "SELECT * FROM project_participants WHERE user_id=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setInt(1,user_id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        ArrayList<Project> projects = new ArrayList<>();
+        while (resultSet.next()){
+            projects.add((Project) projectMapper.create(resultSet));
+        }
+        return projects;
+    }
+
+
     public void createProject(String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws SQLException {
         Connection connection = connector.getConnection();
         String statement = "INSERT INTO projects (project_name, kickoff, deadline, project_leader_id, customer_id) VALUES (?,?,?,?,?)";
