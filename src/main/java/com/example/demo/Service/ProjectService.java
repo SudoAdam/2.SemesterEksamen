@@ -14,6 +14,7 @@ import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Participant;
 import com.example.demo.Domain.Project;
 import com.example.demo.Domain.User;
+import com.example.demo.Exceptions.ExecutionDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 
 import java.sql.SQLException;
@@ -90,7 +91,7 @@ public class ProjectService {
         }
     } */
 
-    public void createProject(String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws SQLException, Exception {
+    public void createProject(String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws Exception {
         if (correctDate(kickoff, deadline) == false) {
             throw new Exception();
         }
@@ -105,15 +106,14 @@ public class ProjectService {
         projectData.deleteProject(id);
     }
 
-    public void assignUserToProject(int user_id, int project_id, int project_role_id) throws SQLException {
-        participantData.assignUserToProject(user_id, project_id, project_role_id);
+    public void assignParticipant(int user_id, int project_id, int project_role_id) throws ExecutionDeniedException {
+        participantData.assignParticipant(user_id, project_id, project_role_id);
     }
 
-    public ArrayList<Participant> getProjectParticipants(int project_id) throws SQLException, QueryDeniedException {
-        ArrayList<Participant> list = participantData.getProjectParticipants(project_id);
+    public ArrayList<Participant> getParticipants(int project_id) throws QueryDeniedException {
+        ArrayList<Participant> list = participantData.getParticipants(project_id);
         return list;
     }
-
 
     public Participant getParticipant(int user_id, int project_id) throws SQLException, QueryDeniedException {
         // Not working yet

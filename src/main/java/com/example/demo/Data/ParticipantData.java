@@ -2,6 +2,7 @@ package com.example.demo.Data;
 
 import com.example.demo.Domain.Participant;
 import com.example.demo.Domain.Project;
+import com.example.demo.Exceptions.ExecutionDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Mapper.ParticipantMapper;
 
@@ -21,7 +22,7 @@ public class ParticipantData {
         this.connector = connector;
     }
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<Participant> getProjectParticipants(int project_id) throws QueryDeniedException {
+    public ArrayList<Participant> getParticipants(int project_id) throws QueryDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "" +
@@ -58,14 +59,18 @@ public class ParticipantData {
     }
 
 
-    public void assignUserToProject(int user_id, int project_id, int project_role_id) throws SQLException {
-        Connection connection = connector.getConnection();
-        String statement = "INSERT INTO project_participants (user_id, project_id, project_role_id) VALUES (?,?,?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(statement);
-        preparedStatement.setInt(1, user_id);
-        preparedStatement.setInt(2, project_id);
-        preparedStatement.setInt(3, project_role_id);
-        preparedStatement.execute();
+    public void assignParticipant(int user_id, int project_id, int project_role_id) throws ExecutionDeniedException {
+        try {
+            Connection connection = connector.getConnection();
+            String statement = "INSERT INTO project_participants (user_id, project_id, project_role_id) VALUES (?,?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setInt(1, user_id);
+            preparedStatement.setInt(2, project_id);
+            preparedStatement.setInt(3, project_role_id);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new ExecutionDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+        }
     }
 
     public void removeParticipant(int user_id, int project_id) throws SQLException {

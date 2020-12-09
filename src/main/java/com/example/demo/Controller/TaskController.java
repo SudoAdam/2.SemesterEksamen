@@ -1,7 +1,6 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.Task;
-import com.example.demo.Domain.User;
 import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.TaskService;
@@ -30,7 +29,7 @@ public class TaskController {
     @RequestMapping(value = "/editTask", method = {RequestMethod.GET, RequestMethod.POST})
     public String editTask(@RequestParam int id, Model model) throws SQLException, QueryDeniedException {
         int project_id = taskService.getTask(id).getProject_id();
-        model.addAttribute("participants", projectService.getProjectParticipants(project_id));
+        model.addAttribute("participants", projectService.getParticipants(project_id));
         model.addAttribute("project", projectService.getProject(project_id));
         model.addAttribute("task", taskService.getTask(id));
         return "project/editTask";
@@ -64,7 +63,7 @@ public class TaskController {
     @RequestMapping(value = "/createTask", method = {RequestMethod.GET, RequestMethod.POST})
     public String createTask(@RequestParam int id, Model model) throws SQLException, QueryDeniedException {
         model.addAttribute("project", projectService.getProject(id));
-        model.addAttribute("participants", projectService.getProjectParticipants(id));
+        model.addAttribute("participants", projectService.getParticipants(id));
         return "project/createTask";
     }
 

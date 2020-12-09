@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.Project;
+import com.example.demo.Exceptions.ExecutionDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Service.CustomerService;
 import com.example.demo.Service.ProjectService;
@@ -88,7 +89,7 @@ public class ProjectController {
 
         projectService.editProject(pId, projectName, kickoff, deadline, pLId, cId);
         model.addAttribute("project", projectService.getProject(pId));
-        model.addAttribute("participants", projectService.getProjectParticipants(pId));
+        model.addAttribute("participants", projectService.getParticipants(pId));
 
         return "redirect:/viewProject?id=" + pId;
     }
@@ -113,8 +114,8 @@ public class ProjectController {
     }
 
     @PostMapping("/addParticipant")
-    public String addParticipant(@RequestParam int user_id, int project_id, int project_role_id) throws SQLException {
-        projectService.assignUserToProject(user_id,project_id,project_role_id);
+    public String addParticipant(@RequestParam int user_id, int project_id, int project_role_id) throws ExecutionDeniedException {
+        projectService.assignParticipant(user_id,project_id,project_role_id);
         return "redirect:/";
     }
 
