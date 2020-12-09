@@ -5,6 +5,7 @@ package com.example.demo.Data;
  * @since 27-11-2020
  */
 
+import com.example.demo.Domain.SubTask;
 import com.example.demo.Domain.Task;
 import com.example.demo.Exceptions.QueryDeniedException;
 
