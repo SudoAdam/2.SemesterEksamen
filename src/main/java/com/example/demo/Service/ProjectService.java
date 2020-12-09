@@ -109,29 +109,14 @@ public class ProjectService {
         participantData.assignUserToProject(user_id, project_id, project_role_id);
     }
 
-    private void finalizeParticipant(Participant participant) throws SQLException, QueryDeniedException {
-        // Late dependency injection for single domain objects
-        int user_id = participant.getUser_id();
-        User participant_user = userData.getUser(user_id);
-        participant.setParticipant_user(participant_user);
-    }
-
-    private void finalizeParticipants(ArrayList<Participant> list) throws SQLException, QueryDeniedException {
-        // Late dependency injection for collections of domain objects
-        for (Participant p : list) {
-            finalizeParticipant(p);
-        }
-    }
-
     public ArrayList<Participant> getProjectParticipants(int project_id) throws SQLException, QueryDeniedException {
         ArrayList<Participant> list = participantData.getProjectParticipants(project_id);
-        finalizeParticipants(list);
         return list;
     }
 
     public Participant getParticipant(int user_id, int project_id) throws SQLException, QueryDeniedException {
+        // Not working yet
         Participant p = participantData.getProjectParticipant(user_id, project_id);
-        finalizeParticipant(p);
         return p;
     }
 
