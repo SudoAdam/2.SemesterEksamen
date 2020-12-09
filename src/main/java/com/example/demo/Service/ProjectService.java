@@ -14,6 +14,7 @@ import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Participant;
 import com.example.demo.Domain.Project;
 import com.example.demo.Domain.User;
+import com.example.demo.Exceptions.ExecutionDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 
 import java.sql.SQLException;
@@ -66,34 +67,22 @@ public class ProjectService {
         return p;
     }
 
-    private boolean correctDate(LocalDate kickoff, LocalDate deadline){
+    private boolean correctDate(LocalDate kickoff, LocalDate deadline) {
         boolean result = false;
-        if (kickoff.isBefore(deadline)){
+        if (kickoff.isBefore(deadline)) {
             result = true;
         }
         return result;
     }
 
- /*   public ArrayList<Project> getUserProjects(User user) throws SQLException {
-        ArrayList<Project> allProjectList = getProjects();
-        ArrayList<Project> userProjectList = new ArrayList<>();
+    public ArrayList<Project> getUserProjects(int user_id) throws QueryDeniedException {
+        return projectData.getUserProjects(user_id);
+    }
 
-        if (user.getIs_admin() == 0) {
-            for (Project p : allProjectList) {
-                if (p.getEmployee_id == user.getUser_id()) {
-                    userProjectList.add(p);
-                }
-            }
-            return userProjectList;
-        } else {
-            return allProjectList;
+    public void createProject(String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws Exception {
+        if (correctDate(kickoff, deadline) == false) {
+            throw new Exception();
         }
-    } */
-
-    public void createProject(String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws SQLException, Exception {
-      if (correctDate(kickoff, deadline) == false){
-          throw new Exception();
-      }
         projectData.createProject(project_name, kickoff, deadline, project_leader_id, customer_id);
     }
 
@@ -105,11 +94,19 @@ public class ProjectService {
         projectData.deleteProject(id);
     }
 
-    public void assignUserToProject(int user_id, int project_id, int project_role_id) throws SQLException {
-    participantData.assignUserToProject(user_id, project_id, project_role_id);
+    public void assignParticipant(int user_id, int project_id, int project_role_id) throws ExecutionDeniedException {
+        participantData.assignParticipant(user_id, project_id, project_role_id);
     }
 
-    public ArrayList<Participant> getProjectParticipants(int id) throws SQLException, QueryDeniedException {
-        return participantData.getProjectParticipants(id);
+    public ArrayList<Participant> getParticipants(int project_id) throws QueryDeniedException {
+        ArrayList<Participant> list = participantData.getParticipants(project_id);
+        return list;
     }
+
+    public Participant getParticipant(int user_id, int project_id) throws SQLException, QueryDeniedException {
+        // Not working yet
+        Participant p = participantData.getProjectParticipant(user_id, project_id);
+        return p;
+    }
+
 }
