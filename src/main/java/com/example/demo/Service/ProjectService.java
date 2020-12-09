@@ -114,6 +114,7 @@ public class ProjectService {
         return list;
     }
 
+
     public Participant getParticipant(int user_id, int project_id) throws SQLException, QueryDeniedException {
         // Not working yet
         Participant p = participantData.getProjectParticipant(user_id, project_id);
