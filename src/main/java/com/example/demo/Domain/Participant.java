@@ -5,12 +5,14 @@ public class Participant implements DomainFacade{
     private int user_id;
     private int project_id;
     private int project_role_id;
+    private User participant_user;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public Participant(int user_id, int project_id, int project_role_id) {
         this.user_id = user_id;
         this.project_id = project_id;
         this.project_role_id = project_role_id;
+
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -36,5 +38,13 @@ public class Participant implements DomainFacade{
 
     public void setProject_role_id(int project_role_id) {
         this.project_role_id = project_role_id;
+    }
+
+    public User getParticipant_user() {
+        return participant_user;
+    }
+
+    public void setParticipant_user(User participant_user) {
+        this.participant_user = participant_user;
     }
 }

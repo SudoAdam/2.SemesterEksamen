@@ -8,6 +8,7 @@ package com.example.demo.Data;
 import com.example.demo.Domain.SubTask;
 import com.example.demo.Domain.Task;
 import com.example.demo.Exceptions.QueryDeniedException;
+import com.example.demo.Mapper.SubTaskMapper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,7 +37,7 @@ public class SubTaskData {
 
         ArrayList<SubTask> tasks = new ArrayList<>();
         while (resultSet.next()) {
-            tasks.add((Task) subTaskMapper.create(resultSet));
+            tasks.add((SubTask) subTaskMapper.create(resultSet));
         }
         return tasks;
     }

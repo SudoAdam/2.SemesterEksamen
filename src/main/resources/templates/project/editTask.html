@@ -17,14 +17,12 @@
             <p><input type="text" name="tName" th:value="${task.task_name}" required>
             <p>Description
             <p><input type="text" name="tDesc" th:value="${task.task_description}" required>
-            <p>Task Leader
-            <p><input type="text" name="taskLeaderEmail" th:value="${task.task_leader_email}" required>
             <p>Task Manager
             <p><select class="form-control" name="taskLeader" required>
                 <option th:value="${task.task_leader_email}" th:text="${task.task_leader.getFirst_name()}+' '+${task.task_leader.getFirst_name()}+' '+${task.task_leader_email}"></option>
                 <option th:each="participant : ${participants}"
                         th:value="${participant.user_id}"
-                        th:text="${}+' '+ ${user.last_name}+' '+${user.e_mail}"></option>
+                        th:text="${participant.participant_user.getFirst_name()}+' '+ ${participant.participant_user.getLast_name()}+' '+${participant.participant_user.getE_mail()}"></option>
             </select>
             <p>Kick-off
             <p><input type="date" name="kickoff" th:value="${task.kickoff}" required>

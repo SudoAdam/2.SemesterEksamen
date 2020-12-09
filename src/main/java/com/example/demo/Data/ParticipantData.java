@@ -25,6 +25,7 @@ public class ParticipantData {
         Connection connection = connector.getConnection();
         String statement = "SELECT * FROM project_participants WHERE project_id=?";
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setInt(1, project_id);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         ArrayList<Participant> participants = new ArrayList<>();
@@ -32,6 +33,16 @@ public class ParticipantData {
             participants.add((Participant) participantMapper.create(resultSet));
         }
         return participants;
+    }
+
+    public Participant getProjectParticipant(int user_id, int project_id) throws SQLException, QueryDeniedException {
+        Connection connection = connector.getConnection();
+        String statement = "SELECT * FROM project_participants WHERE user_id=? and project_id=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setInt(1, user_id);
+        preparedStatement.setInt(2, project_id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return (Participant) participantMapper.create(resultSet);
     }
 
     public void assignUserToProject(int user_id, int project_id, int project_role_id) throws SQLException {
