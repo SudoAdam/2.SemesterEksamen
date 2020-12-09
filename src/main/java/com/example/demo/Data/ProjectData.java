@@ -52,10 +52,10 @@ public class ProjectData {
         try {
             Connection connection = connector.getConnection();
             String statement =
-                    "SELECT p.*" +
-                    "FROM project_participants pp" +
-                    "LEFT JOIN projects p" +
-                    "ON p.project_id = pp.project_id" +
+                    "SELECT p.* " +
+                    "FROM project_participants pp " +
+                    "LEFT JOIN projects p " +
+                    "ON p.project_id = pp.project_id " +
                     "WHERE pp.user_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, user_id);

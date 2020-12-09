@@ -32,12 +32,12 @@ public abstract class AbstractMapper {
         try {
             if (resultSet.isBeforeFirst()) {
                 if (!resultSet.next()) {
-                    throw new QueryDeniedException();
+                    throw new QueryDeniedException("Error scrubbing resultSet: Message: Empty resultSet");
                 }
             }
             return mapping(resultSet);
         } catch (SQLException e) {
-            throw new QueryDeniedException("Error scrubbing resultSet: SQLException message: " + e.getMessage());
+            throw new QueryDeniedException("Error reading resultSet: SQLException message: " + e.getMessage());
         }
     }
 

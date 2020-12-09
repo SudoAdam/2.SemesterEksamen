@@ -67,9 +67,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/viewUser", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewUser(@RequestParam int user_id, Model model) throws QueryDeniedException {
-        model.addAttribute("projects", projectService.getUserProjects(user_id));
-        model.addAttribute("user", userService.getUser(user_id));
+    public String viewUser(@RequestParam int id, Model model) throws QueryDeniedException {
+        model.addAttribute("projects", projectService.getUserProjects(id));
+        model.addAttribute("user", userService.getUser(id));
         return "user/viewUser";
     }
 
