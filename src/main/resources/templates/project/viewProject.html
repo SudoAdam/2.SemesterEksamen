@@ -41,8 +41,22 @@
             </tr>
             <tr>
                 <td>
-                    <form th:action="@{/createTask?id={id}(id=${project.project_id})}" method="post">
-                        <input value="&#10133;" type="submit" style="width: 45px; height: 45px">
+                    <form action="/addParticipant" method="post">
+                        <p><select class="form-control" name="user_id" required>
+                            <option value="">Select Participant</option>
+                            <option th:each="user : ${users}"
+                                    th:value="${user.user_id}"
+                                    th:text="${user.first_name}+' '+ ${user.last_name}+' '+${user.e_mail}"></option>
+                        </select>
+                        <select class="form-control" name="project_role_id" required>
+                            <option value="">Select Participant</option>
+                            <option th:each="user : ${users}"
+                                    th:value="${user.user_id}"
+                                    th:text="${user.first_name}+' '+ ${user.last_name}+' '+${user.e_mail}"></option>
+                        </select>
+                            <input type="hidden" th:value="${project.project_id}">
+                            <input type="submit" value="Add Participant">
+
                     </form>
                 </td>
             </tr>

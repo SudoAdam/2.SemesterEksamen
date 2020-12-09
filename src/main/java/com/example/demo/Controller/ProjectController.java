@@ -101,6 +101,7 @@ public class ProjectController {
         model.addAttribute("customer", customerService.getCustomer(p.getCustomer_id()));
         model.addAttribute("tasks", taskService.getTasks(id));
         model.addAttribute("project", p);
+        model.addAttribute("users", userService.getUsers());
         return "project/viewProject";
     }
 
