@@ -43,5 +43,16 @@ public class ParticipantData {
         preparedStatement.setInt(3, project_role_id);
         preparedStatement.execute();
     }
+
+    public void removeParticipant(int user_id, int project_id) throws SQLException {
+        Connection connection = connector.getConnection();
+        String statement = "DELETE FROM project_participants WHERE user_id=? and project_id=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(statement);
+        preparedStatement.setInt(1, user_id);
+        preparedStatement.setInt(2, project_id);
+        preparedStatement.executeUpdate();
+    }
+
+
     }
 
