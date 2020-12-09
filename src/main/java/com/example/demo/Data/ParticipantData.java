@@ -26,12 +26,12 @@ public class ParticipantData {
         try {
             Connection connection = connector.getConnection();
             String statement = "" +
-                "SELECT p.user_id, u.first_name, u.last_name, u.e_mail, p.project_id, p.project_role_id, r.project_role" +
-                "FROM project_participants p" +
-                "LEFT JOIN users u" +
-                "ON p.user_id = u.user_id" +
-                "LEFT JOIN project_roles r" +
-                "ON p.project_role_id = r.project_role_id" +
+                "SELECT p.user_id, u.first_name, u.last_name, u.e_mail, p.project_id, p.project_role_id, r.project_role " +
+                "FROM project_participants p " +
+                "LEFT JOIN users u " +
+                "ON p.user_id = u.user_id " +
+                "LEFT JOIN project_roles r " +
+                "ON p.project_role_id = r.project_role_id " +
                 "WHERE p.project_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, project_id);

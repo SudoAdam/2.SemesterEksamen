@@ -57,7 +57,6 @@
                             </select>
                             <input type="hidden" th:value="${project.project_id}">
                             <input type="submit" value="Add Participant">
-
                     </form>
                 </td>
             </tr>
@@ -87,9 +86,9 @@
             <td th:text="${task.task_leader_email}"></td>
             <td th:if="${session.user.getIs_admin() == 1}"><a th:href="@{/editTask?id={id}(id=${task.task_id})}">&#128736;</a></td>
         </tr>
-        <tr>
+        <tr th:each="">
             <td></td>
-            <td>SubTask</td>
+            <td th:text="">SubTask</td>
             <td>Description</td>
             <td></td>
             <td></td>
@@ -102,8 +101,8 @@
             <td></td>
             <td><input name="sub_task_name" placeholder="Sub Task Name" required></td>
             <td><input name="sub_task_description" placeholder="Description"></td>
-            <td><input type="hidden" name="task_id"></td>
-            <td></td>
+            <td><input type="hidden" name="task_id" th:value="${task.task_id}"></td>
+            <td><input type="hidden" name="project_id" th:value="${task.project_id}"></td>
             <td><input type="submit" value="Add Sub Task"></td>
             </form>
             <td></td>

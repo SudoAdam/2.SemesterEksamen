@@ -43,7 +43,6 @@ public class TaskService {
 
     public ArrayList<Task> getTasks(int project_id) throws SQLException, QueryDeniedException {
         ArrayList<Task> list = taskData.getTasks(project_id);
-        finalize(list);
         return list;
     }
 
@@ -78,5 +77,10 @@ public class TaskService {
 
     public void createSubTask(int task_id, String name, String description) throws SQLException {
         subTaskData.createSubTask(task_id,description,name);
+    }
+
+    public ArrayList<SubTask> getSubTasks(int task_id) throws SQLException, QueryDeniedException {
+        ArrayList<SubTask> list = subTaskData.getSubTasks(task_id);
+        return list;
     }
 }
