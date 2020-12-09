@@ -21,9 +21,9 @@ public class ParticipantData {
         this.connector = connector;
     }
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<Participant> getParticipants() throws SQLException, QueryDeniedException {
+    public ArrayList<Participant> getProjectParticipants(int project_id) throws SQLException, QueryDeniedException {
         Connection connection = connector.getConnection();
-        String statement = "SELECT * FROM project_participants";
+        String statement = "SELECT * FROM project_participants WHERE project_id=?";
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
         ResultSet resultSet = preparedStatement.executeQuery();
 

@@ -105,6 +105,6 @@ public class ProjectService {
     }
 
     public void assignUserToProject(int user_id, int project_id, int project_role_id) throws SQLException {
-    projectData.assignUserToProject(user_id, project_id, project_role_id);
+    participantData.assignUserToProject(user_id, project_id, project_role_id);
     }
 }
