@@ -103,11 +103,5 @@ public class ProjectData {
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
         preparedStatement.setInt(1, id);
         preparedStatement.executeUpdate();
-
-        //delete all tasks pair with the project
-        String statement2 = "DELETE FROM tasks WHERE project_id=?";
-        PreparedStatement preparedStatement2 = connection.prepareStatement(statement2);
-        preparedStatement.setInt(1, id);
-        preparedStatement.executeUpdate();
     }
 }
