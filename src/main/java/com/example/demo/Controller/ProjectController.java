@@ -87,7 +87,8 @@ public class ProjectController {
         int cId = Integer.parseInt(CustomerId);
 
         projectService.editProject(pId, projectName, kickoff, deadline, pLId, cId);
-        model.addAttribute("project", projectService.getProject(Integer.parseInt(projectId)));
+        model.addAttribute("project", projectService.getProject(pId));
+        model.addAttribute("participants", projectService.getProjectParticipants(pId));
 
         return "redirect:/viewProject?id=" + pId;
     }

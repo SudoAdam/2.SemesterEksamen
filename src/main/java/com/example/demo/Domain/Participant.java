@@ -1,6 +1,6 @@
 package com.example.demo.Domain;
 
-public class Participant implements DomainFacade{
+public class Participant implements DomainFacade {
     // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private int user_id;
     private int project_id;
