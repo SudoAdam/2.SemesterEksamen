@@ -8,6 +8,7 @@ package com.example.demo.Data;
 import com.example.demo.Domain.SubTask;
 import com.example.demo.Domain.Task;
 import com.example.demo.Exceptions.QueryDeniedException;
+import com.example.demo.Mapper.SubTaskMapper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,11 +35,11 @@ public class SubTaskData {
         preparedStatement.setInt(1, task_id);
         ResultSet resultSet = preparedStatement.executeQuery();
 
-        ArrayList<SubTask> tasks = new ArrayList<>();
+        ArrayList<SubTask> subTasks = new ArrayList<>();
         while (resultSet.next()) {
-            tasks.add((Task) subTaskMapper.create(resultSet));
+            subTasks.add((SubTask) subTaskMapper.create(resultSet));
         }
-        return tasks;
+        return subTasks;
     }
 
     public SubTask getSubTask(int sub_task_id) throws SQLException, QueryDeniedException {
