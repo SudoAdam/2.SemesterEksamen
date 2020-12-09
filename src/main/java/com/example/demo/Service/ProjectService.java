@@ -11,6 +11,7 @@ import com.example.demo.Data.ParticipantData;
 import com.example.demo.Data.ProjectData;
 import com.example.demo.Data.UserData;
 import com.example.demo.Domain.Customer;
+import com.example.demo.Domain.Participant;
 import com.example.demo.Domain.Project;
 import com.example.demo.Domain.User;
 import com.example.demo.Exceptions.QueryDeniedException;
@@ -105,6 +106,10 @@ public class ProjectService {
     }
 
     public void assignUserToProject(int user_id, int project_id, int project_role_id) throws SQLException {
-    projectData.assignUserToProject(user_id, project_id, project_role_id);
+    participantData.assignUserToProject(user_id, project_id, project_role_id);
+    }
+
+    public ArrayList<Participant> getProjectParticipants(int id) throws SQLException, QueryDeniedException {
+        return participantData.getProjectParticipants(id);
     }
 }

@@ -29,7 +29,7 @@ public class ProjectController {
     }
 
     @GetMapping("/listProject")
-    public String showProjects(Model model, WebRequest request) throws SQLException, QueryDeniedException {
+    public String showProjects(Model model) throws SQLException, QueryDeniedException {
         model.addAttribute("projectList", projectService.getProjects());
         return "project/listProject";
     }
@@ -103,9 +103,18 @@ public class ProjectController {
         return "project/viewProject";
     }
 
+    // Responds to /deleteProject?id=project_id
     @RequestMapping(value = "/deleteProject", method = {RequestMethod.GET, RequestMethod.POST})
     public String deleteProject(@RequestParam int id) throws SQLException {
         projectService.deleteProject(id);
         return "redirect:/listProject";
     }
+
+    @PostMapping("/addParticipant")
+    public String addParticipant(@RequestParam int user_id, int project_id, int project_role_id) throws SQLException {
+        projectService.assignUserToProject(user_id,project_id,project_role_id);
+        return "redirect:/";
+    }
+
+
 }

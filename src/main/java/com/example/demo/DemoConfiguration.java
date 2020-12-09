@@ -60,6 +60,12 @@ public class DemoConfiguration {
     }
 
     @Bean
+    public ParticipantMapper participantMapper() {return new ParticipantMapper();}
+
+    @Bean
+    public ParticipantData participantData(ParticipantMapper participantMapper, Connector connector) {return new ParticipantData(participantMapper, connector);}
+
+    @Bean
     public ProjectMapper projectMapper() {
         return new ProjectMapper();
     }
@@ -70,7 +76,10 @@ public class DemoConfiguration {
     }
 
     @Bean
-    public ProjectService projectService(ProjectData projectData, UserData userData, CustomerData customerData) {
-        return new ProjectService(projectData, userData, customerData);
+    public ProjectService projectService(ProjectData projectData, UserData userData, CustomerData customerData, ParticipantData participantData) {
+        return new ProjectService(projectData, userData, customerData, participantData);
     }
+
+
+
 }
