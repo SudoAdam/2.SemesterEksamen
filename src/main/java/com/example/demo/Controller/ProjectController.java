@@ -87,7 +87,8 @@ public class ProjectController {
         int cId = Integer.parseInt(CustomerId);
 
         projectService.editProject(pId, projectName, kickoff, deadline, pLId, cId);
-        model.addAttribute("project", projectService.getProject(Integer.parseInt(projectId)));
+        model.addAttribute("project", projectService.getProject(pId));
+        model.addAttribute("participants", projectService.getProjectParticipants(pId));
 
         return "redirect:/viewProject?id=" + pId;
     }
@@ -100,6 +101,7 @@ public class ProjectController {
         model.addAttribute("customer", customerService.getCustomer(p.getCustomer_id()));
         model.addAttribute("tasks", taskService.getTasks(id));
         model.addAttribute("project", p);
+        model.addAttribute("users", userService.getUsers());
         return "project/viewProject";
     }
 
