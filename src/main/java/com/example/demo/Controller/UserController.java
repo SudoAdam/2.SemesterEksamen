@@ -4,7 +4,6 @@
 
 package com.example.demo.Controller;
 
-import com.example.demo.Domain.Project;
 import com.example.demo.Domain.User;
 import com.example.demo.Exceptions.ExecutionDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
@@ -35,7 +34,7 @@ public class UserController {
     }
 
     @GetMapping("/listUser")
-    public String showUsers(Model model) throws SQLException, QueryDeniedException {
+    public String showUsers(Model model) throws QueryDeniedException {
         ArrayList<User> userList = userService.getUsers();
         model.addAttribute("userList", userList);
         return "user/listUser";
@@ -45,7 +44,6 @@ public class UserController {
     public String editUser() {
         return "user/editUser";
     }
-
 
     @PostMapping("/updateUser")
     public String updateUser(WebRequest request) throws SQLException, QueryDeniedException {
@@ -69,10 +67,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/viewUser", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewUser(@RequestParam int id, Model model) throws QueryDeniedException, SQLException {
-        ArrayList<Project> allProjects = projectService.getProjects();
-        ArrayList<Project> userProjects = new ArrayList<>();
-        model.addAttribute("user", userService.getUser(id));
+    public String viewUser(@RequestParam int user_id, Model model) throws QueryDeniedException {
+        model.addAttribute("projects", projectService.getUserProjects(user_id));
+        model.addAttribute("user", userService.getUser(user_id));
         return "user/viewUser";
     }
 
