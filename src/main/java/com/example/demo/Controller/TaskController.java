@@ -115,4 +115,18 @@ public class TaskController {
         taskService.deleteTask(id);
         return "redirect:/viewProject?id=" + project_id;
     }
+
+    @RequestMapping(value = "/createSubTask", method = {RequestMethod.GET, RequestMethod.POST})
+    public String createSubTask(WebRequest request) throws SQLException, QueryDeniedException {
+        String stName = request.getParameter("sub_task_name");
+        String stDesc = request.getParameter("sub_task_description");
+        String tId = request.getParameter("task_id");
+        String pId = request.getParameter("project_id");
+        int task_id = Integer.parseInt(tId);
+        int project_id = Integer.parseInt(pId);
+        taskService.createSubTask(task_id, stName, stDesc);
+
+        return "redirect:/viewProject?id=" + project_id;
+    }
+
 }

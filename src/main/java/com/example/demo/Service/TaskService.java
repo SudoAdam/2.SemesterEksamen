@@ -1,6 +1,8 @@
 package com.example.demo.Service;
 
+import com.example.demo.Data.SubTaskData;
 import com.example.demo.Data.TaskData;
+import com.example.demo.Domain.SubTask;
 import com.example.demo.Domain.Task;
 import com.example.demo.Domain.User;
 import com.example.demo.Exceptions.QueryDeniedException;
@@ -13,12 +15,14 @@ public class TaskService {
 
     // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private final TaskData taskData;
+    private final SubTaskData subTaskData;
     private final UserService userService;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public TaskService(UserService userService, TaskData taskData) {
+    public TaskService(UserService userService, TaskData taskData, SubTaskData subTaskData) {
         this.userService = userService;
         this.taskData = taskData;
+        this.subTaskData =subTaskData;
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -70,5 +74,9 @@ public class TaskService {
 
     public void deleteTask(int id) throws SQLException {
         taskData.deleteTask(id);
+    }
+
+    public void createSubTask(int task_id, String name, String description) throws SQLException {
+        subTaskData.createSubTask(task_id,description,name);
     }
 }

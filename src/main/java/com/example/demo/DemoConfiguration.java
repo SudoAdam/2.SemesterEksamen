@@ -15,6 +15,15 @@ public class DemoConfiguration {
     }
 
     @Bean
+    public SubTaskMapper subTaskMapper() { return new SubTaskMapper();
+    }
+
+    @Bean
+    public SubTaskData subTaskData(SubTaskMapper subTaskMapper, Connector connector) {
+        return new SubTaskData(subTaskMapper, connector);
+    }
+
+    @Bean
     public TaskMapper taskMapper() {
         return new TaskMapper();
     }
@@ -25,8 +34,8 @@ public class DemoConfiguration {
     }
 
     @Bean
-    public TaskService taskService(UserService userService, TaskData taskData) {
-        return new TaskService(userService, taskData);
+    public TaskService taskService(UserService userService, TaskData taskData, SubTaskData subTaskData) {
+        return new TaskService(userService, taskData, subTaskData);
     }
 
     @Bean

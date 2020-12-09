@@ -21,7 +21,7 @@
         <br th:text="${projectmanager.e_mail}">
         <p>
             Kick Off: <span th:text="${project.kickoff}"></span>
-        <br>
+            <br>
             Deadline: <span th:text="${project.deadline}"></span>
     </div>
     <div id="bio-right" style="text-align: right">
@@ -37,7 +37,8 @@
             <tbody>
             <tr th:each="participant : ${participants}">
                 <td th:text="${participant.user_id}"></td>
-                <td th:if="${session.user.getIs_admin() == 1}"><a th:href="@{/editTask?id={id}(id=${task.task_id})}">&#128736;</a></td>
+                <td th:if="${session.user.getIs_admin() == 1}"><a th:href="@{/editTask?id={id}(id=${task.task_id})}">&#128736;</a>
+                </td>
             </tr>
             <tr>
                 <td>
@@ -48,12 +49,12 @@
                                     th:value="${user.user_id}"
                                     th:text="${user.first_name}+' '+ ${user.last_name}+' '+${user.e_mail}"></option>
                         </select>
-                        <select class="form-control" name="project_role_id" required>
-                            <option value="">Select Participant</option>
-                            <option th:each="user : ${users}"
-                                    th:value="${user.user_id}"
-                                    th:text="${user.first_name}+' '+ ${user.last_name}+' '+${user.e_mail}"></option>
-                        </select>
+                            <select class="form-control" name="project_role_id" required>
+                                <option value="">Select Role</option>
+                                <option th:each="user : ${users}"
+                                        th:value="${user.user_id}"
+                                        th:text="${user.first_name}+' '+ ${user.last_name}+' '+${user.e_mail}"></option>
+                            </select>
                             <input type="hidden" th:value="${project.project_id}">
                             <input type="submit" value="Add Participant">
 
@@ -73,21 +74,45 @@
             <th>End</th>
             <th>Task Manager</th>
             <th th:if="${session.user.getIs_admin() == 1}" style="background-color: #9EBDD5; text-align: center"></th>
+            <th th:if="${session.user.getIs_admin() == 1}">Sub Task</th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="task : ${tasks}">
+        <tbody th:each="task : ${tasks}">
+        <tr>
             <td th:text="${task.task_name}"></td>
             <td th:text="${task.task_description}"></td>
             <td th:text="${task.working_hours}"></td>
             <td th:text="${task.kickoff}"></td>
             <td th:text="${task.deadline}"></td>
             <td th:text="${task.task_leader_email}"></td>
-            <td th:if="${session.user.getIs_admin() == 1}"><a th:href="@{/editTask?id={id}(id=${task.task_id})}">&#128736;</a>
-            </td>
+            <td th:if="${session.user.getIs_admin() == 1}"><a th:href="@{/editTask?id={id}(id=${task.task_id})}">&#128736;</a></td>
         </tr>
+        <tr>
+            <td></td>
+            <td>SubTask</td>
+            <td>Description</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><a href="/">-</a></td>
+        </tr>
+        <tr>
+            <form action="/createSubTask" method="post">
+            <td></td>
+            <td><input name="sub_task_name" placeholder="Sub Task Name" required></td>
+            <td><input name="sub_task_description" placeholder="Description"></td>
+            <td><input type="hidden" name="task_id"></td>
+            <td></td>
+            <td><input type="submit" value="Add Sub Task"></td>
+            </form>
+            <td></td>
+
+        </tr>
+        </tbody>
+        <tbody>
         <tr th:if="${session.user.getIs_admin() == 1}" style="background-color: #9EBDD5; text-align: center">
-            <td colspan="7">
+            <td colspan="8">
                 <form th:action="@{/createTask?id={id}(id=${project.project_id})}" method="post">
                     <input value="&#10133;" type="submit" style="width: 45px; height: 45px">
                 </form>

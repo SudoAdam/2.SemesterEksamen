@@ -51,14 +51,13 @@ public class SubTaskData {
         return (SubTask) subTaskMapper.create(resultSet);
     }
 
-    public void createSubTask(int task_id, String sub_task_description, int sub_task_id, String sub_task_name) throws SQLException {
+    public void createSubTask(int task_id, String sub_task_description, String sub_task_name) throws SQLException {
         Connection connection = connector.getConnection();
-        String statement = "INSERT INTO sub_tasks (task_ID, sub_task_description , sub_task_id, sub_task_name) VALUES (?,?,?,?);";
+        String statement = "INSERT INTO sub_tasks (task_ID, sub_task_description, sub_task_name) VALUES (?,?,?);";
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
         preparedStatement.setInt(1, task_id);
         preparedStatement.setString(2, sub_task_description);
-        preparedStatement.setInt(3, sub_task_id);
-        preparedStatement.setString(4, sub_task_name);
+        preparedStatement.setString(3, sub_task_name);
         preparedStatement.execute();
     }
 
