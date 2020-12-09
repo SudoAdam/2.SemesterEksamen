@@ -52,10 +52,10 @@ public class ProjectData {
         try {
             Connection connection = connector.getConnection();
             String statement =
-                    "SELECT p.*" +
-                    "FROM project_participants pp" +
-                    "LEFT JOIN projects p" +
-                    "ON p.project_id = pp.project_id" +
+                    "SELECT p.* " +
+                    "FROM project_participants pp " +
+                    "LEFT JOIN projects p " +
+                    "ON p.project_id = pp.project_id " +
                     "WHERE pp.user_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, user_id);
@@ -101,12 +101,6 @@ public class ProjectData {
         Connection connection = connector.getConnection();
         String statement = "DELETE FROM projects WHERE project_id=?";
         PreparedStatement preparedStatement = connection.prepareStatement(statement);
-        preparedStatement.setInt(1, id);
-        preparedStatement.executeUpdate();
-
-        //delete all tasks pair with the project
-        String statement2 = "DELETE FROM tasks WHERE project_id=?";
-        PreparedStatement preparedStatement2 = connection.prepareStatement(statement2);
         preparedStatement.setInt(1, id);
         preparedStatement.executeUpdate();
     }

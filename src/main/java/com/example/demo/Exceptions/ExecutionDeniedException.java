@@ -1,6 +1,6 @@
 package com.example.demo.Exceptions;
 
-public class ExecutionDeniedException extends Throwable {
+public class ExecutionDeniedException extends Exception {
     private final String message;
 
     public ExecutionDeniedException(String message) {

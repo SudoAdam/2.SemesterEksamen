@@ -1,6 +1,6 @@
 package com.example.demo.Exceptions;
 
-public class QueryDeniedException extends Throwable {
+public class QueryDeniedException extends Exception {
     private final String message;
 
     public QueryDeniedException(String message) {

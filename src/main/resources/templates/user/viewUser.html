@@ -48,12 +48,16 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="project : ${customerProjects}">
+        <tr th:each="project : ${projects}">
             <td th:text="${project.project_name}"></td>
             <td th:text="${project.kickoff}"></td>
             <td th:text="${project.deadline}"></td>
             <td> &#10060;</td> <!-- 9989 -->
             <td><a th:href="@{/viewProject?id={id}(id=${project.project_id})}">View Project</a></td>
+        </tr>
+        <tr>
+            <td colspan="4">
+            </td>
         </tr>
         </tbody>
     </table>
