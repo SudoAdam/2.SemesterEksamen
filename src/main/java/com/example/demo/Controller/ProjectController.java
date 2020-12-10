@@ -1,7 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.Project;
-import com.example.demo.Exceptions.ExecutionDeniedException;
+import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Service.CustomerService;
 import com.example.demo.Service.ProjectService;
@@ -31,7 +31,7 @@ public class ProjectController {
     }
 
     @GetMapping("/listProject")
-    public String showProjects(Model model, WebRequest request) throws SQLException, QueryDeniedException {
+    public String showProjects(Model model, WebRequest request) throws QueryDeniedException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -41,7 +41,7 @@ public class ProjectController {
     }
 
     @GetMapping("/createProject")
-    public String createProject(Model model,WebRequest request) throws SQLException, QueryDeniedException {
+    public String createProject(Model model,WebRequest request) throws QueryDeniedException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -73,7 +73,7 @@ public class ProjectController {
 
     // Responds to /editProject?id=project_id
     @RequestMapping(value = "/editProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String editProject(@RequestParam int id, Model model, WebRequest request) throws SQLException, QueryDeniedException {
+    public String editProject(@RequestParam int id, Model model, WebRequest request) throws QueryDeniedException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -87,7 +87,7 @@ public class ProjectController {
     }
 
     @PostMapping("/updateProject")
-    public String updateProject(WebRequest request, Model model) throws SQLException, QueryDeniedException {
+    public String updateProject(WebRequest request, Model model) throws QueryDeniedException, ExecuteDeniedException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -128,7 +128,7 @@ public class ProjectController {
 
     // Responds to /deleteProject?id=project_id
     @RequestMapping(value = "/deleteProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteProject(@RequestParam int id, WebRequest request) throws SQLException {
+    public String deleteProject(@RequestParam int id, WebRequest request) throws ExecuteDeniedException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -137,7 +137,7 @@ public class ProjectController {
     }
 
     @PostMapping("/addParticipant")
-    public String addParticipant(@RequestParam int user_id, int project_id, int project_role_id, WebRequest request) throws ExecutionDeniedException {
+    public String addParticipant(@RequestParam int user_id, int project_id, int project_role_id, WebRequest request) throws ExecuteDeniedException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
