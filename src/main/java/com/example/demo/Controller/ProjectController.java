@@ -10,6 +10,7 @@ import com.example.demo.Service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 
 import java.sql.SQLException;
@@ -30,20 +31,30 @@ public class ProjectController {
     }
 
     @GetMapping("/listProject")
-    public String showProjects(Model model) throws SQLException, QueryDeniedException {
-        model.addAttribute("projectList", projectService.getProjects());
-        return "project/listProject";
+    public String showProjects(Model model, WebRequest request) throws SQLException, QueryDeniedException {
+        if (!checkLogin(request)) {
+            return "redirect:/";
+        } else {
+            model.addAttribute("projectList", projectService.getProjects());
+            return "project/listProject";
+        }
     }
 
     @GetMapping("/createProject")
-    public String createProject(Model model) throws SQLException, QueryDeniedException {
+    public String createProject(Model model,WebRequest request) throws SQLException, QueryDeniedException {
+        if (!checkLogin(request)) {
+            return "redirect:/";
+        } else {
         model.addAttribute("customers", customerService.getCustomers());
         model.addAttribute("users", userService.getUsers());
-        return "project/createProject";
+        return "project/createProject";}
     }
 
     @PostMapping("/createProject")
     public String createProject(WebRequest request) throws Exception {
+        if (!checkLogin(request)) {
+            return "redirect:/";
+        } else {
         //denne funktion er ikke færdig!
         String projectName = request.getParameter("pName");
         String kickOffStr = request.getParameter("kickOff");
@@ -57,23 +68,29 @@ public class ProjectController {
         LocalDate deadline = LocalDate.parse(deadlineStr);
 
         projectService.createProject(projectName, kickOff, deadline, project_leader_id, customer_id);
-        return "redirect:/listProject";
+        return "redirect:/listProject";}
     }
 
     // Responds to /editProject?id=project_id
     @RequestMapping(value = "/editProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String editProject(@RequestParam int id, Model model) throws SQLException, QueryDeniedException {
+    public String editProject(@RequestParam int id, Model model, WebRequest request) throws SQLException, QueryDeniedException {
+        if (!checkLogin(request)) {
+            return "redirect:/";
+        } else {
         Project p = projectService.getProject(id);
         model.addAttribute("customers", customerService.getCustomers());
         model.addAttribute("users", userService.getUsers());
         model.addAttribute("projectmanager", userService.getUser(p.getProject_leader_id()));
         model.addAttribute("currentcustomer", customerService.getCustomer(p.getCustomer_id()));
         model.addAttribute("project", p);
-        return "project/editProject";
+        return "project/editProject";}
     }
 
     @PostMapping("/updateProject")
     public String updateProject(WebRequest request, Model model) throws SQLException, QueryDeniedException {
+        if (!checkLogin(request)) {
+            return "redirect:/";
+        } else {
         String projectId = request.getParameter("id");
         String projectName = request.getParameter("pName");
         String kickOffStr = request.getParameter("kickOff");
@@ -91,33 +108,50 @@ public class ProjectController {
         model.addAttribute("project", projectService.getProject(pId));
         model.addAttribute("participants", projectService.getParticipants(pId));
 
-        return "redirect:/viewProject?id=" + pId;
+        return "redirect:/viewProject?id=" + pId;}
     }
 
     // Responds to /viewProject?id=project_id
     @RequestMapping(value = "/viewProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewProject(@RequestParam int id, Model model) throws SQLException, QueryDeniedException {
+    public String viewProject(@RequestParam int id, Model model, WebRequest request) throws SQLException, QueryDeniedException {
+        if (!checkLogin(request)) {
+            return "redirect:/";
+        } else {
         Project p = projectService.getProject(id);
         model.addAttribute("projectmanager", userService.getUser(p.getProject_leader_id()));
         model.addAttribute("customer", customerService.getCustomer(p.getCustomer_id()));
         model.addAttribute("tasks", taskService.getTasks(id));
         model.addAttribute("project", p);
         model.addAttribute("users", userService.getUsers());
-        return "project/viewProject";
+        return "project/viewProject";}
     }
 
     // Responds to /deleteProject?id=project_id
     @RequestMapping(value = "/deleteProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteProject(@RequestParam int id) throws SQLException {
+    public String deleteProject(@RequestParam int id, WebRequest request) throws SQLException {
+        if (!checkLogin(request)) {
+            return "redirect:/";
+        } else {
         projectService.deleteProject(id);
-        return "redirect:/listProject";
+        return "redirect:/listProject";}
     }
 
     @PostMapping("/addParticipant")
-    public String addParticipant(@RequestParam int user_id, int project_id, int project_role_id) throws ExecutionDeniedException {
-        projectService.assignParticipant(user_id,project_id,project_role_id);
-        return "redirect:/";
+    public String addParticipant(@RequestParam int user_id, int project_id, int project_role_id, WebRequest request) throws ExecutionDeniedException {
+        if (!checkLogin(request)) {
+            return "redirect:/";
+        } else {
+            projectService.assignParticipant(user_id, project_id, project_role_id);
+            return "redirect:/";
+        }
     }
 
 
+    public Boolean checkLogin(WebRequest request) {
+        if (request.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
