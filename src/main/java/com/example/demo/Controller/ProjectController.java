@@ -1,7 +1,6 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.Project;
-import com.example.demo.Domain.SubTask;
 import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Service.CustomerService;
@@ -11,12 +10,10 @@ import com.example.demo.Service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 @Controller
 public class ProjectController {
@@ -130,6 +127,7 @@ public class ProjectController {
             model.addAttribute("tasks", taskService.getTasks(id));
             model.addAttribute("project", p);
             model.addAttribute("users", userService.getUsers());
+            model.addAttribute("workingHours", taskService.getWorkinghours(taskService.getTasks(id)));
             return "project/viewProject";
         }
     }

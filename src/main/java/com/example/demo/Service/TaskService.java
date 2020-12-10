@@ -48,6 +48,15 @@ public class TaskService {
         return list;
     }
 
+    public int getWorkinghours(ArrayList<Task> list){
+       int totalTime = 0;
+        for (int i = 0; i < list.size(); i++) {
+           int time = list.get(i).getWorking_hours();
+            totalTime += time;
+        }
+        return totalTime;
+    }
+
     public Task getTask(int task_id) throws QueryDeniedException {
         Task t = taskData.getTask(task_id);
         finalize(t);
