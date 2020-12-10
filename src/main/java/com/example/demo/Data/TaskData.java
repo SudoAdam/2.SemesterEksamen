@@ -7,6 +7,7 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Task;
+import com.example.demo.Exceptions.EmptyResultSetException;
 import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Mapper.TaskMapper;
@@ -27,7 +28,7 @@ public class TaskData {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<Task> getTasks(int project_id) throws QueryDeniedException {
+    public ArrayList<Task> getTasks(int project_id) throws QueryDeniedException, EmptyResultSetException {
         try {
             Connection connection = connector.getConnection();
             String statement = "SELECT * FROM tasks WHERE project_id=?;";
@@ -45,7 +46,7 @@ public class TaskData {
         }
     }
 
-    public Task getTask(int task_id) throws QueryDeniedException {
+    public Task getTask(int task_id) throws QueryDeniedException, EmptyResultSetException {
         try {
             Connection connection = connector.getConnection();
             String statement = "SELECT * FROM tasks WHERE task_id = ?";

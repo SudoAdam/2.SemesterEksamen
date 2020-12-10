@@ -14,10 +14,8 @@ import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Participant;
 import com.example.demo.Domain.Project;
 import com.example.demo.Domain.User;
-import com.example.demo.Exceptions.ExecuteDeniedException;
-import com.example.demo.Exceptions.QueryDeniedException;
+import com.example.demo.Exceptions.*;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -38,7 +36,7 @@ public class ProjectService {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    private void finalize(Project project) throws QueryDeniedException {
+    private void finalize(Project project) throws QueryDeniedException, EmptyResultSetException {
         // Late dependency injection for single domain objects
         int project_leader_id = project.getProject_leader_id();
         int customer_id = project.getCustomer_id();
@@ -46,25 +44,6 @@ public class ProjectService {
         Customer customer = customerData.getCustomer(customer_id);
         project.setProject_leader(project_leader);
         project.setCustomer(customer);
-    }
-
-    private void finalize(ArrayList<Project> list) throws QueryDeniedException {
-        // Late dependency injection for collections of domain objects
-        for (Project p : list) {
-            finalize(p);
-        }
-    }
-
-    public ArrayList<Project> getProjects() throws QueryDeniedException {
-        ArrayList<Project> list = projectData.getProjects();
-        // finalize(list);
-        return list;
-    }
-
-    public Project getProject(int id) throws QueryDeniedException {
-        Project p = projectData.getProject(id);
-        finalize(p);
-        return p;
     }
 
     private boolean correctDate(LocalDate kickoff, LocalDate deadline) {
@@ -75,38 +54,83 @@ public class ProjectService {
         return result;
     }
 
-    public ArrayList<Project> getUserProjects(int user_id) throws QueryDeniedException {
-        return projectData.getUserProjects(user_id);
-    }
-
-    public void createProject(String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws Exception {
-        if (correctDate(kickoff, deadline) == false) {
-            throw new Exception();
+    public ArrayList<Project> getProjects() throws FailedRequestException {
+        try {
+            ArrayList<Project> list = projectData.getProjects();
+            return list;
+        } catch (QueryDeniedException | EmptyResultSetException e) {
+            throw new FailedRequestException(e.getMessage());
         }
-        projectData.createProject(project_name, kickoff, deadline, project_leader_id, customer_id);
     }
 
-    public void editProject(int project_id, String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws ExecuteDeniedException {
+    public Project getProject(int project_id) throws FailedRequestException {
+        try {
+            Project p = projectData.getProject(project_id);
+            finalize(p);
+            return p;
+        } catch (QueryDeniedException | EmptyResultSetException e) {
+            throw new FailedRequestException(e.getMessage());
+        }
+    }
+
+    public ArrayList<Project> getUserProjects(int user_id) throws FailedRequestException {
+        try {
+            return projectData.getUserProjects(user_id);
+        } catch (QueryDeniedException | EmptyResultSetException e) {
+            throw new FailedRequestException(e.getMessage());
+        }
+    }
+
+    public void createProject(String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws FailedRequestException, DateContextException {
+        try {
+            if (!correctDate(kickoff, deadline)) {
+                throw new DateContextException();
+            }
+            projectData.createProject(project_name, kickoff, deadline, project_leader_id, customer_id);
+        } catch (ExecuteDeniedException e) {
+            throw new FailedRequestException(e.getMessage());
+        }
+    }
+
+    public void editProject(int project_id, String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws FailedRequestException {
+        try {
         projectData.editProject(project_id, project_name, kickoff, deadline, project_leader_id, customer_id);
+        } catch (ExecuteDeniedException e) {
+            throw new FailedRequestException(e.getMessage());
+        }
     }
 
-    public void deleteProject(int id) throws ExecuteDeniedException {
-        projectData.deleteProject(id);
+    public void deleteProject(int project_id) throws FailedRequestException {
+        try {
+        projectData.deleteProject(project_id);
+        } catch (ExecuteDeniedException e) {
+            throw new FailedRequestException(e.getMessage());
+        }
     }
 
-    public void assignParticipant(int user_id, int project_id, int project_role_id) throws ExecuteDeniedException {
+    public void assignParticipant(int user_id, int project_id, int project_role_id) throws FailedRequestException {
+        try {
         participantData.assignParticipant(user_id, project_id, project_role_id);
+        } catch (ExecuteDeniedException e) {
+            throw new FailedRequestException(e.getMessage());
+        }
     }
 
-    public ArrayList<Participant> getParticipants(int project_id) throws QueryDeniedException {
+    public ArrayList<Participant> getParticipants(int project_id) throws FailedRequestException {
+        try {
         ArrayList<Participant> list = participantData.getParticipants(project_id);
         return list;
+        } catch (QueryDeniedException | EmptyResultSetException e) {
+            throw new FailedRequestException(e.getMessage());
+        }
     }
 
+    /*
     public Participant getParticipant(int user_id, int project_id) throws QueryDeniedException {
         // Not working yet
         Participant p = participantData.getProjectParticipant(user_id, project_id);
         return p;
     }
+    */
 
 }

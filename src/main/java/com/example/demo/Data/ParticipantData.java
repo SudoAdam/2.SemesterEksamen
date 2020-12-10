@@ -1,6 +1,7 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Participant;
+import com.example.demo.Exceptions.EmptyResultSetException;
 import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Mapper.ParticipantMapper;
@@ -15,23 +16,25 @@ public class ParticipantData {
     // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private final ParticipantMapper participantMapper;
     private final Connector connector;
+
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public ParticipantData(ParticipantMapper participantMapper, Connector connector) {
         this.participantMapper = participantMapper;
         this.connector = connector;
     }
+
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<Participant> getParticipants(int project_id) throws QueryDeniedException {
+    public ArrayList<Participant> getParticipants(int project_id) throws QueryDeniedException, EmptyResultSetException {
         try {
             Connection connection = connector.getConnection();
             String statement = "" +
-                "SELECT p.user_id, u.first_name, u.last_name, u.e_mail, p.project_id, p.project_role_id, r.project_role " +
-                "FROM project_participants p " +
-                "LEFT JOIN users u " +
-                "ON p.user_id = u.user_id " +
-                "LEFT JOIN project_roles r " +
-                "ON p.project_role_id = r.project_role_id " +
-                "WHERE p.project_id = ?";
+                    "SELECT p.user_id, u.first_name, u.last_name, u.e_mail, p.project_id, p.project_role_id, r.project_role " +
+                    "FROM project_participants p " +
+                    "LEFT JOIN users u " +
+                    "ON p.user_id = u.user_id " +
+                    "LEFT JOIN project_roles r " +
+                    "ON p.project_role_id = r.project_role_id " +
+                    "WHERE p.project_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, project_id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -46,7 +49,7 @@ public class ParticipantData {
         }
     }
 
-    public Participant getProjectParticipant(int user_id, int project_id) throws QueryDeniedException {
+    public Participant getProjectParticipant(int user_id, int project_id) throws QueryDeniedException, EmptyResultSetException {
         try {
             // Not working yet
             Connection connection = connector.getConnection();

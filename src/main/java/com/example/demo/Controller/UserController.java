@@ -5,8 +5,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.User;
-import com.example.demo.Exceptions.ExecuteDeniedException;
-import com.example.demo.Exceptions.QueryDeniedException;
+import com.example.demo.Exceptions.FailedRequestException;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.UserService;
 import org.springframework.stereotype.Controller;
@@ -33,7 +32,7 @@ public class UserController {
     }
 
     @GetMapping("/listUser")
-    public String showUsers(Model model, WebRequest request) throws QueryDeniedException {
+    public String showUsers(Model model, WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -53,7 +52,7 @@ public class UserController {
     }
 
     @PostMapping("/updateUser")
-    public String updateUser(WebRequest request) throws QueryDeniedException, ExecuteDeniedException {
+    public String updateUser(WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -77,7 +76,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/viewUser", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewUser(@RequestParam int id, Model model, WebRequest request) throws QueryDeniedException {
+    public String viewUser(@RequestParam int id, Model model, WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -97,7 +96,7 @@ public class UserController {
     }
 
     @PostMapping("/uploadImg")
-    public String uploadImg(@RequestParam("file") MultipartFile file, WebRequest request) throws QueryDeniedException, ExecuteDeniedException {
+    public String uploadImg(@RequestParam("file") MultipartFile file, WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -110,7 +109,7 @@ public class UserController {
     }
 
     @PostMapping("/updateUserRole")
-    public String updateUserRole(WebRequest request) throws ExecuteDeniedException {
+    public String updateUserRole(WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -127,7 +126,7 @@ public class UserController {
     }
 
     @PostMapping("/resetUserPassword")
-    public String resetUserPassword(WebRequest request) throws ExecuteDeniedException {
+    public String resetUserPassword(WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -138,7 +137,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/deleteUser", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteUser(@RequestParam int id, WebRequest request) throws ExecuteDeniedException {
+    public String deleteUser(@RequestParam int id, WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {

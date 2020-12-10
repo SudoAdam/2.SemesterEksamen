@@ -6,6 +6,7 @@ package com.example.demo.Data;
  */
 
 import com.example.demo.Domain.SubTask;
+import com.example.demo.Exceptions.EmptyResultSetException;
 import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Mapper.SubTaskMapper;
@@ -28,7 +29,7 @@ public class SubTaskData {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<SubTask> getSubTasks(int project_id) throws QueryDeniedException {
+    public ArrayList<SubTask> getSubTasks(int project_id) throws QueryDeniedException, EmptyResultSetException {
         try {
             Connection connection = connector.getConnection();
             String statement =
@@ -52,7 +53,7 @@ public class SubTaskData {
         }
     }
 
-    public SubTask getSubTask(int task_id, int sub_task_id) throws QueryDeniedException {
+    public SubTask getSubTask(int task_id, int sub_task_id) throws QueryDeniedException, EmptyResultSetException {
         try {
             Connection connection = connector.getConnection();
             String statement = "SELECT * FROM sub_tasks WHERE task_id = ? AND sub_task_id = ?";
@@ -66,7 +67,7 @@ public class SubTaskData {
         }
     }
 
-    public SubTask getSubTask(int task_id, String sub_task_name) throws QueryDeniedException {
+    public SubTask getSubTask(int task_id, String sub_task_name) throws QueryDeniedException, EmptyResultSetException {
         try {
             Connection connection = connector.getConnection();
             String statement = "SELECT * FROM sub_tasks WHERE task_id = ? AND sub_task_name = ?";
@@ -94,6 +95,7 @@ public class SubTaskData {
         }
     }
 
+    /*
     public void editSubTask(int task_id, String sub_task_description, int sub_task_id, String sub_task_name) throws ExecuteDeniedException {
         try {
             Connection connection = connector.getConnection();
@@ -109,6 +111,7 @@ public class SubTaskData {
             throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
+    */
 
     public void deleteSubTask(int task_id, int sub_task_id) throws ExecuteDeniedException {
         try {

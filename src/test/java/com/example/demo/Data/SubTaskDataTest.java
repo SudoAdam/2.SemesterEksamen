@@ -99,7 +99,4 @@ class SubTaskDataTest {
         assertSubTask(subTask);
     }
 
-    @Test
-    void editSubTask() {
-    }
 }

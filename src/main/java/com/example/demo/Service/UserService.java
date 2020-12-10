@@ -5,15 +5,10 @@ package com.example.demo.Service;
 
 import com.example.demo.Data.UserData;
 import com.example.demo.Domain.User;
-import com.example.demo.Exceptions.ExecuteDeniedException;
-import com.example.demo.Exceptions.LoginException;
-import com.example.demo.Exceptions.QueryDeniedException;
+import com.example.demo.Exceptions.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class UserService {
@@ -26,9 +21,13 @@ public class UserService {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<User> getUsers() throws QueryDeniedException {
+    public ArrayList<User> getUsers() throws FailedRequestException {
+        try {
         ArrayList<User> list = userData.getUsers();
         return list;
+        } catch (QueryDeniedException | EmptyResultSetException e) {
+            throw new FailedRequestException(e.getMessage());
+        }
     }
 
     private String passwordHASH(String password) {
@@ -36,20 +35,35 @@ public class UserService {
         return hash;
     }
 
-    public User login(String email, String password) throws LoginException, QueryDeniedException {
-        User user = userData.login(email, passwordHASH(password));
-        return user;
+    public User login(String email, String password) throws FailedRequestException, LoginException {
+        try {
+            User user = userData.login(email, passwordHASH(password));
+            return user;
+        } catch (QueryDeniedException e) {
+            throw new FailedRequestException(e.getMessage());
+        } catch (EmptyResultSetException e) {
+            throw new LoginException();
+        }
     }
 
-    public User getUser(int id) throws QueryDeniedException {
-        return userData.getUser(id);
+    public User getUser(int id) throws FailedRequestException {
+        try {
+            return userData.getUser(id);
+        } catch (QueryDeniedException | EmptyResultSetException e) {
+            throw new FailedRequestException(e.getMessage());
+        }
     }
 
-    public void createUser(String e_mail, String password, String first_name, String last_name) throws ExecuteDeniedException {
-        userData.createUser(e_mail, passwordHASH(password), first_name, last_name);
+    public void createUser(String e_mail, String password, String first_name, String last_name) throws FailedRequestException {
+        try {
+            userData.createUser(e_mail, passwordHASH(password), first_name, last_name);
+        } catch (ExecuteDeniedException e) {
+            throw new FailedRequestException(e.getMessage());
+        }
     }
 
-    public void editUser(User user, int user_id, String e_mail, String pwd1, String pwd2, String oldPwd, String first_name, String last_name, int is_admin) throws ExecuteDeniedException {
+    public void editUser(User user, int user_id, String e_mail, String pwd1, String pwd2, String oldPwd, String first_name, String last_name, int is_admin) throws FailedRequestException {
+        try {
             //to update Password
             String newPassword;
             oldPwd = "" + oldPwd.hashCode();
@@ -60,36 +74,58 @@ public class UserService {
             }
 
             userData.editUser(user_id, e_mail, newPassword, first_name, last_name, is_admin);
-    }
-
-    public int findUserIdFromEmail(String email) throws QueryDeniedException {
-        return userData.findUserIdFromEmail(email);
-    }
-
-    public String findEmailFromUserId(int id) throws QueryDeniedException {
-        return userData.findEmailFromUserId(id);
-    }
-
-    public void addProfilePicture(int user_id, MultipartFile file) throws ExecuteDeniedException {
-        try {
-            byte[] fileAsBytes = file.getBytes();
-            Blob fileAsBlob = new SerialBlob(fileAsBytes);
-            userData.uploadImg(user_id, fileAsBlob);
-        } catch (IOException | SQLException ioException) {
-            throw new NullPointerException(ioException.getMessage());
+        } catch (ExecuteDeniedException e) {
+            throw new FailedRequestException(e.getMessage());
         }
     }
 
-    public void deleteUser(int id) throws ExecuteDeniedException {
-        userData.deleteUser(id);
+    public int findUserIdFromEmail(String email) throws FailedRequestException {
+        try {
+            return userData.findUserIdFromEmail(email);
+        } catch (QueryDeniedException e) {
+            throw new FailedRequestException(e.getMessage());
+        }
     }
 
-    public void setAdminStatus(int user_id, int is_admin) throws ExecuteDeniedException {
-        userData.setAdminStatus(user_id, is_admin);
+    public String findEmailFromUserId(int id) throws FailedRequestException {
+        try {
+            return userData.findEmailFromUserId(id);
+        } catch (QueryDeniedException e) {
+            throw new FailedRequestException(e.getMessage());
+        }
     }
 
-    public void resetPassword(int user_id) throws ExecuteDeniedException {
-        String passwordHash = "-1307671719";
-        userData.setPassword(user_id,passwordHash);
+    public void addProfilePicture(int user_id, MultipartFile file) throws FailedRequestException {
+        try {
+            byte[] fileAsBytes = file.getBytes();
+            userData.uploadImg(user_id, fileAsBytes);
+        } catch (IOException | ExecuteDeniedException e) {
+            throw new FailedRequestException(e.getMessage());
+        }
+    }
+
+    public void deleteUser(int id) throws FailedRequestException {
+        try {
+            userData.deleteUser(id);
+        } catch (ExecuteDeniedException e) {
+            throw new FailedRequestException(e.getMessage());
+        }
+    }
+
+    public void setAdminStatus(int user_id, int is_admin) throws FailedRequestException {
+        try {
+            userData.setAdminStatus(user_id, is_admin);
+        } catch (ExecuteDeniedException e) {
+            throw new FailedRequestException(e.getMessage());
+        }
+    }
+
+    public void resetPassword(int user_id) throws FailedRequestException {
+        try {
+            String passwordHash = "-1307671719";
+            userData.setPassword(user_id, passwordHash);
+        } catch (ExecuteDeniedException e) {
+            throw new FailedRequestException(e.getMessage());
+        }
     }
 }

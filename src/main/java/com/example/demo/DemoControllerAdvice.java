@@ -12,24 +12,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.sql.SQLException;
 import java.util.Arrays;
 
 @ControllerAdvice
 public class DemoControllerAdvice {
 
-    @ExceptionHandler(SQLException.class)
-    public String handleSQLException(Model model, SQLException e) {
-        String title = "Database request error was encountered;";
-        model.addAttribute("title", title);
-        model.addAttribute("exception", e.getClass());
-        model.addAttribute("message", e.getMessage());
-        model.addAttribute("stacktrace", Arrays.toString(e.getStackTrace()));
-        return "error";
-    }
-
     @ExceptionHandler(LoginException.class)
-    public String handleLoginException(Model model, LoginException e) {
+    public String handleLoginException() {
         return "redirect:/";
     }
 
