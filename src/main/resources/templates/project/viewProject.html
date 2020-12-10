@@ -8,10 +8,11 @@
 <th:block th:include="/includes/header :: header"></th:block>
 <body>
 <div id="container" style="text-align: left">
-    <div id="bio-left" style="float: left">
-        <a class="back-button" href="/listProject">&#11013;</a>
-        <h1 style="font-size: 50px" th:text="${project.project_name}"></h1>
+    <div style="float: left"><a class="back-button" href="/listProject">&#11013;</a></div>
+    <div style="clear: both"><h1 style="font-size: 50px" th:text="${project.project_name}"></h1>
         <hr class="rounded">
+    </div>
+    <div id="bio-left" style="float: left">
         <h3>Customer: </h3><span th:text="${customer.name}"></span>
         <br th:text="${customer.contact_name}">
         <span th:text="${customer.contact_email}"></span>
@@ -23,45 +24,62 @@
             Kick Off: <span th:text="${project.kickoff}"></span>
             <br>
             Deadline: <span th:text="${project.deadline}"></span>
+            <br>
+            Total Working Hours: <span th:text="${workingHours}"></span>
+            <br>
+            <a th:if="${session.user.getIs_admin() == 1}" th:href="@{/editProject?id={id}(id=${project.project_id})}">
+                Edit Project
+            </a>
     </div>
-    <div id="bio-right" style="text-align: right">
-        <a th:if="${session.user.getIs_admin() == 1}" th:href="@{/editProject?id={id}(id=${project.project_id})}">
-            Edit Project
-        </a>
+    <div id="bio-right" style="float: right">
+        <p></p>
         <table class="bio-right-table">
             <thead>
             <tr>
-                <th>Project participants</th>
+                <th>Participants</th>
+                <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                <th>Role</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="participant : ${participants}">
-                <td th:text="${participant.user_id}"></td>
-                <td th:if="${session.user.getIs_admin() == 1}"><a th:href="@{/editTask?id={id}(id=${task.task_id})}">&#128736;</a>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <form action="/addParticipant" method="post">
-                        <p><select class="form-control" name="user_id" required>
-                            <option value="">Select Participant</option>
-                            <option th:each="user : ${users}"
-                                    th:value="${user.user_id}"
-                                    th:text="${user.first_name}+' '+ ${user.last_name}+' '+${user.e_mail}"></option>
-                        </select>
-                            <select class="form-control" name="project_role_id" required>
-                                <option value="">Select Role</option>
-                                <option th:each="user : ${users}"
-                                        th:value="${user.user_id}"
-                                        th:text="${user.first_name}+' '+ ${user.last_name}+' '+${user.e_mail}"></option>
-                            </select>
-                            <input type="hidden" th:value="${project.project_id}">
-                            <input type="submit" value="Add Participant">
-                    </form>
-                </td>
+                <td th:text="${participant.getFirst_name()}+' '+${participant.getLast_name()}"></td>
+                <td></td>
+                <td th:if="${participant.getProject_role_id() == 1}">Programmer</td>
+                <td th:if="${participant.getProject_role_id() == 2}">Database Admin</td>
+                <td th:if="${participant.getProject_role_id() == 3}">System Designer</td>
+                <td th:if="${participant.getProject_role_id() == 4}">Architect</td>
+                <td th:if="${participant.getProject_role_id() == 5}">Sales</td>
+                <td th:if="${participant.getProject_role_id() == 6}">Other</td>
+                <form action="/removeParticipant" method="post">
+                    <td>
+                        <input type="hidden" name="user_id" th:value="${participant.user_id}">
+                        <input type="hidden" name="project_id" th:value="${participant.project_id}">
+                        <input type="submit" value="Remove">
+                    </td>
+                </form>
             </tr>
             </tbody>
         </table>
+        <form action="/addParticipant" method="post">
+            <p><select style="font-size: 15px" class="form-control" name="user_id" required>
+                <option value="">Select Participant</option>
+                <option th:each="user : ${users}"
+                        th:value="${user.user_id}"
+                        th:text="${user.first_name}+' '+ ${user.last_name}+' '+${user.e_mail}"></option>
+            </select>
+                <select style="font-size: 15px" class="form-control" name="project_role_id" required>
+                    <option value="">Select Role</option>
+                    <option value="1">Programmer</option>
+                    <option value="2">Database Admin</option>
+                    <option value="3">System Designer</option>
+                    <option value="4">Architect</option>
+                    <option value="5">Sales</option>
+                    <option value="6">Other</option>
+                </select>
+                <input type="hidden" name="project_id" th:value="${project.project_id}">
+                <input type="submit" value="Add Participant">
+        </form>
     </div>
     <table class="list-table">
         <thead>
@@ -83,11 +101,12 @@
             <td th:text="${task.kickoff}"></td>
             <td th:text="${task.deadline}"></td>
             <td th:text="${task.task_leader_email}"></td>
-            <td th:if="${session.user.getIs_admin() == 1}"><a th:href="@{/editTask?id={id}(id=${task.task_id})}">&#128736;</a></td>
+            <td th:if="${session.user.getIs_admin() == 1}"><a th:href="@{/editTask?id={id}(id=${task.task_id})}">&#128736;</a>
+            </td>
         </tr>
-        <tr  th:each="subtask : ${subtasks}"
-             th:object="${subtask}"
-             th:if="${subtask.task_id == task.task_id}">
+        <tr th:each="subtask : ${subtasks}"
+            th:object="${subtask}"
+            th:if="${subtask.task_id == task.task_id}">
             <td style="font-size: 50%">&#9899;</td>
             <td th:text="${subtask.sub_task_name}"></td>
             <td th:text="${subtask.sub_task_description}"></td>
@@ -99,18 +118,18 @@
                     <input type="hidden" name="task_id" th:value="${subtask.task_id}">
                     <input type="hidden" name="sub_task_id" th:value="${subtask.sub_task_id}">
                     <input type="hidden" name="project_id" th:value="${project.project_id}">
-                <input type="submit" value="-" style="font-size: 200%; text-decoration: none; color: red">
+                    <input type="submit" value="-" style="font-size: 200%; text-decoration: none; color: red">
                 </form>
             </td>
         </tr>
         <tr style="border-bottom: 6px solid #9EBDD5;" th:if="${session.user.getIs_admin() == 1}">
             <form action="/createSubTask" method="post">
-            <td></td>
-            <td><input name="sub_task_name" placeholder="Sub Task Name" required></td>
-            <td><input name="sub_task_description" placeholder="Description"></td>
-            <td><input type="hidden" name="task_id" th:value="${task.task_id}"></td>
-            <td><input type="hidden" name="project_id" th:value="${task.project_id}"></td>
-            <td><input type="submit" value="Add Sub Task"></td>
+                <td></td>
+                <td><input name="sub_task_name" placeholder="Sub Task Name" required></td>
+                <td><input name="sub_task_description" placeholder="Description"></td>
+                <td><input type="hidden" name="task_id" th:value="${task.task_id}"></td>
+                <td><input type="hidden" name="project_id" th:value="${task.project_id}"></td>
+                <td><input type="submit" value="Add Sub Task"></td>
             </form>
             <td></td>
         </tr>
