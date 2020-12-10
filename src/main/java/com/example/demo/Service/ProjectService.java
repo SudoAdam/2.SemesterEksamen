@@ -109,4 +109,7 @@ public class ProjectService {
         return p;
     }
 
+    public void removeParticipant(int user_id, int project_id) throws ExecuteDeniedException {
+        participantData.removeParticipant(user_id, project_id);
+    }
 }
