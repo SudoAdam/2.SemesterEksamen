@@ -73,7 +73,6 @@
             <th>End</th>
             <th>Task Manager</th>
             <th th:if="${session.user.getIs_admin() == 1}" style="background-color: #9EBDD5; text-align: center"></th>
-            <th th:if="${session.user.getIs_admin() == 1}">Sub Task</th>
         </tr>
         </thead>
         <tbody th:each="task : ${tasks}">
@@ -86,16 +85,18 @@
             <td th:text="${task.task_leader_email}"></td>
             <td th:if="${session.user.getIs_admin() == 1}"><a th:href="@{/editTask?id={id}(id=${task.task_id})}">&#128736;</a></td>
         </tr>
-        <tr th:each="subtask : ${subtasks}">
+        <tr  th:each="subtask : ${subtasks}"
+             th:object="${subtask}"
+             th:if="${subtask.task_id == task.task_id}">
+            <td style="font-size: 50%">&#9899;</td>
+            <td th:text="${subtask.sub_task_name}"></td>
+            <td th:text="${subtask.sub_task_description}"></td>
             <td></td>
-            <td th:if="${subtask.task_id == task.task_id}" th:text="${subtask.sub_task_name}"></td>
-            <td th:if="${subtask.task_id == task.task_id}" th:text="${subtask.sub_task_description}"></td>
             <td></td>
             <td></td>
-            <td></td>
-            <td><a href="/">-</a></td>
+            <td style="font-size: 300%; text-decoration: none; color: red"><a href="/">-</a></td>
         </tr>
-        <tr th:if="${session.user.getIs_admin() == 1}">
+        <tr style="border-bottom: 6px solid #9EBDD5;" th:if="${session.user.getIs_admin() == 1}">
             <form action="/createSubTask" method="post">
             <td></td>
             <td><input name="sub_task_name" placeholder="Sub Task Name" required></td>
@@ -109,7 +110,7 @@
         </tbody>
         <tbody>
         <tr th:if="${session.user.getIs_admin() == 1}" style="background-color: #9EBDD5; text-align: center">
-            <td colspan="8">
+            <td colspan="7">
                 <form th:action="@{/createTask?id={id}(id=${project.project_id})}" method="post">
                     <input value="&#10133;" type="submit" style="width: 45px; height: 45px">
                 </form>

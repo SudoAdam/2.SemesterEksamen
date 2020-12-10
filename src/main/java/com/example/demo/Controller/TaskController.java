@@ -81,11 +81,10 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/createTaskPost", method = {RequestMethod.GET, RequestMethod.POST})
-    public String createTaskPost(@RequestParam int id, WebRequest request, Model model) throws Exception {
+    public String createTaskPost(@RequestParam int id, WebRequest request) throws Exception {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
-
             String taskName = request.getParameter("taskName");
             String taskDesc = request.getParameter("taskDesc");
             String taskLeader = request.getParameter("taskLeader");
@@ -96,11 +95,8 @@ public class TaskController {
             LocalDate kickoff = LocalDate.parse(taskKickoff);
             LocalDate deadline = LocalDate.parse(taskDeadline);
             int workingHours = Integer.parseInt(workingHoursSTR);
-            int project_leader_id = userService.findUserIdFromEmail(taskLeader);
+            int project_leader_id = Integer.parseInt(taskLeader);
             taskService.createTask(id, taskName, taskDesc, project_leader_id, kickoff, deadline, workingHours);
-
-
-            model.addAttribute("project", projectService.getProject(id));
             return "redirect:/viewProject?id=" + id;
         }
     }
