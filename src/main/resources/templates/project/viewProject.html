@@ -86,17 +86,16 @@
             <td th:text="${task.task_leader_email}"></td>
             <td th:if="${session.user.getIs_admin() == 1}"><a th:href="@{/editTask?id={id}(id=${task.task_id})}">&#128736;</a></td>
         </tr>
-        <tr th:each="">
+        <tr>
             <td></td>
-            <td th:text="">SubTask</td>
+            <td>SubTask</td>
             <td>Description</td>
-            <td></td>
             <td></td>
             <td></td>
             <td></td>
             <td><a href="/">-</a></td>
         </tr>
-        <tr>
+        <tr th:if="${session.user.getIs_admin() == 1}">
             <form action="/createSubTask" method="post">
             <td></td>
             <td><input name="sub_task_name" placeholder="Sub Task Name" required></td>
@@ -106,7 +105,6 @@
             <td><input type="submit" value="Add Sub Task"></td>
             </form>
             <td></td>
-
         </tr>
         </tbody>
         <tbody>
