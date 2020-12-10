@@ -7,28 +7,33 @@
  *
  * Reference: Larman: Template Method Pattern
  *
+ * A future implementation could be the use of Generics to avoid type casting outside the Mapper class
+ *
  * @author Patrick Vincent Højstrøm
  * @version 1.0
  * @since 27-11-2020
  */
 package com.example.demo.Mapper;
 
-import com.example.demo.Domain.DomainFacade;
+import com.example.demo.Domain.DomainInterface;
 import com.example.demo.Exceptions.QueryDeniedException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public abstract class AbstractMapper {
-    /*public ArrayList<DomainFacade> batch(ResultSet resultSet) throws SQLException {
-        ArrayList<DomainFacade> list = new ArrayList<>();
+    /*
+    public ArrayList<?> batch(ResultSet resultSet) throws SQLException, QueryDeniedException {
+        ArrayList<?> list = new ArrayList<>();
         while (resultSet.next()) {
             list.add(create(resultSet));
         }
         return list;
-    }*/
+    }
+    */
 
-    public DomainFacade create(ResultSet resultSet) throws QueryDeniedException {
+    public DomainInterface create(ResultSet resultSet) throws QueryDeniedException {
         try {
             if (resultSet.isBeforeFirst()) {
                 if (!resultSet.next()) {
@@ -41,5 +46,5 @@ public abstract class AbstractMapper {
         }
     }
 
-    public abstract DomainFacade mapping(ResultSet resultSet) throws SQLException;
+    public abstract DomainInterface mapping(ResultSet resultSet) throws SQLException;
 }

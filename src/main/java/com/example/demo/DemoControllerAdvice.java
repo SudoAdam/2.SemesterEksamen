@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 
 @ControllerAdvice
-public class DemoAdvice {
+public class DemoControllerAdvice {
 
     @ExceptionHandler(SQLException.class)
     public String handleSQLException(Model model, SQLException e) {

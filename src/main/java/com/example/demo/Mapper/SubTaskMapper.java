@@ -4,7 +4,6 @@ package com.example.demo.Mapper;
  * @version 1.0
  * @since 09-12-2020
  */
-import com.example.demo.Domain.DomainFacade;
 import com.example.demo.Domain.SubTask;
 
 import java.sql.ResultSet;
