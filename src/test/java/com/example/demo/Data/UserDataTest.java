@@ -1,6 +1,7 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.User;
+import com.example.demo.Exceptions.EmptyResultSetException;
 import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.LoginException;
 import com.example.demo.Exceptions.QueryDeniedException;
@@ -43,7 +44,7 @@ class UserDataTest {
     }
 
     @BeforeEach
-    void init() throws QueryDeniedException, ExecuteDeniedException {
+    void construct() throws QueryDeniedException, ExecuteDeniedException {
         // Every test requires a user object, we will make it for every test.
         userData.deleteUser(e_mail);
         userData.createUser(e_mail, password, first_name, last_name);
@@ -65,7 +66,7 @@ class UserDataTest {
 
     // TEST ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Test
-    void getUsers() throws QueryDeniedException {
+    void getUsers() throws QueryDeniedException, EmptyResultSetException {
         ArrayList<User> users = userData.getUsers();
         for (User u: users) {
             assertNotNull(u);
@@ -73,13 +74,13 @@ class UserDataTest {
     }
 
     @Test
-    void getUser_byMail() throws QueryDeniedException {
+    void getUser_byMail() throws QueryDeniedException, EmptyResultSetException {
         User user = userData.getUser(e_mail);
         assertUser(user);
     }
 
     @Test
-    void getUser_byId() throws QueryDeniedException {
+    void getUser_byId() throws QueryDeniedException, EmptyResultSetException {
         User user = userData.getUser(user_id);
         assertUser(user);
     }
@@ -97,7 +98,7 @@ class UserDataTest {
     }
 
     @Test
-    void login() throws LoginException, QueryDeniedException {
+    void login() throws QueryDeniedException, EmptyResultSetException {
         User user = userData.login(e_mail, password);
         assertUser(user);
         assertThrows(LoginException.class, ()->{userData.login("false@123.com", "");} );

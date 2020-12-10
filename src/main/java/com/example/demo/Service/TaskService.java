@@ -26,7 +26,7 @@ public class TaskService {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    private void finalize(Task task) throws QueryDeniedException {
+    private void finalize(Task task) throws QueryDeniedException, FailedRequestException {
         int task_leader_id = task.getTask_leader_id();
         User task_leader = userService.getUser(task_leader_id);
         task.setTask_leader(task_leader);

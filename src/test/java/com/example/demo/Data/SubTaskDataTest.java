@@ -1,6 +1,7 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.SubTask;
+import com.example.demo.Exceptions.EmptyResultSetException;
 import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import org.junit.jupiter.api.AfterEach;
@@ -48,7 +49,7 @@ class SubTaskDataTest {
     }
 
     @BeforeEach
-    void construct() throws QueryDeniedException, ExecuteDeniedException {
+    void construct() throws QueryDeniedException, ExecuteDeniedException, EmptyResultSetException {
 
         projectData.deleteProject(project_name);
         projectData.createProject(
@@ -88,13 +89,13 @@ class SubTaskDataTest {
     // TEST ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     @Test
-    void getSubTasks() throws QueryDeniedException {
+    void getSubTasks() throws QueryDeniedException, EmptyResultSetException {
         ArrayList<SubTask> list = subTaskData.getSubTasks(project_id);
         assertSubTask(list.get(0));
     }
 
     @Test
-    void getSubTask() throws QueryDeniedException {
+    void getSubTask() throws QueryDeniedException, EmptyResultSetException {
         SubTask subTask = subTaskData.getSubTask(task_id, sub_task_id);
         assertSubTask(subTask);
     }

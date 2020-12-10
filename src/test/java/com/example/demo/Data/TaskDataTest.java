@@ -10,6 +10,7 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Task;
+import com.example.demo.Exceptions.EmptyResultSetException;
 import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import org.junit.jupiter.api.MethodOrderer;
@@ -19,7 +20,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -47,7 +47,7 @@ class TaskDataTest {
 
     @Test
     @Order(1)
-    void getTasks(ApplicationContext ctx) throws SQLException, QueryDeniedException {
+    void getTasks(ApplicationContext ctx) throws QueryDeniedException, EmptyResultSetException {
         TaskData taskData = (TaskData) ctx.getBean("taskData");
 
         ArrayList<Task> list = taskData.getTasks(1);
@@ -64,7 +64,7 @@ class TaskDataTest {
 
     @Test
     @Order(2)
-    void editTask(ApplicationContext ctx) throws QueryDeniedException, ExecuteDeniedException {
+    void editTask(ApplicationContext ctx) throws QueryDeniedException, ExecuteDeniedException, EmptyResultSetException {
         TaskData taskData = (TaskData) ctx.getBean("taskData");
 
         ArrayList<Task> list01 = taskData.getTasks(1);
