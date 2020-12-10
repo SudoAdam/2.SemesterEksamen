@@ -140,17 +140,5 @@ public class SubTaskData {
             throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
-
-    public void deleteSubTask(int id) throws ExecuteDeniedException {
-        try {
-            Connection connection = connector.getConnection();
-            String statement = "DELETE FROM sub_tasks WHERE sub_task_id=?";
-            PreparedStatement preparedStatement = connection.prepareStatement(statement);
-            preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
-        }
-    }
 }
 
