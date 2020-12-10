@@ -1,6 +1,5 @@
 package com.example.demo.Controller;
 
-import com.example.demo.Domain.SubTask;
 import com.example.demo.Domain.Task;
 import com.example.demo.Exceptions.DateContextException;
 import com.example.demo.Exceptions.FailedRequestException;
@@ -133,9 +132,8 @@ public class TaskController {
         }
     }
 
-
     @PostMapping("/deleteSubTask")
-    public String deleteSubTask(WebRequest request) throws QueryDeniedException, ExecuteDeniedException {
+    public String deleteSubTask(WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -149,7 +147,6 @@ public class TaskController {
             return "redirect:/viewProject?id=" + project_id;
         }
     }
-
 
     @RequestMapping(value = "/createSubTask", method = {RequestMethod.GET, RequestMethod.POST})
     public String createSubTask(WebRequest request) throws FailedRequestException {
