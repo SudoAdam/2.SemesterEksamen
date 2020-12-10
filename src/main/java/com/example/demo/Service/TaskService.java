@@ -7,7 +7,6 @@ import com.example.demo.Domain.Task;
 import com.example.demo.Domain.User;
 import com.example.demo.Exceptions.*;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -49,6 +48,15 @@ public class TaskService {
         } catch (QueryDeniedException | EmptyResultSetException e) {
             throw new FailedRequestException(e.getMessage());
         }
+    }
+
+    public int getWorkinghours(ArrayList<Task> list){
+       int totalTime = 0;
+        for (int i = 0; i < list.size(); i++) {
+           int time = list.get(i).getWorking_hours();
+            totalTime += time;
+        }
+        return totalTime;
     }
 
     public Task getTask(int task_id) throws FailedRequestException {

@@ -36,7 +36,7 @@ public class CustomerController {
     }
 
     @PostMapping("/createCustomer")
-    public String createCustomer(WebRequest request, Model model) throws FailedRequestException {
+    public String createCustomer(WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -71,7 +71,7 @@ public class CustomerController {
     }
 
     @PostMapping("/updateCustomer")
-    public String updateCustomer(WebRequest request, Model model) throws FailedRequestException {
+    public String updateCustomer(WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {

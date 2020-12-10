@@ -88,7 +88,4 @@ public class DemoConfiguration {
     public ProjectService projectService(ProjectData projectData, UserData userData, CustomerData customerData, ParticipantData participantData) {
         return new ProjectService(projectData, userData, customerData, participantData);
     }
-
-
-
 }

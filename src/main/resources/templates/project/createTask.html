@@ -20,7 +20,7 @@
             <p><input type="text" name="taskDesc" required>
             <p>Task Manager
             <p><select class="form-control" name="taskLeader">
-                <option value="">Select Task Manager</option>
+                <option th:value="${null}">Select Task Manager</option>
                 <option th:each="participant : ${participants}"
                         th:value="${participant.user_id}"
                         th:text="${participant.first_name}+' '+ ${participant.last_name}+' '+${participant.e_mail}"></option>
@@ -31,8 +31,7 @@
             <p><input type="date" name="deadline" required>
             <p>Working Hours
             <p><input type="number" name="workingHours" required>
-                <input type="hidden" name="projectId" th:value="${project.project_id}">
-            <div class="button">
+                            <div class="button">
                 <input type="Submit" value="  Create!  ">
             </div>
             <br>
