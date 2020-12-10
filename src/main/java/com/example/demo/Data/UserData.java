@@ -5,7 +5,7 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.User;
-import com.example.demo.Exceptions.ExecutionDeniedException;
+import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.LoginException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Mapper.UserMapper;
@@ -84,7 +84,7 @@ public class UserData {
         }
     }
 
-    public void createUser(String e_mail, String password, String first_name, String last_name) throws ExecutionDeniedException {
+    public void createUser(String e_mail, String password, String first_name, String last_name) throws ExecuteDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "INSERT INTO users (e_mail, password, first_name, last_name) VALUES (?,?,?,?)";
@@ -95,21 +95,25 @@ public class UserData {
             preparedStatement.setString(4, last_name);
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new ExecutionDeniedException("Error when executing statement to database: SQLException message: " + e.getMessage());
+            throw new ExecuteDeniedException("Error when executing statement to database: SQLException message: " + e.getMessage());
         }
     }
 
-    public void editUser(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin) throws SQLException {
-        Connection connection = connector.getConnection();
-        String statement = "UPDATE users SET e_mail=?, password=?, first_name=?, last_name=?, is_admin=? WHERE user_id=?";
-        PreparedStatement preparedStatement = connection.prepareStatement(statement);
-        preparedStatement.setString(1, e_mail);
-        preparedStatement.setString(2, password);
-        preparedStatement.setString(3, first_name);
-        preparedStatement.setString(4, last_name);
-        preparedStatement.setInt(5, is_admin);
-        preparedStatement.setInt(6, user_id);
-        preparedStatement.executeUpdate();
+    public void editUser(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin) throws ExecuteDeniedException {
+        try {
+            Connection connection = connector.getConnection();
+            String statement = "UPDATE users SET e_mail=?, password=?, first_name=?, last_name=?, is_admin=? WHERE user_id=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, e_mail);
+            preparedStatement.setString(2, password);
+            preparedStatement.setString(3, first_name);
+            preparedStatement.setString(4, last_name);
+            preparedStatement.setInt(5, is_admin);
+            preparedStatement.setInt(6, user_id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+        }
     }
 
     public int findUserIdFromEmail(String e_mail) throws QueryDeniedException {
@@ -144,7 +148,7 @@ public class UserData {
         }
     }
 
-    public void uploadImg(int user_id, Blob img) throws ExecutionDeniedException {
+    public void uploadImg(int user_id, Blob img) throws ExecuteDeniedException {
         try {
             String statement = "UPDATE users SET img=? WHERE user_id=?;";
             Connection connection = connector.getConnection();
@@ -153,42 +157,58 @@ public class UserData {
             preparedStatement.setInt(2, user_id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new ExecutionDeniedException("Error when querying database: SQLException message: " + e.getMessage());
+            throw new ExecuteDeniedException("Error when querying database: SQLException message: " + e.getMessage());
         }
     }
 
-    public void deleteUser(int id) throws SQLException {
-        Connection connection = connector.getConnection();
-        String statement = "DELETE FROM users WHERE user_id=?";
-        PreparedStatement preparedStatement = connection.prepareStatement(statement);
-        preparedStatement.setInt(1, id);
-        preparedStatement.executeUpdate();
+    public void deleteUser(int id) throws ExecuteDeniedException {
+        try {
+            Connection connection = connector.getConnection();
+            String statement = "DELETE FROM users WHERE user_id=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+        }
     }
 
-    public void deleteUser(String e_mail) throws SQLException {
-        Connection connection = connector.getConnection();
-        String statement = "DELETE FROM users WHERE e_mail=?";
-        PreparedStatement preparedStatement = connection.prepareStatement(statement);
-        preparedStatement.setString(1, e_mail);
-        preparedStatement.executeUpdate();
+    public void deleteUser(String e_mail) throws ExecuteDeniedException {
+        try {
+            Connection connection = connector.getConnection();
+            String statement = "DELETE FROM users WHERE e_mail=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, e_mail);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+        }
     }
 
-    public void setAdminStatus(int user_id, int is_admin) throws SQLException {
-        Connection connection = connector.getConnection();
-        String statement = "UPDATE users SET is_admin=? WHERE user_id=?";
-        PreparedStatement preparedStatement = connection.prepareStatement(statement);
-        preparedStatement.setInt(1, is_admin);
-        preparedStatement.setInt(2, user_id);
-        preparedStatement.executeUpdate();
+    public void setAdminStatus(int user_id, int is_admin) throws ExecuteDeniedException {
+        try {
+            Connection connection = connector.getConnection();
+            String statement = "UPDATE users SET is_admin=? WHERE user_id=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setInt(1, is_admin);
+            preparedStatement.setInt(2, user_id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+        }
     }
 
-    public void setPassword(int user_id, String password) throws SQLException {
-        Connection connection = connector.getConnection();
-        String statement = "UPDATE users SET password=? WHERE user_id=?";
-        PreparedStatement preparedStatement = connection.prepareStatement(statement);
-        preparedStatement.setString(1, password);
-        preparedStatement.setInt(2, user_id);
-        preparedStatement.executeUpdate();
+    public void setPassword(int user_id, String password) throws ExecuteDeniedException {
+        try {
+            Connection connection = connector.getConnection();
+            String statement = "UPDATE users SET password=? WHERE user_id=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, password);
+            preparedStatement.setInt(2, user_id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+        }
     }
 
 }

@@ -5,7 +5,7 @@ package com.example.demo.Service;
 
 import com.example.demo.Data.UserData;
 import com.example.demo.Domain.User;
-import com.example.demo.Exceptions.ExecutionDeniedException;
+import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.LoginException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,34 +45,32 @@ public class UserService {
         return userData.getUser(id);
     }
 
-    public void createUser(String e_mail, String password, String first_name, String last_name) throws ExecutionDeniedException {
+    public void createUser(String e_mail, String password, String first_name, String last_name) throws ExecuteDeniedException {
         userData.createUser(e_mail, passwordHASH(password), first_name, last_name);
     }
 
-    public void editUser(User user, int user_id, String e_mail, String pwd1, String pwd2, String oldPwd, String first_name, String last_name, int is_admin) throws SQLException {
+    public void editUser(User user, int user_id, String e_mail, String pwd1, String pwd2, String oldPwd, String first_name, String last_name, int is_admin) throws ExecuteDeniedException {
+            //to update Password
+            String newPassword;
+            oldPwd = "" + oldPwd.hashCode();
+            if (pwd1.equals(pwd2) && oldPwd.equals(user.getPassword())) {
+                newPassword = "" + pwd1.hashCode();
+            } else {
+                newPassword = user.getPassword();
+            }
 
-        //to update Password
-        String newPassword;
-        oldPwd ="" + oldPwd.hashCode();
-        if (pwd1.equals(pwd2) && oldPwd.equals(user.getPassword())) {
-            newPassword ="" + pwd1.hashCode();
-        } else {
-            newPassword = user.getPassword();
-        }
-
-        userData.editUser(user_id, e_mail, newPassword, first_name, last_name, is_admin);
+            userData.editUser(user_id, e_mail, newPassword, first_name, last_name, is_admin);
     }
 
     public int findUserIdFromEmail(String email) throws QueryDeniedException {
         return userData.findUserIdFromEmail(email);
-
     }
 
     public String findEmailFromUserId(int id) throws QueryDeniedException {
         return userData.findEmailFromUserId(id);
     }
 
-    public void addProfilePicture(int user_id, MultipartFile file) throws ExecutionDeniedException {
+    public void addProfilePicture(int user_id, MultipartFile file) throws ExecuteDeniedException {
         try {
             byte[] fileAsBytes = file.getBytes();
             Blob fileAsBlob = new SerialBlob(fileAsBytes);
@@ -82,15 +80,15 @@ public class UserService {
         }
     }
 
-    public void deleteUser(int id) throws SQLException {
+    public void deleteUser(int id) throws ExecuteDeniedException {
         userData.deleteUser(id);
     }
 
-    public void setAdminStatus(int user_id, int is_admin) throws SQLException {
+    public void setAdminStatus(int user_id, int is_admin) throws ExecuteDeniedException {
         userData.setAdminStatus(user_id, is_admin);
     }
 
-    public void resetPassword(int user_id) throws SQLException {
+    public void resetPassword(int user_id) throws ExecuteDeniedException {
         String passwordHash = "-1307671719";
         userData.setPassword(user_id,passwordHash);
     }

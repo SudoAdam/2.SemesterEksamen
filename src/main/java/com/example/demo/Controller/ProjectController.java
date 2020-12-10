@@ -1,7 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.Project;
-import com.example.demo.Exceptions.ExecutionDeniedException;
+import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Service.CustomerService;
 import com.example.demo.Service.ProjectService;
@@ -30,13 +30,13 @@ public class ProjectController {
     }
 
     @GetMapping("/listProject")
-    public String showProjects(Model model) throws SQLException, QueryDeniedException {
+    public String showProjects(Model model) throws QueryDeniedException {
         model.addAttribute("projectList", projectService.getProjects());
         return "project/listProject";
     }
 
     @GetMapping("/createProject")
-    public String createProject(Model model) throws SQLException, QueryDeniedException {
+    public String createProject(Model model) throws QueryDeniedException {
         model.addAttribute("customers", customerService.getCustomers());
         model.addAttribute("users", userService.getUsers());
         return "project/createProject";
@@ -62,7 +62,7 @@ public class ProjectController {
 
     // Responds to /editProject?id=project_id
     @RequestMapping(value = "/editProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String editProject(@RequestParam int id, Model model) throws SQLException, QueryDeniedException {
+    public String editProject(@RequestParam int id, Model model) throws QueryDeniedException {
         Project p = projectService.getProject(id);
         model.addAttribute("customers", customerService.getCustomers());
         model.addAttribute("users", userService.getUsers());
@@ -73,7 +73,7 @@ public class ProjectController {
     }
 
     @PostMapping("/updateProject")
-    public String updateProject(WebRequest request, Model model) throws SQLException, QueryDeniedException {
+    public String updateProject(WebRequest request, Model model) throws QueryDeniedException, ExecuteDeniedException {
         String projectId = request.getParameter("id");
         String projectName = request.getParameter("pName");
         String kickOffStr = request.getParameter("kickOff");
@@ -96,7 +96,7 @@ public class ProjectController {
 
     // Responds to /viewProject?id=project_id
     @RequestMapping(value = "/viewProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewProject(@RequestParam int id, Model model) throws SQLException, QueryDeniedException {
+    public String viewProject(@RequestParam int id, Model model) throws QueryDeniedException {
         Project p = projectService.getProject(id);
         model.addAttribute("projectmanager", userService.getUser(p.getProject_leader_id()));
         model.addAttribute("customer", customerService.getCustomer(p.getCustomer_id()));
@@ -108,13 +108,13 @@ public class ProjectController {
 
     // Responds to /deleteProject?id=project_id
     @RequestMapping(value = "/deleteProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteProject(@RequestParam int id) throws SQLException {
+    public String deleteProject(@RequestParam int id) throws ExecuteDeniedException {
         projectService.deleteProject(id);
         return "redirect:/listProject";
     }
 
     @PostMapping("/addParticipant")
-    public String addParticipant(@RequestParam int user_id, int project_id, int project_role_id) throws ExecutionDeniedException {
+    public String addParticipant(@RequestParam int user_id, int project_id, int project_role_id) throws ExecuteDeniedException {
         projectService.assignParticipant(user_id,project_id,project_role_id);
         return "redirect:/";
     }
