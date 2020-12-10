@@ -21,6 +21,7 @@ body {
 hr.rounded {
     border-top: 2px solid #6B7A99;
     border-radius: 2px;
+
 }
 
 .profilepic-list{
@@ -107,11 +108,12 @@ footer{
  }
 
 #bio-left{
+    max-width: 400px;
 
 }
 
 #bio-right{
-
+    max-width: 400px;
 }
 
 #input-form {

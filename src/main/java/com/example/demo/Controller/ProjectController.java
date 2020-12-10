@@ -120,6 +120,7 @@ public class ProjectController {
             return "redirect:/";
         } else {
             Project p = projectService.getProject(id);
+            model.addAttribute("participants",projectService.getParticipants(id));
             model.addAttribute("subtasks", taskService.getSubTasks(id));
             model.addAttribute("projectmanager", userService.getUser(p.getProject_leader_id()));
             model.addAttribute("customer", customerService.getCustomer(p.getCustomer_id()));
@@ -148,7 +149,22 @@ public class ProjectController {
             return "redirect:/";
         } else {
             projectService.assignParticipant(user_id, project_id, project_role_id);
+            return "redirect:/viewProject?id=" + project_id;
+        }
+    }
+
+    @PostMapping("/removeParticipant")
+    public String removeParticipant(WebRequest request) throws ExecuteDeniedException {
+        if (!checkLogin(request)) {
             return "redirect:/";
+        } else {
+            String uId = request.getParameter("user_id");
+            String pId = request.getParameter("project_id");
+            int user_id = Integer.parseInt(uId);
+            int project_id = Integer.parseInt(pId);
+            projectService.removeParticipant(user_id, project_id);
+        return "redirect:/viewProject?id=" + project_id;
+
         }
     }
 
