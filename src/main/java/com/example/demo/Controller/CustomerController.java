@@ -37,7 +37,7 @@ public class CustomerController {
     }
 
     @PostMapping("/createCustomer")
-    public String createCustomer(WebRequest request, Model model) throws ExecuteDeniedException {
+    public String createCustomer(WebRequest request) throws ExecuteDeniedException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -72,7 +72,7 @@ public class CustomerController {
     }
 
     @PostMapping("/updateCustomer")
-    public String updateCustomer(WebRequest request, Model model) throws QueryDeniedException {
+    public String updateCustomer(WebRequest request) throws QueryDeniedException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {

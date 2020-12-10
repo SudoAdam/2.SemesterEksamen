@@ -20,7 +20,7 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String showHome() throws Exception {
+    public String showHome() {
         return "authentication/login";
     }
 
@@ -40,20 +40,18 @@ public class HomeController {
 
     @GetMapping("/logout")
     public String logout(WebRequest request) {
-        // en hurtig tanke... Ser ud til at virke. men skal testet godt igennem
         request.removeAttribute("user", WebRequest.SCOPE_SESSION);
         return "redirect:/";
     }
 
     @GetMapping("/loggedin")
-    public String loggedin(WebRequest request, Model model) {
+    public String loggedin(WebRequest request) {
         User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         if (user != null) {
             return "authentication/loggedin";
         } else
             return "redirect:/";
     }
-
 
     @GetMapping("/createUser")
     public String createUser() {
@@ -78,4 +76,3 @@ public class HomeController {
         return "authentication/forgot";
     }
 }
-
