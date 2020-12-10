@@ -130,6 +130,7 @@ public class ProjectController {
             model.addAttribute("tasks", taskService.getTasks(id));
             model.addAttribute("project", p);
             model.addAttribute("users", userService.getUsers());
+            model.addAttribute("workingHours", taskService.getWorkinghours(taskService.getTasks(id)));
             return "project/viewProject";
         }
     }
