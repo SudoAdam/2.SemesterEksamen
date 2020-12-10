@@ -154,7 +154,7 @@ public class ProjectController {
     }
 
     @PostMapping("/removeParticipant")
-    public String removeParticipant(WebRequest request) throws ExecuteDeniedException {
+    public String removeParticipant(WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {

@@ -133,7 +133,11 @@ public class ProjectService {
     }
     */
 
-    public void removeParticipant(int user_id, int project_id) throws ExecuteDeniedException {
-        participantData.removeParticipant(user_id, project_id);
+    public void removeParticipant(int user_id, int project_id) throws FailedRequestException {
+        try {
+            participantData.removeParticipant(user_id, project_id);
+        } catch (ExecuteDeniedException e) {
+            throw new FailedRequestException(e.getMessage());
+        }
     }
 }
