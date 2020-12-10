@@ -5,8 +5,9 @@
  * @version 1.0
  * @since 04-12-2020
  */
-package com.example.demo.Exceptions;
+package com.example.demo;
 
+import com.example.demo.Exceptions.LoginException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,7 +16,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 
 @ControllerAdvice
-public class ApplicationExceptionHandler {
+public class DemoAdvice {
 
     @ExceptionHandler(SQLException.class)
     public String handleSQLException(Model model, SQLException e) {

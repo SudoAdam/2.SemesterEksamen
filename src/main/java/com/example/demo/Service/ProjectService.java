@@ -14,7 +14,7 @@ import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Participant;
 import com.example.demo.Domain.Project;
 import com.example.demo.Domain.User;
-import com.example.demo.Exceptions.ExecutionDeniedException;
+import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 
 import java.sql.SQLException;
@@ -38,7 +38,7 @@ public class ProjectService {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    private void finalize(Project project) throws SQLException, QueryDeniedException {
+    private void finalize(Project project) throws QueryDeniedException {
         // Late dependency injection for single domain objects
         int project_leader_id = project.getProject_leader_id();
         int customer_id = project.getCustomer_id();
@@ -48,20 +48,20 @@ public class ProjectService {
         project.setCustomer(customer);
     }
 
-    private void finalize(ArrayList<Project> list) throws SQLException, QueryDeniedException {
+    private void finalize(ArrayList<Project> list) throws QueryDeniedException {
         // Late dependency injection for collections of domain objects
         for (Project p : list) {
             finalize(p);
         }
     }
 
-    public ArrayList<Project> getProjects() throws SQLException, QueryDeniedException {
+    public ArrayList<Project> getProjects() throws QueryDeniedException {
         ArrayList<Project> list = projectData.getProjects();
         // finalize(list);
         return list;
     }
 
-    public Project getProject(int id) throws SQLException, QueryDeniedException {
+    public Project getProject(int id) throws QueryDeniedException {
         Project p = projectData.getProject(id);
         finalize(p);
         return p;
@@ -86,15 +86,15 @@ public class ProjectService {
         projectData.createProject(project_name, kickoff, deadline, project_leader_id, customer_id);
     }
 
-    public void editProject(int project_id, String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws SQLException {
+    public void editProject(int project_id, String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws ExecuteDeniedException {
         projectData.editProject(project_id, project_name, kickoff, deadline, project_leader_id, customer_id);
     }
 
-    public void deleteProject(int id) throws SQLException {
+    public void deleteProject(int id) throws ExecuteDeniedException {
         projectData.deleteProject(id);
     }
 
-    public void assignParticipant(int user_id, int project_id, int project_role_id) throws ExecutionDeniedException {
+    public void assignParticipant(int user_id, int project_id, int project_role_id) throws ExecuteDeniedException {
         participantData.assignParticipant(user_id, project_id, project_role_id);
     }
 
@@ -103,7 +103,7 @@ public class ProjectService {
         return list;
     }
 
-    public Participant getParticipant(int user_id, int project_id) throws SQLException, QueryDeniedException {
+    public Participant getParticipant(int user_id, int project_id) throws QueryDeniedException {
         // Not working yet
         Participant p = participantData.getProjectParticipant(user_id, project_id);
         return p;

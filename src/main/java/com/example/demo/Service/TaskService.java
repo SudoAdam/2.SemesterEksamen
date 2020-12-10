@@ -5,6 +5,7 @@ import com.example.demo.Data.TaskData;
 import com.example.demo.Domain.SubTask;
 import com.example.demo.Domain.Task;
 import com.example.demo.Domain.User;
+import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 
 import java.sql.SQLException;
@@ -26,7 +27,7 @@ public class TaskService {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    private void finalize(Task task) throws SQLException, QueryDeniedException {
+    private void finalize(Task task) throws QueryDeniedException {
         int task_leader_id = task.getTask_leader_id();
         User task_leader = userService.getUser(task_leader_id);
         task.setTask_leader(task_leader);
@@ -34,25 +35,26 @@ public class TaskService {
         task.setTask_leader_email(e_mail);
     }
 
-    private void finalize(ArrayList<Task> list) throws SQLException, QueryDeniedException {
+    private void finalize(ArrayList<Task> list) throws QueryDeniedException {
         // Late dependency injection for collections of domain objects
         for (Task t : list) {
             finalize(t);
         }
     }
 
-    public ArrayList<Task> getTasks(int project_id) throws SQLException, QueryDeniedException {
+    public ArrayList<Task> getTasks(int project_id) throws QueryDeniedException {
         ArrayList<Task> list = taskData.getTasks(project_id);
+        // finalize(list);
         return list;
     }
 
-    public Task getTask(int task_id) throws SQLException, QueryDeniedException {
+    public Task getTask(int task_id) throws QueryDeniedException {
         Task t = taskData.getTask(task_id);
         finalize(t);
         return (t);
     }
 
-    public void createTask(int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws SQLException, Exception {
+    public void createTask(int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws Exception {
         if (correctDate(kickoff, deadline) == false) {
             throw new Exception();
         }
@@ -67,20 +69,15 @@ public class TaskService {
         return result;
     }
 
-    public void editTask(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws SQLException {
+    public void editTask(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws ExecuteDeniedException {
         taskData.editTask(task_id, project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
     }
 
-    public void deleteTask(int id) throws SQLException {
+    public void deleteTask(int id) throws ExecuteDeniedException {
         taskData.deleteTask(id);
     }
 
-    public void createSubTask(int task_id, String name, String description) throws SQLException {
+    public void createSubTask(int task_id, String name, String description) throws ExecuteDeniedException {
         subTaskData.createSubTask(task_id,description,name);
-    }
-
-    public ArrayList<SubTask> getSubTasks(int task_id) throws SQLException, QueryDeniedException {
-        ArrayList<SubTask> list = subTaskData.getSubTasks(task_id);
-        return list;
     }
 }

@@ -6,6 +6,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Project;
+import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Service.CustomerService;
 import com.example.demo.Service.ProjectService;
@@ -14,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Controller
@@ -33,7 +33,7 @@ public class CustomerController {
     }
 
     @PostMapping("/createCustomer")
-    public String createCustomer(WebRequest request, Model model) throws SQLException {
+    public String createCustomer(WebRequest request, Model model) throws ExecuteDeniedException {
         String companyName = request.getParameter("comName");
         String contactName = request.getParameter("conName");
         String contactEmail = request.getParameter("conEmail");
@@ -43,20 +43,20 @@ public class CustomerController {
     }
 
     @GetMapping("/listCustomer")
-    public String listCustomer(Model model) throws SQLException, QueryDeniedException {
+    public String listCustomer(Model model) throws QueryDeniedException {
         ArrayList<Customer> customerList = customerService.getCustomers();
         model.addAttribute("customerList", customerList);
         return "customer/listCustomer";
     }
 
     @RequestMapping(value = "/editCustomer", method = {RequestMethod.GET, RequestMethod.POST})
-    public String editCustomer(@RequestParam int id, Model model) throws SQLException, QueryDeniedException {
+    public String editCustomer(@RequestParam int id, Model model) throws QueryDeniedException {
         model.addAttribute("customer", customerService.getCustomer(id));
         return "customer/editCustomer";
     }
 
     @PostMapping("/updateCustomer")
-    public String updateCustomer(WebRequest request, Model model) throws SQLException {
+    public String updateCustomer(WebRequest request, Model model) throws QueryDeniedException {
         int customerID = Integer.parseInt(request.getParameter("cId"));
         String companyName = request.getParameter("comName");
         String contactName = request.getParameter("conName");
@@ -68,7 +68,7 @@ public class CustomerController {
 
     // Responds to /viewCustomer?id=project_id
     @RequestMapping(value = "/viewCustomer", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewCustomer(@RequestParam int id, Model model) throws SQLException, QueryDeniedException {
+    public String viewCustomer(@RequestParam int id, Model model) throws QueryDeniedException {
         ArrayList<Project> projectList = projectService.getProjects();
         ArrayList<Project> projectCustomerList = new ArrayList<>();
         for (Project p : projectList) {
@@ -81,7 +81,7 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/deleteCustomer", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteCustomer(@RequestParam int id) throws SQLException {
+    public String deleteCustomer(@RequestParam int id) throws ExecuteDeniedException {
         customerService.deleteCustomer(id);
         return "redirect:/listCustomer";
     }

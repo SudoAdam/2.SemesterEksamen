@@ -5,7 +5,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.User;
-import com.example.demo.Exceptions.ExecutionDeniedException;
+import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.UserService;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Controller
@@ -46,7 +45,7 @@ public class UserController {
     }
 
     @PostMapping("/updateUser")
-    public String updateUser(WebRequest request) throws SQLException, QueryDeniedException {
+    public String updateUser(WebRequest request) throws QueryDeniedException, ExecuteDeniedException {
         User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         String userId = request.getParameter("uId");
         String first_name = request.getParameter("fName");
@@ -56,7 +55,6 @@ public class UserController {
         String pwd1 = request.getParameter("pwd1");
         String pwd2 = request.getParameter("pwd2");
         int uId = Integer.parseInt(userId);
-        String newPassword;
         int isAdmin = user.getIs_admin();
 
         userService.editUser(user, uId, email, pwd1, pwd2, oldPwd, first_name, last_name, isAdmin);
@@ -79,7 +77,7 @@ public class UserController {
     }
 
     @PostMapping("/uploadImg")
-    public String uploadImg(@RequestParam("file") MultipartFile file, WebRequest request) throws QueryDeniedException, ExecutionDeniedException {
+    public String uploadImg(@RequestParam("file") MultipartFile file, WebRequest request) throws QueryDeniedException, ExecuteDeniedException {
         User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         userService.addProfilePicture(user.getUser_id(), file);
         User updatedUser = userService.getUser(user.getUser_id());
@@ -88,7 +86,7 @@ public class UserController {
     }
 
     @PostMapping("/updateUserRole")
-    public String updateUserRole(WebRequest request) throws SQLException {
+    public String updateUserRole(WebRequest request) throws ExecuteDeniedException {
         String userId = request.getParameter("user_id");
         String isAdmin = request.getParameter("is_admin");
         if (isAdmin == null) {
@@ -101,14 +99,14 @@ public class UserController {
     }
 
     @PostMapping("/resetUserPassword")
-    public String resetUserPassword(WebRequest request) throws SQLException {
+    public String resetUserPassword(WebRequest request) throws ExecuteDeniedException {
         String userId = request.getParameter("user_id");
         userService.resetPassword(Integer.parseInt(userId));
         return "redirect:/listUser";
     }
 
     @RequestMapping(value = "/deleteUser", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteUser(@RequestParam int id) throws SQLException {
+    public String deleteUser(@RequestParam int id) throws ExecuteDeniedException {
         userService.deleteUser(id);
         return "redirect:/listUser";
     }

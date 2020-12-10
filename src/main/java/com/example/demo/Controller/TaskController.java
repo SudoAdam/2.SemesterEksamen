@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.Task;
+import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.TaskService;
@@ -10,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 @Controller
@@ -27,7 +27,7 @@ public class TaskController {
 
     // Responds to /editTask?id=task_id
     @RequestMapping(value = "/editTask", method = {RequestMethod.GET, RequestMethod.POST})
-    public String editTask(@RequestParam int id, Model model) throws SQLException, QueryDeniedException {
+    public String editTask(@RequestParam int id, Model model) throws QueryDeniedException {
         int project_id = taskService.getTask(id).getProject_id();
         model.addAttribute("participants", projectService.getParticipants(project_id));
         model.addAttribute("project", projectService.getProject(project_id));
@@ -36,7 +36,7 @@ public class TaskController {
     }
 
     @PostMapping("/updateTask")
-    public String updateTask(WebRequest request, Model model) throws SQLException, QueryDeniedException {
+    public String updateTask(WebRequest request, Model model) throws QueryDeniedException, ExecuteDeniedException {
         // Consider refactoring to handle mapping in either Data or Mapping layer
         String taskId = request.getParameter("tId");
         String projectId = request.getParameter("pId");
@@ -61,14 +61,14 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/createTask", method = {RequestMethod.GET, RequestMethod.POST})
-    public String createTask(@RequestParam int id, Model model) throws SQLException, QueryDeniedException {
+    public String createTask(@RequestParam int id, Model model) throws QueryDeniedException {
         model.addAttribute("project", projectService.getProject(id));
         model.addAttribute("participants", projectService.getParticipants(id));
         return "project/createTask";
     }
 
     @RequestMapping(value = "/createTaskPost", method = {RequestMethod.GET, RequestMethod.POST})
-    public String createTaskPost(@RequestParam int id, WebRequest request, Model model) throws Exception, QueryDeniedException {
+    public String createTaskPost(@RequestParam int id, WebRequest request, Model model) throws Exception {
 
         String taskName = request.getParameter("taskName");
         String taskDesc = request.getParameter("taskDesc");
@@ -109,7 +109,7 @@ public class TaskController {
     }*/
 
     @RequestMapping(value = "/deleteTask", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteTask(@RequestParam int id) throws SQLException, QueryDeniedException {
+    public String deleteTask(@RequestParam int id) throws QueryDeniedException, ExecuteDeniedException {
         Task task = taskService.getTask(id);
         int project_id = task.getProject_id();
         taskService.deleteTask(id);
@@ -117,7 +117,7 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/createSubTask", method = {RequestMethod.GET, RequestMethod.POST})
-    public String createSubTask(WebRequest request) throws SQLException, QueryDeniedException {
+    public String createSubTask(WebRequest request) throws ExecuteDeniedException {
         String stName = request.getParameter("sub_task_name");
         String stDesc = request.getParameter("sub_task_description");
         String tId = request.getParameter("task_id");

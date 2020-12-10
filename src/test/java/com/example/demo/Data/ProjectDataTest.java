@@ -10,6 +10,7 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Project;
+import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,7 +28,7 @@ class ProjectDataTest {
 
     @Test
     @Order(0)
-    void createProject(ApplicationContext ctx) throws SQLException {
+    void createProject(ApplicationContext ctx) throws ExecuteDeniedException {
         ProjectData projectData = (ProjectData) ctx.getBean("projectData");
         String project_name = "The newest Deal";
         LocalDate kickoff = LocalDate.of(2020,12,2);
@@ -39,7 +40,7 @@ class ProjectDataTest {
 
     @Test
     @Order(1)
-    void getProjects(ApplicationContext ctx) throws SQLException, QueryDeniedException {
+    void getProjects(ApplicationContext ctx) throws QueryDeniedException {
         ProjectData projectData = (ProjectData) ctx.getBean("projectData");
         ArrayList<Project> list = projectData.getProjects();
         Project p = list.get(list.size()-1);
@@ -79,7 +80,7 @@ class ProjectDataTest {
 
     @Test
     @Order(3)
-    void editProject(ApplicationContext ctx) throws SQLException, QueryDeniedException {
+    void editProject(ApplicationContext ctx) throws QueryDeniedException, ExecuteDeniedException {
         ProjectData projectData = (ProjectData) ctx.getBean("projectData");
 
         // Select the last project in list and apply changes
