@@ -94,7 +94,14 @@
             <td></td>
             <td></td>
             <td></td>
-            <td style="font-size: 300%; text-decoration: none; color: red"><a href="/">-</a></td>
+            <td>
+                <form action="/deleteSubTask" method="post">
+                    <input type="hidden" name="task_id" th:value="${subtask.task_id}">
+                    <input type="hidden" name="sub_task_id" th:value="${subtask.sub_task_id}">
+                    <input type="hidden" name="project_id" th:value="${project.project_id}">
+                <input type="submit" value="-" style="font-size: 200%; text-decoration: none; color: red">
+                </form>
+            </td>
         </tr>
         <tr style="border-bottom: 6px solid #9EBDD5;" th:if="${session.user.getIs_admin() == 1}">
             <form action="/createSubTask" method="post">

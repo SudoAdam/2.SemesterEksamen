@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Domain.SubTask;
 import com.example.demo.Domain.Task;
 import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
@@ -132,16 +133,23 @@ public class TaskController {
         }
     }
 
-    /*
-    @RequestMapping(value = "/deleteSubTask", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteSubTask(@RequestParam int id) throws QueryDeniedException, ExecuteDeniedException {
 
-        SubTask subTask = TaskService.getSubTask(id);
-        int project_id = task.getProject_id();
-        taskService.deleteTask(id);
-        return "redirect:/viewProject?id=" + project_id;
+    @PostMapping("/deleteSubTask")
+    public String deleteSubTask(WebRequest request) throws QueryDeniedException, ExecuteDeniedException {
+        if (!checkLogin(request)) {
+            return "redirect:/";
+        } else {
+            String pId = request.getParameter("project_id");
+            String tId = request.getParameter("task_id");
+            String stId = request.getParameter("sub_task_id");
+            int project_id = Integer.parseInt(pId);
+            int task_id = Integer.parseInt(tId);
+            int sub_task_id = Integer.parseInt(stId);
+            taskService.deleteSubTask(task_id, sub_task_id);
+            return "redirect:/viewProject?id=" + project_id;
+        }
     }
-    */
+
 
     @RequestMapping(value = "/createSubTask", method = {RequestMethod.GET, RequestMethod.POST})
     public String createSubTask(WebRequest request) throws ExecuteDeniedException {
