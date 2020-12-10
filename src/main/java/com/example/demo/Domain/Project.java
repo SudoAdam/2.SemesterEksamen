@@ -1,9 +1,8 @@
 package com.example.demo.Domain;
 
 import java.time.LocalDate;
-import java.util.Date;
 
-public class Project implements DomainFacade {
+public class Project implements DomainInterface {
     // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private final int project_id;
     private final String project_name;

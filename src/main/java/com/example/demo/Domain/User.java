@@ -7,7 +7,7 @@ package com.example.demo.Domain;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 
-public class User implements DomainFacade {
+public class User implements DomainInterface {
     // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private int user_id;
     private String e_mail;

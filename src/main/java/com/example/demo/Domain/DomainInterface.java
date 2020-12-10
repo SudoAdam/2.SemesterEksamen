@@ -2,4 +2,4 @@ package com.example.demo.Domain;
 
 
 
-public interface DomainFacade {}
+public interface DomainInterface {}

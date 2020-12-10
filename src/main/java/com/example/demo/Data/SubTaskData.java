@@ -28,12 +28,17 @@ public class SubTaskData {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<SubTask> getSubTasks(int task_id) throws QueryDeniedException {
+    public ArrayList<SubTask> getSubTasks(int project_id) throws QueryDeniedException {
         try {
             Connection connection = connector.getConnection();
-            String statement = "SELECT * FROM sub_tasks WHERE task_id=?;";
+            String statement =
+                    "SELECT s.* " +
+                    "FROM projects p " +
+                    "LEFT JOIN tasks t ON p.project_id = t.project_id " +
+                    "LEFT JOIN sub_tasks s ON t.task_id = s.task_id " +
+                    "WHERE p.project_id = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
-            preparedStatement.setInt(1, task_id);
+            preparedStatement.setInt(1, project_id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             ArrayList<SubTask> subTasks = new ArrayList<>();

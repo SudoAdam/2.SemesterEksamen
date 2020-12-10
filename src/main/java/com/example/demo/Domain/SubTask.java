@@ -5,7 +5,7 @@ package com.example.demo.Domain;
  * @since 09-12-2020
  */
 
-public class SubTask implements DomainFacade {
+public class SubTask implements DomainInterface {
 
     private int task_id;
     private String sub_task_description;

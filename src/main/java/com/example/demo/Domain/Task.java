@@ -2,7 +2,7 @@ package com.example.demo.Domain;
 
 import java.time.LocalDate;
 
-public class Task implements DomainFacade {
+public class Task implements DomainInterface {
     // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private int task_id;
     private int project_id;

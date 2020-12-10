@@ -5,7 +5,7 @@
 
 package com.example.demo.Domain;
 
-public class Customer implements DomainFacade {
+public class Customer implements DomainInterface {
     // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private int customer_id;
     private String name;
