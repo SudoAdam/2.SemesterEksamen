@@ -28,61 +28,97 @@ public class CustomerController {
     }
 
     @GetMapping("/createCustomer")
-    public String createProject() {
-        return "customer/createCustomer";
+    public String createProject(WebRequest request) {
+        if (!checkLogin(request)) {
+            return "redirect:/";
+        } else {
+            return "customer/createCustomer";
+        }
     }
 
     @PostMapping("/createCustomer")
     public String createCustomer(WebRequest request, Model model) throws ExecuteDeniedException {
-        String companyName = request.getParameter("comName");
-        String contactName = request.getParameter("conName");
-        String contactEmail = request.getParameter("conEmail");
-        String tel = request.getParameter("tel");
-        customerService.createCustomer(companyName, contactName, contactEmail, tel);
-        return "redirect:/listCustomer";
+        if (!checkLogin(request)) {
+            return "redirect:/";
+        } else {
+            String companyName = request.getParameter("comName");
+            String contactName = request.getParameter("conName");
+            String contactEmail = request.getParameter("conEmail");
+            String tel = request.getParameter("tel");
+            customerService.createCustomer(companyName, contactName, contactEmail, tel);
+            return "redirect:/listCustomer";
+        }
     }
 
     @GetMapping("/listCustomer")
-    public String listCustomer(Model model) throws QueryDeniedException {
-        ArrayList<Customer> customerList = customerService.getCustomers();
-        model.addAttribute("customerList", customerList);
-        return "customer/listCustomer";
+    public String listCustomer(Model model, WebRequest request) throws QueryDeniedException {
+        if (!checkLogin(request)) {
+            return "redirect:/";
+        } else {
+            ArrayList<Customer> customerList = customerService.getCustomers();
+            model.addAttribute("customerList", customerList);
+            return "customer/listCustomer";
+        }
     }
 
     @RequestMapping(value = "/editCustomer", method = {RequestMethod.GET, RequestMethod.POST})
-    public String editCustomer(@RequestParam int id, Model model) throws QueryDeniedException {
-        model.addAttribute("customer", customerService.getCustomer(id));
-        return "customer/editCustomer";
+    public String editCustomer(@RequestParam int id, Model model, WebRequest request) throws QueryDeniedException {
+        if (!checkLogin(request)) {
+            return "redirect:/";
+        } else {
+            model.addAttribute("customer", customerService.getCustomer(id));
+            return "customer/editCustomer";
+        }
     }
 
     @PostMapping("/updateCustomer")
     public String updateCustomer(WebRequest request, Model model) throws QueryDeniedException {
-        int customerID = Integer.parseInt(request.getParameter("cId"));
-        String companyName = request.getParameter("comName");
-        String contactName = request.getParameter("conName");
-        String contactEmail = request.getParameter("conEmail");
-        String tel = request.getParameter("tel");
-        customerService.editCustomer(customerID, companyName, contactName, contactEmail, tel);
-        return "redirect:/listCustomer";
+        if (!checkLogin(request)) {
+            return "redirect:/";
+        } else {
+            int customerID = Integer.parseInt(request.getParameter("cId"));
+            String companyName = request.getParameter("comName");
+            String contactName = request.getParameter("conName");
+            String contactEmail = request.getParameter("conEmail");
+            String tel = request.getParameter("tel");
+            customerService.editCustomer(customerID, companyName, contactName, contactEmail, tel);
+            return "redirect:/listCustomer";
+        }
     }
 
     // Responds to /viewCustomer?id=project_id
     @RequestMapping(value = "/viewCustomer", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewCustomer(@RequestParam int id, Model model) throws QueryDeniedException {
-        ArrayList<Project> projectList = projectService.getProjects();
-        ArrayList<Project> projectCustomerList = new ArrayList<>();
-        for (Project p : projectList) {
-            if (p.getCustomer_id() == id)
-                projectCustomerList.add(p);
+    public String viewCustomer(@RequestParam int id, Model model, WebRequest request) throws QueryDeniedException {
+        if (!checkLogin(request)) {
+            return "redirect:/";
+        } else {
+            ArrayList<Project> projectList = projectService.getProjects();
+            ArrayList<Project> projectCustomerList = new ArrayList<>();
+            for (Project p : projectList) {
+                if (p.getCustomer_id() == id)
+                    projectCustomerList.add(p);
+            }
+            model.addAttribute("customer", customerService.getCustomer(id));
+            model.addAttribute("customerProjects", projectCustomerList);
+            return "customer/viewCustomer";
         }
-        model.addAttribute("customer", customerService.getCustomer(id));
-        model.addAttribute("customerProjects", projectCustomerList);
-        return "customer/viewCustomer";
     }
 
     @RequestMapping(value = "/deleteCustomer", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteCustomer(@RequestParam int id) throws ExecuteDeniedException {
-        customerService.deleteCustomer(id);
-        return "redirect:/listCustomer";
+    public String deleteCustomer(@RequestParam int id, WebRequest request) throws ExecuteDeniedException {
+        if (!checkLogin(request)) {
+            return "redirect:/";
+        } else {
+            customerService.deleteCustomer(id);
+            return "redirect:/listCustomer";
+        }
+    }
+
+    public Boolean checkLogin(WebRequest request) {
+        if (request.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

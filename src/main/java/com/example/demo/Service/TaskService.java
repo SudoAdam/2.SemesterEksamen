@@ -77,7 +77,19 @@ public class TaskService {
         taskData.deleteTask(id);
     }
 
+    public void deleteSubTask(int id) throws ExecuteDeniedException {
+        subTaskData.deleteSubTask(id);
+    }
+
     public void createSubTask(int task_id, String name, String description) throws ExecuteDeniedException {
         subTaskData.createSubTask(task_id,description,name);
+    }
+
+    public ArrayList<SubTask> getSubTasks(int project_id) throws QueryDeniedException {
+        return subTaskData.getSubTasks(project_id);
+    }
+
+    public SubTask getSubTask(int sub_task_id) throws QueryDeniedException {
+        return subTaskData.getSubTask(sub_task_id);
     }
 }

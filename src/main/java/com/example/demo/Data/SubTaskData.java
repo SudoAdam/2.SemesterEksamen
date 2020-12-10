@@ -33,10 +33,11 @@ public class SubTaskData {
             Connection connection = connector.getConnection();
             String statement =
                     "SELECT s.* " +
-                    "FROM projects p " +
-                    "LEFT JOIN tasks t ON p.project_id = t.project_id " +
-                    "LEFT JOIN sub_tasks s ON t.task_id = s.task_id " +
-                    "WHERE p.project_id = ?;";
+                            "FROM projects p " +
+                            "LEFT JOIN tasks t ON p.project_id = t.project_id " +
+                            "LEFT JOIN sub_tasks s ON t.task_id = s.task_id " +
+                            "WHERE p.project_id = ? " +
+                            "ORDER BY sub_task_id;";
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, project_id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -134,6 +135,18 @@ public class SubTaskData {
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setString(1, task_name);
             preparedStatement.setString(2, sub_task_name);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+        }
+    }
+
+    public void deleteSubTask(int id) throws ExecuteDeniedException {
+        try {
+            Connection connection = connector.getConnection();
+            String statement = "DELETE FROM sub_tasks WHERE sub_task_id=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
