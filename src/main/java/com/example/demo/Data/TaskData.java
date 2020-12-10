@@ -106,5 +106,17 @@ public class TaskData {
             throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
+
+    public void deleteTask(String task_name) throws ExecuteDeniedException {
+        try {
+            Connection connection = connector.getConnection();
+            String statement = "DELETE FROM tasks WHERE task_name=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, task_name);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+        }
+    }
 }
 

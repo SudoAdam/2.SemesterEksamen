@@ -1,6 +1,5 @@
 package com.example.demo.Controller;
 
-import com.example.demo.Domain.SubTask;
 import com.example.demo.Domain.Task;
 import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
@@ -133,14 +132,16 @@ public class TaskController {
         }
     }
 
-    /*@RequestMapping(value = "/deleteSubTask", method = {RequestMethod.GET, RequestMethod.POST})
+    /*
+    @RequestMapping(value = "/deleteSubTask", method = {RequestMethod.GET, RequestMethod.POST})
     public String deleteSubTask(@RequestParam int id) throws QueryDeniedException, ExecuteDeniedException {
 
         SubTask subTask = TaskService.getSubTask(id);
         int project_id = task.getProject_id();
         taskService.deleteTask(id);
         return "redirect:/viewProject?id=" + project_id;
-    }*/
+    }
+    */
 
     @RequestMapping(value = "/createSubTask", method = {RequestMethod.GET, RequestMethod.POST})
     public String createSubTask(WebRequest request) throws ExecuteDeniedException {

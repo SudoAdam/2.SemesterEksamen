@@ -23,31 +23,15 @@ public class SubTask implements DomainInterface {
         return task_id;
     }
 
-    public void setTask_id(int task_id) {
-        this.task_id = task_id;
-    }
-
     public String getSub_task_description() {
         return sub_task_description;
-    }
-
-    public void setSub_task_description(String sub_task_description) {
-        this.sub_task_description = sub_task_description;
     }
 
     public int getSub_task_id() {
         return sub_task_id;
     }
 
-    public void setSub_task_id(int sub_task_id) {
-        this.sub_task_id = sub_task_id;
-    }
-
     public String getSub_task_name() {
         return sub_task_name;
-    }
-
-    public void setSub_task_name(String sub_task_name) {
-        this.sub_task_name = sub_task_name;
     }
 }
