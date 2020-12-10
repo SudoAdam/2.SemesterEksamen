@@ -6,17 +6,25 @@ import com.example.demo.Exceptions.QueryDeniedException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class SubTaskDataTest {
     // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private final ProjectData projectData;
     private final TaskData taskData;
     private final SubTaskData subTaskData;
+    private int project_id;
     private int task_id;
     private int sub_task_id;
+    private final String project_name;
+    private final String task_name;
     private final String sub_task_description;
     private final String sub_task_name;
 
@@ -25,6 +33,8 @@ class SubTaskDataTest {
         this.projectData = (ProjectData) ctx.getBean("projectData");
         this.taskData = (TaskData) ctx.getBean("taskData");
         this.subTaskData = (SubTaskData) ctx.getBean("subTaskData");
+        this.project_name = "SubTask test project";
+        this.task_name = "SubTask test task";
         this.sub_task_description = "testing of sub task";
         this.sub_task_name = "SubTask test";
     }
@@ -38,46 +48,55 @@ class SubTaskDataTest {
     }
 
     @BeforeEach
-    void init() throws QueryDeniedException, ExecuteDeniedException {
-        // Every test requires a user object, we will make it for every test.
-        /*
-        projectData.deleteProject();
-        projectData.createProject();
+    void construct() throws QueryDeniedException, ExecuteDeniedException {
 
-        taskData.deleteTask();
-        taskData.createTask();
+        projectData.deleteProject(project_name);
+        projectData.createProject(
+                project_name,
+                LocalDate.of(2020,1,1),
+                LocalDate.of(2020,1,2),
+                3,
+                1
+        );
+        project_id = projectData.getProject(project_name).getProject_id();
 
-        subTaskData.deleteSubTask();
-        subTaskData.createSubTask();
+        taskData.deleteTask(task_name);
+        taskData.createTask(
+                project_id,
+                task_name,
+                "test for sub task",
+                3,
+                LocalDate.of(2020, 1, 1),
+                LocalDate.of(2020,1,2),
+                20
+        );
+        task_id = taskData.getTasks(project_id).get(0).getTask_id();
 
-        sub_task_id = subTaskData.getSubTasks().get(0).getSub_task_id();
-        assertNotNull(task_id);
-        */
+        subTaskData.deleteSubTask(task_name, sub_task_name);
+        subTaskData.createSubTask(task_id, sub_task_description, sub_task_name);
+
+        sub_task_id = subTaskData.getSubTask(task_id, sub_task_name).getSub_task_id();
     }
 
     @AfterEach
     void destruct() throws ExecuteDeniedException {
-        // After every test we will delete the test user.
-        /*
-        projectData.deleteProject();
-        taskData.deleteTask();
-        subTaskData.deleteSubTask();
-        */
+        projectData.deleteProject(project_id);
+        taskData.deleteTask(task_id);
+        subTaskData.deleteSubTask(task_id, sub_task_id);
     }
 
     // TEST ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     @Test
-    void getSubTasks() {
-
+    void getSubTasks() throws QueryDeniedException {
+        ArrayList<SubTask> list = subTaskData.getSubTasks(project_id);
+        assertSubTask(list.get(0));
     }
 
     @Test
-    void getSubTask() {
-    }
-
-    @Test
-    void createSubTask() {
+    void getSubTask() throws QueryDeniedException {
+        SubTask subTask = subTaskData.getSubTask(task_id, sub_task_id);
+        assertSubTask(subTask);
     }
 
     @Test

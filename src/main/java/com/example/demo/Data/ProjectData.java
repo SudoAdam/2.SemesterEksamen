@@ -57,6 +57,19 @@ public class ProjectData {
         }
     }
 
+    public Project getProject(String project_name) throws QueryDeniedException {
+        try {
+            Connection connection = connector.getConnection();
+            String statement = "SELECT * FROM projects WHERE project_name=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, project_name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return (Project) projectMapper.create(resultSet);
+        } catch (SQLException e) {
+            throw new QueryDeniedException("Error when querying database: SQLException message: " + e.getMessage());
+        }
+    }
+
     public ArrayList<Project> getUserProjects(int user_id) throws QueryDeniedException {
         try {
             Connection connection = connector.getConnection();
@@ -119,6 +132,18 @@ public class ProjectData {
             String statement = "DELETE FROM projects WHERE project_id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+        }
+    }
+
+    public void deleteProject(String project_name) throws ExecuteDeniedException {
+        try {
+            Connection connection = connector.getConnection();
+            String statement = "DELETE FROM projects WHERE project_name=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, project_name);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
