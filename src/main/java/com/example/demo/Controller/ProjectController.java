@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.Project;
+import com.example.demo.Domain.SubTask;
 import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Service.CustomerService;
@@ -15,6 +16,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Controller
 public class ProjectController {
@@ -41,13 +43,14 @@ public class ProjectController {
     }
 
     @GetMapping("/createProject")
-    public String createProject(Model model,WebRequest request) throws QueryDeniedException {
+    public String createProject(Model model, WebRequest request) throws QueryDeniedException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
-        model.addAttribute("customers", customerService.getCustomers());
-        model.addAttribute("users", userService.getUsers());
-        return "project/createProject";}
+            model.addAttribute("customers", customerService.getCustomers());
+            model.addAttribute("users", userService.getUsers());
+            return "project/createProject";
+        }
     }
 
     @PostMapping("/createProject")
@@ -55,20 +58,21 @@ public class ProjectController {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
-        //denne funktion er ikke færdig!
-        String projectName = request.getParameter("pName");
-        String kickOffStr = request.getParameter("kickOff");
-        String deadlineStr = request.getParameter("deadline");
-        String pLId = request.getParameter("pLId");
-        String cId = request.getParameter("cId");
+            //denne funktion er ikke færdig!
+            String projectName = request.getParameter("pName");
+            String kickOffStr = request.getParameter("kickOff");
+            String deadlineStr = request.getParameter("deadline");
+            String pLId = request.getParameter("pLId");
+            String cId = request.getParameter("cId");
 
-        int project_leader_id = Integer.parseInt(pLId);                                  //request email and get project_leader_id
-        int customer_id = Integer.parseInt(cId);
-        LocalDate kickOff = LocalDate.parse(kickOffStr);
-        LocalDate deadline = LocalDate.parse(deadlineStr);
+            int project_leader_id = Integer.parseInt(pLId);                                  //request email and get project_leader_id
+            int customer_id = Integer.parseInt(cId);
+            LocalDate kickOff = LocalDate.parse(kickOffStr);
+            LocalDate deadline = LocalDate.parse(deadlineStr);
 
-        projectService.createProject(projectName, kickOff, deadline, project_leader_id, customer_id);
-        return "redirect:/listProject";}
+            projectService.createProject(projectName, kickOff, deadline, project_leader_id, customer_id);
+            return "redirect:/listProject";
+        }
     }
 
     // Responds to /editProject?id=project_id
@@ -77,13 +81,14 @@ public class ProjectController {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
-        Project p = projectService.getProject(id);
-        model.addAttribute("customers", customerService.getCustomers());
-        model.addAttribute("users", userService.getUsers());
-        model.addAttribute("projectmanager", userService.getUser(p.getProject_leader_id()));
-        model.addAttribute("currentcustomer", customerService.getCustomer(p.getCustomer_id()));
-        model.addAttribute("project", p);
-        return "project/editProject";}
+            Project p = projectService.getProject(id);
+            model.addAttribute("customers", customerService.getCustomers());
+            model.addAttribute("users", userService.getUsers());
+            model.addAttribute("projectmanager", userService.getUser(p.getProject_leader_id()));
+            model.addAttribute("currentcustomer", customerService.getCustomer(p.getCustomer_id()));
+            model.addAttribute("project", p);
+            return "project/editProject";
+        }
     }
 
     @PostMapping("/updateProject")
@@ -91,24 +96,25 @@ public class ProjectController {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
-        String projectId = request.getParameter("id");
-        String projectName = request.getParameter("pName");
-        String kickOffStr = request.getParameter("kickOff");
-        String deadlineStr = request.getParameter("deadline");
-        String pLeaderId = request.getParameter("plId");
-        String CustomerId = request.getParameter("cId");
+            String projectId = request.getParameter("id");
+            String projectName = request.getParameter("pName");
+            String kickOffStr = request.getParameter("kickOff");
+            String deadlineStr = request.getParameter("deadline");
+            String pLeaderId = request.getParameter("plId");
+            String CustomerId = request.getParameter("cId");
 
-        int pId = Integer.parseInt(projectId);
-        LocalDate kickoff = LocalDate.parse(kickOffStr);
-        LocalDate deadline = LocalDate.parse(deadlineStr);
-        int pLId = Integer.parseInt(pLeaderId);
-        int cId = Integer.parseInt(CustomerId);
+            int pId = Integer.parseInt(projectId);
+            LocalDate kickoff = LocalDate.parse(kickOffStr);
+            LocalDate deadline = LocalDate.parse(deadlineStr);
+            int pLId = Integer.parseInt(pLeaderId);
+            int cId = Integer.parseInt(CustomerId);
 
-        projectService.editProject(pId, projectName, kickoff, deadline, pLId, cId);
-        model.addAttribute("project", projectService.getProject(pId));
-        model.addAttribute("participants", projectService.getParticipants(pId));
+            projectService.editProject(pId, projectName, kickoff, deadline, pLId, cId);
+            model.addAttribute("project", projectService.getProject(pId));
+            model.addAttribute("participants", projectService.getParticipants(pId));
 
-        return "redirect:/viewProject?id=" + pId;}
+            return "redirect:/viewProject?id=" + pId;
+        }
     }
 
     // Responds to /viewProject?id=project_id
@@ -117,13 +123,15 @@ public class ProjectController {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
-        Project p = projectService.getProject(id);
-        model.addAttribute("projectmanager", userService.getUser(p.getProject_leader_id()));
-        model.addAttribute("customer", customerService.getCustomer(p.getCustomer_id()));
-        model.addAttribute("tasks", taskService.getTasks(id));
-        model.addAttribute("project", p);
-        model.addAttribute("users", userService.getUsers());
-        return "project/viewProject";}
+            Project p = projectService.getProject(id);
+            model.addAttribute("subtasks", taskService.getSubTasks(id));
+            model.addAttribute("projectmanager", userService.getUser(p.getProject_leader_id()));
+            model.addAttribute("customer", customerService.getCustomer(p.getCustomer_id()));
+            model.addAttribute("tasks", taskService.getTasks(id));
+            model.addAttribute("project", p);
+            model.addAttribute("users", userService.getUsers());
+            return "project/viewProject";
+        }
     }
 
     // Responds to /deleteProject?id=project_id
@@ -132,8 +140,9 @@ public class ProjectController {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
-        projectService.deleteProject(id);
-        return "redirect:/listProject";}
+            projectService.deleteProject(id);
+            return "redirect:/listProject";
+        }
     }
 
     @PostMapping("/addParticipant")

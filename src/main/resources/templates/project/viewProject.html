@@ -86,10 +86,10 @@
             <td th:text="${task.task_leader_email}"></td>
             <td th:if="${session.user.getIs_admin() == 1}"><a th:href="@{/editTask?id={id}(id=${task.task_id})}">&#128736;</a></td>
         </tr>
-        <tr>
+        <tr th:each="subtask : ${subtasks}">
             <td></td>
-            <td>SubTask</td>
-            <td>Description</td>
+            <td th:if="${subtask.task_id == task.task_id}" th:text="${subtask.sub_task_name}"></td>
+            <td th:if="${subtask.task_id == task.task_id}" th:text="${subtask.sub_task_description}"></td>
             <td></td>
             <td></td>
             <td></td>
