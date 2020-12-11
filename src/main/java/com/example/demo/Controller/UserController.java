@@ -87,10 +87,12 @@ public class UserController {
     }
 
     @GetMapping("/currentUser")
-    public String currentUser(WebRequest request) {
+    public String currentUser(WebRequest request,Model model) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
+            User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
+            model.addAttribute("userProjectList", projectService.getUserProjects(user.getUser_id()));
             return "user/currentUser";
         }
     }
