@@ -7,7 +7,7 @@ package com.example.demo.Data;
 
 import com.example.demo.Domain.Project;
 import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
-import com.example.demo.Exceptions.DataExceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.DataExceptions.OperationDeniedException;
 import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
 import com.example.demo.Mapper.ProjectMapper;
 
@@ -93,7 +93,7 @@ public class ProjectData {
         }
     }
 
-    public void createProject(String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws ExecuteDeniedException {
+    public void createProject(String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "INSERT INTO projects (project_name, kickoff, deadline, project_leader_id, customer_id) VALUES (?,?,?,?,?)";
@@ -105,11 +105,11 @@ public class ProjectData {
             preparedStatement.setInt(5, customer_id);
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
 
-    public void editProject(int project_id, String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws ExecuteDeniedException {
+    public void editProject(int project_id, String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "UPDATE projects SET project_name=?, kickoff=?, deadline=?, project_leader_id=?, customer_id=? WHERE project_id=?";
@@ -122,11 +122,11 @@ public class ProjectData {
             preparedStatement.setInt(6, project_id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
 
-    public void deleteProject(int id) throws ExecuteDeniedException {
+    public void deleteProject(int id) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "DELETE FROM projects WHERE project_id=?";
@@ -134,11 +134,11 @@ public class ProjectData {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
 
-    public void deleteProject(String project_name) throws ExecuteDeniedException {
+    public void deleteProject(String project_name) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "DELETE FROM projects WHERE project_name=?";
@@ -146,7 +146,7 @@ public class ProjectData {
             preparedStatement.setString(1, project_name);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
 }

@@ -1,13 +1,12 @@
 /**
  * @Author Rasmus Berg
  */
-
 package com.example.demo.Service;
 
 import com.example.demo.Data.CustomerData;
 import com.example.demo.Domain.Customer;
 import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
-import com.example.demo.Exceptions.DataExceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.DataExceptions.OperationDeniedException;
 import com.example.demo.Exceptions.ServiceExceptions.FailedRequestException;
 import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,7 +30,7 @@ public class CustomerService {
     public void createCustomer(String name, String contact_name, String contact_email, String contact_phone) throws FailedRequestException {
         try {
             customerData.createCustomer(name, contact_name, contact_email, contact_phone);
-        } catch (ExecuteDeniedException e) {
+        } catch (OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
     }
@@ -55,7 +54,7 @@ public class CustomerService {
 
     public Customer getCustomer(int id) throws FailedRequestException {
         try {
-        return customerData.getCustomer(id);
+            return customerData.getCustomer(id);
         } catch (QueryDeniedException | EmptyResultSetException e) {
             throw new FailedRequestException(e.getMessage());
         }
@@ -63,8 +62,8 @@ public class CustomerService {
 
     public void deleteCustomer(int id) throws FailedRequestException {
         try {
-        customerData.deleteCustomer(id);
-        } catch (ExecuteDeniedException e) {
+            customerData.deleteCustomer(id);
+        } catch (OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
     }

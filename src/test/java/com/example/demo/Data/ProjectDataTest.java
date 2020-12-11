@@ -11,7 +11,7 @@ package com.example.demo.Data;
 
 import com.example.demo.Domain.Project;
 import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
-import com.example.demo.Exceptions.DataExceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.DataExceptions.OperationDeniedException;
 import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,7 +28,7 @@ class ProjectDataTest {
 
     @Test
     @Order(0)
-    void createProject(ApplicationContext ctx) throws ExecuteDeniedException {
+    void createProject(ApplicationContext ctx) throws OperationDeniedException {
         ProjectData projectData = (ProjectData) ctx.getBean("projectData");
         String project_name = "The newest Deal";
         LocalDate kickoff = LocalDate.of(2020,12,2);
@@ -80,7 +80,7 @@ class ProjectDataTest {
 
     @Test
     @Order(3)
-    void editProject(ApplicationContext ctx) throws QueryDeniedException, ExecuteDeniedException, EmptyResultSetException {
+    void editProject(ApplicationContext ctx) throws QueryDeniedException, OperationDeniedException, EmptyResultSetException {
         ProjectData projectData = (ProjectData) ctx.getBean("projectData");
 
         // Select the last project in list and apply changes

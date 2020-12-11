@@ -3,7 +3,6 @@
  * @version 1.0
  * @since 27-11-2020
  */
-
 package com.example.demo.Service;
 
 import com.example.demo.Data.CustomerData;
@@ -15,7 +14,7 @@ import com.example.demo.Domain.Participant;
 import com.example.demo.Domain.Project;
 import com.example.demo.Domain.User;
 import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
-import com.example.demo.Exceptions.DataExceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.DataExceptions.OperationDeniedException;
 import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
 import com.example.demo.Exceptions.ServiceExceptions.DateContextException;
 import com.example.demo.Exceptions.ServiceExceptions.FailedRequestException;
@@ -29,34 +28,18 @@ public class ProjectService {
     private final UserData userData;
     private final CustomerData customerData;
     private final ParticipantData participantData;
-
+    private final TimeLogic timeLogic;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ProjectService(ProjectData projectData, UserData userData, CustomerData customerData, ParticipantData participantData) {
+    public ProjectService(ProjectData projectData, UserData userData, CustomerData customerData, ParticipantData participantData, TimeLogic timeLogic) {
         this.projectData = projectData;
         this.userData = userData;
         this.customerData = customerData;
         this.participantData = participantData;
+        this.timeLogic = timeLogic;
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    private void finalize(Project project) throws QueryDeniedException, EmptyResultSetException {
-        // Late dependency injection for single domain objects
-        int project_leader_id = project.getProject_leader_id();
-        int customer_id = project.getCustomer_id();
-        User project_leader = userData.getUser(project_leader_id);
-        Customer customer = customerData.getCustomer(customer_id);
-        project.setProject_leader(project_leader);
-        project.setCustomer(customer);
-    }
-
-    private boolean correctDate(LocalDate kickoff, LocalDate deadline) {
-        boolean result = false;
-        if (kickoff.isBefore(deadline)) {
-            result = true;
-        }
-        return result;
-    }
 
     public ArrayList<Project> getProjects() throws FailedRequestException {
         try {
@@ -69,9 +52,16 @@ public class ProjectService {
 
     public Project getProject(int project_id) throws FailedRequestException {
         try {
-            Project p = projectData.getProject(project_id);
-            finalize(p);
-            return p;
+            Project project = projectData.getProject(project_id);
+
+            int project_leader_id = project.getProject_leader_id();
+            int customer_id = project.getCustomer_id();
+            User project_leader = userData.getUser(project_leader_id);
+            Customer customer = customerData.getCustomer(customer_id);
+            project.setProject_leader(project_leader);
+            project.setCustomer(customer);
+
+            return project;
         } catch (QueryDeniedException | EmptyResultSetException e) {
             throw new FailedRequestException(e.getMessage());
         }
@@ -87,11 +77,11 @@ public class ProjectService {
 
     public void createProject(String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws FailedRequestException, DateContextException {
         try {
-            if (!correctDate(kickoff, deadline)) {
+            if (!timeLogic.correctDate(kickoff, deadline)) {
                 throw new DateContextException();
             }
             projectData.createProject(project_name, kickoff, deadline, project_leader_id, customer_id);
-        } catch (ExecuteDeniedException e) {
+        } catch (OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
     }
@@ -99,7 +89,7 @@ public class ProjectService {
     public void editProject(int project_id, String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws FailedRequestException {
         try {
         projectData.editProject(project_id, project_name, kickoff, deadline, project_leader_id, customer_id);
-        } catch (ExecuteDeniedException e) {
+        } catch (OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
     }
@@ -107,7 +97,7 @@ public class ProjectService {
     public void deleteProject(int project_id) throws FailedRequestException {
         try {
         projectData.deleteProject(project_id);
-        } catch (ExecuteDeniedException e) {
+        } catch (OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
     }
@@ -115,7 +105,7 @@ public class ProjectService {
     public void assignParticipant(int user_id, int project_id, int project_role_id) throws FailedRequestException {
         try {
         participantData.assignParticipant(user_id, project_id, project_role_id);
-        } catch (ExecuteDeniedException e) {
+        } catch (OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
     }
@@ -140,7 +130,7 @@ public class ProjectService {
     public void removeParticipant(int user_id, int project_id) throws FailedRequestException {
         try {
             participantData.removeParticipant(user_id, project_id);
-        } catch (ExecuteDeniedException e) {
+        } catch (OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
     }

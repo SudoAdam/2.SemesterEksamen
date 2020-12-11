@@ -20,8 +20,13 @@ public class DemoConfiguration {
     }
 
     @Bean
-    public SubTaskMapper subTaskMapper() { return new SubTaskMapper();
-    }
+    public TimeLogic timeLogic() { return new TimeLogic(); }
+
+    @Bean
+    public EncryptionLogic encryptionLogic() { return new EncryptionLogic(); }
+
+    @Bean
+    public SubTaskMapper subTaskMapper() { return new SubTaskMapper(); }
 
     @Bean
     public SubTaskData subTaskData(SubTaskMapper subTaskMapper, Connector connector) {
@@ -39,8 +44,8 @@ public class DemoConfiguration {
     }
 
     @Bean
-    public TaskService taskService(UserService userService, TaskData taskData, SubTaskData subTaskData) {
-        return new TaskService(userService, taskData, subTaskData);
+    public TaskService taskService(UserService userService, TaskData taskData, SubTaskData subTaskData, TimeLogic timeLogic) {
+        return new TaskService(userService, taskData, subTaskData, timeLogic);
     }
 
     @Bean
@@ -69,8 +74,8 @@ public class DemoConfiguration {
     }
 
     @Bean
-    public UserService userService(UserData userData) {
-        return new UserService(userData);
+    public UserService userService(UserData userData, EncryptionLogic encryptionLogic) {
+        return new UserService(userData, encryptionLogic);
     }
 
     @Bean
@@ -90,7 +95,7 @@ public class DemoConfiguration {
     }
 
     @Bean
-    public ProjectService projectService(ProjectData projectData, UserData userData, CustomerData customerData, ParticipantData participantData) {
-        return new ProjectService(projectData, userData, customerData, participantData);
+    public ProjectService projectService(ProjectData projectData, UserData userData, CustomerData customerData, ParticipantData participantData, TimeLogic timeLogic) {
+        return new ProjectService(projectData, userData, customerData, participantData, timeLogic);
     }
 }

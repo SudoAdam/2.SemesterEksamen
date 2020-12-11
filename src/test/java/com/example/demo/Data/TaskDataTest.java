@@ -11,7 +11,7 @@ package com.example.demo.Data;
 
 import com.example.demo.Domain.Task;
 import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
-import com.example.demo.Exceptions.DataExceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.DataExceptions.OperationDeniedException;
 import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -31,7 +31,7 @@ class TaskDataTest {
 
     @Test
     @Order(0)
-    void createTask(ApplicationContext ctx) throws ExecuteDeniedException {
+    void createTask(ApplicationContext ctx) throws OperationDeniedException {
         TaskData taskData = (TaskData) ctx.getBean("taskData");
 
         int project_id = 1;
@@ -64,7 +64,7 @@ class TaskDataTest {
 
     @Test
     @Order(2)
-    void editTask(ApplicationContext ctx) throws QueryDeniedException, ExecuteDeniedException, EmptyResultSetException {
+    void editTask(ApplicationContext ctx) throws QueryDeniedException, OperationDeniedException, EmptyResultSetException {
         TaskData taskData = (TaskData) ctx.getBean("taskData");
 
         ArrayList<Task> list01 = taskData.getTasks(1);

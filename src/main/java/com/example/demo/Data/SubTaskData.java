@@ -7,7 +7,7 @@ package com.example.demo.Data;
 
 import com.example.demo.Domain.SubTask;
 import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
-import com.example.demo.Exceptions.DataExceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.DataExceptions.OperationDeniedException;
 import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
 import com.example.demo.Mapper.SubTaskMapper;
 
@@ -81,7 +81,7 @@ public class SubTaskData {
         }
     }
 
-    public void createSubTask(int task_id, String sub_task_description, String sub_task_name) throws ExecuteDeniedException {
+    public void createSubTask(int task_id, String sub_task_description, String sub_task_name) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "INSERT INTO sub_tasks (task_ID, sub_task_description, sub_task_name) VALUES (?,?,?);";
@@ -91,7 +91,7 @@ public class SubTaskData {
             preparedStatement.setString(3, sub_task_name);
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
 
@@ -113,7 +113,7 @@ public class SubTaskData {
     }
     */
 
-    public void deleteSubTask(int task_id, int sub_task_id) throws ExecuteDeniedException {
+    public void deleteSubTask(int task_id, int sub_task_id) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "" +
@@ -124,11 +124,11 @@ public class SubTaskData {
             preparedStatement.setInt(2, sub_task_id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
 
-    public void deleteSubTask(String task_name, String sub_task_name) throws ExecuteDeniedException {
+    public void deleteSubTask(String task_name, String sub_task_name) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "" +
@@ -140,7 +140,7 @@ public class SubTaskData {
             preparedStatement.setString(2, sub_task_name);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
 }

@@ -2,7 +2,7 @@ package com.example.demo.Data;
 
 import com.example.demo.Domain.Participant;
 import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
-import com.example.demo.Exceptions.DataExceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.DataExceptions.OperationDeniedException;
 import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
 import com.example.demo.Mapper.ParticipantMapper;
 
@@ -64,7 +64,7 @@ public class ParticipantData {
         }
     }
 
-    public void assignParticipant(int user_id, int project_id, int project_role_id) throws ExecuteDeniedException {
+    public void assignParticipant(int user_id, int project_id, int project_role_id) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "INSERT INTO project_participants (user_id, project_id, project_role_id) VALUES (?,?,?)";
@@ -74,11 +74,11 @@ public class ParticipantData {
             preparedStatement.setInt(3, project_role_id);
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
 
-    public void removeParticipant(int user_id, int project_id) throws ExecuteDeniedException {
+    public void removeParticipant(int user_id, int project_id) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "DELETE FROM project_participants WHERE user_id=? and project_id=?";
@@ -87,7 +87,7 @@ public class ParticipantData {
             preparedStatement.setInt(2, project_id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
 }

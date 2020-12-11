@@ -1,12 +1,14 @@
 /**
- * @author Adam and Rasmus
+ * @author Adam, Rasmus
+ * @version 1.0
+ * @since 1-11-2020
  */
 package com.example.demo.Service;
 
 import com.example.demo.Data.UserData;
 import com.example.demo.Domain.User;
 import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
-import com.example.demo.Exceptions.DataExceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.DataExceptions.OperationDeniedException;
 import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
 import com.example.demo.Exceptions.ServiceExceptions.FailedRequestException;
 import com.example.demo.Exceptions.ServiceExceptions.LoginException;
@@ -18,10 +20,12 @@ import java.util.ArrayList;
 public class UserService {
     // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private final UserData userData;
+    private final EncryptionLogic encryptionLogic;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public UserService(UserData userData) {
+    public UserService(UserData userData, EncryptionLogic encryptionLogic) {
         this.userData = userData;
+        this.encryptionLogic = encryptionLogic;
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -34,14 +38,10 @@ public class UserService {
         }
     }
 
-    private String passwordHASH(String password) {
-        String hash = "" + password.hashCode();
-        return hash;
-    }
-
     public User login(String email, String password) throws FailedRequestException, LoginException {
         try {
-            User user = userData.login(email, passwordHASH(password));
+            String encrypted = encryptionLogic.toHash(password);
+            User user = userData.login(email, encrypted);
             return user;
         } catch (QueryDeniedException e) {
             throw new FailedRequestException(e.getMessage());
@@ -60,8 +60,9 @@ public class UserService {
 
     public void createUser(String e_mail, String password, String first_name, String last_name) throws FailedRequestException {
         try {
-            userData.createUser(e_mail, passwordHASH(password), first_name, last_name);
-        } catch (ExecuteDeniedException e) {
+            String encrypted = encryptionLogic.toHash(password);
+            userData.createUser(e_mail, encrypted, first_name, last_name);
+        } catch (OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
     }
@@ -78,7 +79,7 @@ public class UserService {
             }
 
             userData.editUser(user_id, e_mail, newPassword, first_name, last_name, is_admin);
-        } catch (ExecuteDeniedException e) {
+        } catch (OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
     }
@@ -103,7 +104,7 @@ public class UserService {
         try {
             byte[] fileAsBytes = file.getBytes();
             userData.uploadImg(user_id, fileAsBytes);
-        } catch (IOException | ExecuteDeniedException e) {
+        } catch (IOException | OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
     }
@@ -111,7 +112,7 @@ public class UserService {
     public void deleteUser(int id) throws FailedRequestException {
         try {
             userData.deleteUser(id);
-        } catch (ExecuteDeniedException e) {
+        } catch (OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
     }
@@ -119,7 +120,7 @@ public class UserService {
     public void setAdminStatus(int user_id, int is_admin) throws FailedRequestException {
         try {
             userData.setAdminStatus(user_id, is_admin);
-        } catch (ExecuteDeniedException e) {
+        } catch (OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
     }
@@ -128,7 +129,7 @@ public class UserService {
         try {
             String passwordHash = "-1307671719";
             userData.setPassword(user_id, passwordHash);
-        } catch (ExecuteDeniedException e) {
+        } catch (OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
     }

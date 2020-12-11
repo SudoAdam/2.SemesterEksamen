@@ -2,7 +2,7 @@ package com.example.demo.Data;
 
 import com.example.demo.Domain.SubTask;
 import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
-import com.example.demo.Exceptions.DataExceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.DataExceptions.OperationDeniedException;
 import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,7 +49,7 @@ class SubTaskDataTest {
     }
 
     @BeforeEach
-    void construct() throws QueryDeniedException, ExecuteDeniedException, EmptyResultSetException {
+    void construct() throws QueryDeniedException, OperationDeniedException, EmptyResultSetException {
 
         projectData.deleteProject(project_name);
         projectData.createProject(
@@ -80,7 +80,7 @@ class SubTaskDataTest {
     }
 
     @AfterEach
-    void destruct() throws ExecuteDeniedException {
+    void destruct() throws OperationDeniedException {
         projectData.deleteProject(project_id);
         taskData.deleteTask(task_id);
         subTaskData.deleteSubTask(task_id, sub_task_id);
