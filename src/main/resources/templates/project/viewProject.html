@@ -55,7 +55,7 @@
                     <td>
                         <input type="hidden" name="user_id" th:value="${participant.user_id}">
                         <input type="hidden" name="project_id" th:value="${participant.project_id}">
-                        <input type="submit" value="Remove">
+                        <input type="submit" class="submit-button" value="Remove">
                     </td>
                 </form>
             </tr>
@@ -78,7 +78,7 @@
                     <option value="6">Other</option>
                 </select>
                 <input type="hidden" name="project_id" th:value="${project.project_id}">
-                <input type="submit" value="Add Participant">
+                <input type="submit" class="submit-button" value="Add Participant">
         </form>
     </div>
     <table class="list-table">
