@@ -9,7 +9,6 @@
 package com.example.demo.Mapper;
 
 import com.example.demo.Domain.Project;
-import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

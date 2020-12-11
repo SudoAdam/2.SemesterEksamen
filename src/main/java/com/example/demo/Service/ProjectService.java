@@ -14,7 +14,11 @@ import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Participant;
 import com.example.demo.Domain.Project;
 import com.example.demo.Domain.User;
-import com.example.demo.Exceptions.*;
+import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
+import com.example.demo.Exceptions.DataExceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
+import com.example.demo.Exceptions.ServiceExceptions.DateContextException;
+import com.example.demo.Exceptions.ServiceExceptions.FailedRequestException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

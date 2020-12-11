@@ -1,4 +1,4 @@
-package com.example.demo.Exceptions;
+package com.example.demo.Exceptions.DataExceptions;
 
 public class QueryDeniedException extends Exception {
     private final String message;

@@ -10,14 +10,13 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Project;
-import com.example.demo.Exceptions.EmptyResultSetException;
-import com.example.demo.Exceptions.ExecuteDeniedException;
-import com.example.demo.Exceptions.QueryDeniedException;
+import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
+import com.example.demo.Exceptions.DataExceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 

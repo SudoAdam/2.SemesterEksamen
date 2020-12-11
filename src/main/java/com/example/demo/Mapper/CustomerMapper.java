@@ -2,7 +2,6 @@
  * @Author Rasmus Berg and Patrick Vincent Højstrøm
  */
 
-
 package com.example.demo.Mapper;
 
 import com.example.demo.Domain.Customer;

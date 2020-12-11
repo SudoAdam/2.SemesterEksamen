@@ -1,9 +1,11 @@
-package com.example.demo.Mapper;
 /**
  * @author Adam Madsen
  * @version 1.0
  * @since 09-12-2020
  */
+
+package com.example.demo.Mapper;
+
 import com.example.demo.Domain.SubTask;
 
 import java.sql.ResultSet;

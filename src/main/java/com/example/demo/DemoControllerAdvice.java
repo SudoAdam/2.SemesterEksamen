@@ -7,7 +7,7 @@
  */
 package com.example.demo;
 
-import com.example.demo.Exceptions.LoginException;
+import com.example.demo.Exceptions.ServiceExceptions.LoginException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

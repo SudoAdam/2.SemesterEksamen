@@ -1,3 +1,8 @@
+/**
+ * @author Patrick Vincent Højstrøm
+ * @version 1.0
+ * @since 07-12-2020
+ */
 package com.example.demo;
 
 import com.example.demo.Data.*;

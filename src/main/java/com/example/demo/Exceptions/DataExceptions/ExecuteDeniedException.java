@@ -1,4 +1,4 @@
-package com.example.demo.Exceptions;
+package com.example.demo.Exceptions.DataExceptions;
 
 public class ExecuteDeniedException extends Exception {
     private final String message;

@@ -6,17 +6,17 @@ package com.example.demo.Service;
 
 import com.example.demo.Data.CustomerData;
 import com.example.demo.Domain.Customer;
-import com.example.demo.Exceptions.EmptyResultSetException;
-import com.example.demo.Exceptions.ExecuteDeniedException;
-import com.example.demo.Exceptions.FailedRequestException;
-import com.example.demo.Exceptions.QueryDeniedException;
+import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
+import com.example.demo.Exceptions.DataExceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.ServiceExceptions.FailedRequestException;
+import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
 
 import java.util.ArrayList;
 
 public class CustomerService {
     // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    private CustomerData customerData;
+    private final CustomerData customerData;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 

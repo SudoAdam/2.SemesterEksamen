@@ -1,9 +1,9 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Participant;
-import com.example.demo.Exceptions.EmptyResultSetException;
-import com.example.demo.Exceptions.ExecuteDeniedException;
-import com.example.demo.Exceptions.QueryDeniedException;
+import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
+import com.example.demo.Exceptions.DataExceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
 import com.example.demo.Mapper.ParticipantMapper;
 
 import java.sql.Connection;

@@ -1,17 +1,21 @@
+/**
+ * @author Patrick Vincent Højstrøm
+ * @version 1.0
+ * @since 9-12-2020
+ */
 package com.example.demo.Data;
 
 import com.example.demo.Domain.User;
-import com.example.demo.Exceptions.EmptyResultSetException;
-import com.example.demo.Exceptions.ExecuteDeniedException;
-import com.example.demo.Exceptions.LoginException;
-import com.example.demo.Exceptions.QueryDeniedException;
+import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
+import com.example.demo.Exceptions.DataExceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.ServiceExceptions.LoginException;
+import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -66,6 +70,11 @@ class UserDataTest {
 
     // TEST ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Test
+    void createUser_exception() {
+        assertThrows(ExecuteDeniedException.class, ()->{userData.createUser("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "", "", "");});
+    }
+
+    @Test
     void getUsers() throws QueryDeniedException, EmptyResultSetException {
         ArrayList<User> users = userData.getUsers();
         for (User u: users) {
@@ -75,14 +84,10 @@ class UserDataTest {
 
     @Test
     void getUser_byMail() throws QueryDeniedException, EmptyResultSetException {
-        User user = userData.getUser(e_mail);
-        assertUser(user);
-    }
-
-    @Test
-    void getUser_byId() throws QueryDeniedException, EmptyResultSetException {
-        User user = userData.getUser(user_id);
-        assertUser(user);
+        User user01 = userData.getUser(e_mail);
+        assertUser(user01);
+        User user02 = userData.getUser(user_id);
+        assertUser(user02);
     }
 
     @Test
@@ -101,12 +106,11 @@ class UserDataTest {
     void login() throws QueryDeniedException, EmptyResultSetException {
         User user = userData.login(e_mail, password);
         assertUser(user);
-        assertThrows(LoginException.class, ()->{userData.login("false@123.com", "");} );
     }
 
     @Test
-    void createUser_exception() {
-        assertThrows(ExecuteDeniedException.class, ()->{userData.createUser("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "", "", "");});
+    void login_exception() {
+        assertThrows(LoginException.class, ()->{userData.login("false@123.com", "");} );
     }
 
     @Test
