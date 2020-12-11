@@ -51,17 +51,17 @@
                 <td th:if="${participant.getProject_role_id() == 4}">Architect</td>
                 <td th:if="${participant.getProject_role_id() == 5}">Sales</td>
                 <td th:if="${participant.getProject_role_id() == 6}">Other</td>
-                <form action="/removeParticipant" method="post">
+                <form th:if="${session.user.getIs_admin() == 1}" action="/removeParticipant" method="post">
                     <td>
                         <input type="hidden" name="user_id" th:value="${participant.user_id}">
                         <input type="hidden" name="project_id" th:value="${participant.project_id}">
-                        <input type="submit" value="Remove">
+                        <input type="submit" class="submit-button" value="Remove">
                     </td>
                 </form>
             </tr>
             </tbody>
         </table>
-        <form action="/addParticipant" method="post">
+        <form th:if="${session.user.getIs_admin() == 1}" action="/addParticipant" method="post">
             <p><select style="font-size: 15px" class="form-control" name="user_id" required>
                 <option value="">Select Participant</option>
                 <option th:each="user : ${users}"
@@ -78,29 +78,32 @@
                     <option value="6">Other</option>
                 </select>
                 <input type="hidden" name="project_id" th:value="${project.project_id}">
-                <input type="submit" value="Add Participant">
+                <input type="submit" class="submit-button" value="Add Participant">
         </form>
     </div>
     <table class="list-table">
-        <thead>
+       <!-- <thead>
         <tr>
             <th>Tasks</th>
             <th>Description</th>
             <th>Working hours</th>
             <th>Start</th>
             <th>End</th>
-            <th>Task Manager</th>
             <th th:if="${session.user.getIs_admin() == 1}" style="background-color: #9EBDD5; text-align: center"></th>
         </tr>
-        </thead>
+        </thead> -->
         <tbody th:each="task : ${tasks}">
+        <tr style="background-color: #9EBDD5; color: white; text-align: center">
+           <td colspan="6" th:text="${task.task_name}"></td>
+        </tr>
         <tr>
-            <td th:text="${task.task_name}"></td>
+
+           <!-- <td th:text="${task.task_name}"></td> -->
             <td th:text="${task.task_description}"></td>
-            <td th:text="${task.working_hours}"></td>
+            <td th:text="${task.working_hours}+ ' hours'"></td>
             <td th:text="${task.kickoff}"></td>
             <td th:text="${task.deadline}"></td>
-            <td th:text="${task.task_leader_email}"></td>
+            <td></td>
             <td th:if="${session.user.getIs_admin() == 1}"><a th:href="@{/editTask?id={id}(id=${task.task_id})}">&#128736;</a>
             </td>
         </tr>
@@ -112,9 +115,8 @@
             <td th:text="${subtask.sub_task_description}"></td>
             <td></td>
             <td></td>
-            <td></td>
             <td>
-                <form action="/deleteSubTask" method="post">
+                <form th:if="${session.user.getIs_admin() == 1}" action="/deleteSubTask" method="post">
                     <input type="hidden" name="task_id" th:value="${subtask.task_id}">
                     <input type="hidden" name="sub_task_id" th:value="${subtask.sub_task_id}">
                     <input type="hidden" name="project_id" th:value="${project.project_id}">
@@ -131,12 +133,11 @@
                 <td><input type="hidden" name="project_id" th:value="${task.project_id}"></td>
                 <td><input type="submit" value="Add Sub Task"></td>
             </form>
-            <td></td>
         </tr>
         </tbody>
         <tbody>
         <tr th:if="${session.user.getIs_admin() == 1}" style="background-color: #9EBDD5; text-align: center">
-            <td colspan="7">
+            <td colspan="6">
                 <form th:action="@{/createTask?id={id}(id=${project.project_id})}" method="post">
                     <input value="&#10133;" type="submit" style="width: 45px; height: 45px">
                 </form>
