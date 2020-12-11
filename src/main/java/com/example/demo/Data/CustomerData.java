@@ -98,7 +98,7 @@ public class CustomerData {
         }
     }
 
-    public void uploadCustomerImg(int customer_id, byte[] fileAsBytes) throws ExecuteDeniedException {
+    public void uploadCustomerImg(int customer_id, byte[] fileAsBytes) throws OperationDeniedException {
         try {
             Blob img = new SerialBlob(fileAsBytes);
             String statement = "UPDATE customers SET img=? WHERE customer_id=?;";
@@ -108,7 +108,7 @@ public class CustomerData {
             preparedStatement.setInt(2, customer_id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when querying database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when querying database: SQLException message: " + e.getMessage());
         }
     }
 }

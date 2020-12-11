@@ -72,7 +72,7 @@ public class CustomerService {
         try {
             byte[] fileAsBytes = file.getBytes();
             customerData.uploadCustomerImg(customer_id, fileAsBytes);
-        } catch (IOException | ExecuteDeniedException e) {
+        } catch (IOException | OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
     }
