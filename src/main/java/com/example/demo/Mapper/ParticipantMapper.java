@@ -5,7 +5,6 @@ import com.example.demo.Domain.Participant;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
 public class ParticipantMapper extends AbstractMapper {
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Override

@@ -1,4 +1,4 @@
-package com.example.demo.Exceptions;
+package com.example.demo.Exceptions.ServiceExceptions;
 
 public class FailedRequestException extends Exception {
     private final String message;

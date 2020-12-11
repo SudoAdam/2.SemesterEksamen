@@ -5,7 +5,11 @@ package com.example.demo.Service;
 
 import com.example.demo.Data.UserData;
 import com.example.demo.Domain.User;
-import com.example.demo.Exceptions.*;
+import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
+import com.example.demo.Exceptions.DataExceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
+import com.example.demo.Exceptions.ServiceExceptions.FailedRequestException;
+import com.example.demo.Exceptions.ServiceExceptions.LoginException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

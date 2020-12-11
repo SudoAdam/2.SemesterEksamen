@@ -1,11 +1,10 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.User;
-import com.example.demo.Exceptions.FailedRequestException;
-import com.example.demo.Exceptions.LoginException;
+import com.example.demo.Exceptions.ServiceExceptions.FailedRequestException;
+import com.example.demo.Exceptions.ServiceExceptions.LoginException;
 import com.example.demo.Service.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;

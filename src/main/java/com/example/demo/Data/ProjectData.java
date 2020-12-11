@@ -3,13 +3,12 @@
  * @version 1.0
  * @since 27-11-2020
  */
-
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Project;
-import com.example.demo.Exceptions.EmptyResultSetException;
-import com.example.demo.Exceptions.ExecuteDeniedException;
-import com.example.demo.Exceptions.QueryDeniedException;
+import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
+import com.example.demo.Exceptions.DataExceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
 import com.example.demo.Mapper.ProjectMapper;
 
 import java.sql.*;
