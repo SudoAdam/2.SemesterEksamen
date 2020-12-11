@@ -2,8 +2,8 @@ package com.example.demo.Controller;
 
 import com.example.demo.Domain.Project;
 import com.example.demo.Domain.User;
-import com.example.demo.Exceptions.DateContextException;
-import com.example.demo.Exceptions.FailedRequestException;
+import com.example.demo.Exceptions.ServiceExceptions.DateContextException;
+import com.example.demo.Exceptions.ServiceExceptions.FailedRequestException;
 import com.example.demo.Service.CustomerService;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.TaskService;
