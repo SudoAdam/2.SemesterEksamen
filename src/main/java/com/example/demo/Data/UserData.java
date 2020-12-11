@@ -6,7 +6,7 @@ package com.example.demo.Data;
 
 import com.example.demo.Domain.User;
 import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
-import com.example.demo.Exceptions.DataExceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.DataExceptions.OperationDeniedException;
 import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
 import com.example.demo.Mapper.UserMapper;
 
@@ -83,7 +83,7 @@ public class UserData {
         }
     }
 
-    public void createUser(String e_mail, String password, String first_name, String last_name) throws ExecuteDeniedException {
+    public void createUser(String e_mail, String password, String first_name, String last_name) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "INSERT INTO users (e_mail, password, first_name, last_name) VALUES (?,?,?,?)";
@@ -94,11 +94,11 @@ public class UserData {
             preparedStatement.setString(4, last_name);
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when executing statement to database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when executing statement to database: SQLException message: " + e.getMessage());
         }
     }
 
-    public void editUser(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin) throws ExecuteDeniedException {
+    public void editUser(int user_id, String e_mail, String password, String first_name, String last_name, int is_admin) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "UPDATE users SET e_mail=?, password=?, first_name=?, last_name=?, is_admin=? WHERE user_id=?";
@@ -111,7 +111,7 @@ public class UserData {
             preparedStatement.setInt(6, user_id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
 
@@ -147,7 +147,7 @@ public class UserData {
         }
     }
 
-    public void uploadImg(int user_id, byte[] fileAsBytes) throws ExecuteDeniedException {
+    public void uploadImg(int user_id, byte[] fileAsBytes) throws OperationDeniedException {
         try {
             Blob img = new SerialBlob(fileAsBytes);
             String statement = "UPDATE users SET img=? WHERE user_id=?;";
@@ -157,11 +157,11 @@ public class UserData {
             preparedStatement.setInt(2, user_id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when querying database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when querying database: SQLException message: " + e.getMessage());
         }
     }
 
-    public void deleteUser(int id) throws ExecuteDeniedException {
+    public void deleteUser(int id) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "DELETE FROM users WHERE user_id=?";
@@ -169,11 +169,11 @@ public class UserData {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
 
-    public void deleteUser(String e_mail) throws ExecuteDeniedException {
+    public void deleteUser(String e_mail) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "DELETE FROM users WHERE e_mail=?";
@@ -181,11 +181,11 @@ public class UserData {
             preparedStatement.setString(1, e_mail);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
 
-    public void setAdminStatus(int user_id, int is_admin) throws ExecuteDeniedException {
+    public void setAdminStatus(int user_id, int is_admin) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "UPDATE users SET is_admin=? WHERE user_id=?";
@@ -194,11 +194,11 @@ public class UserData {
             preparedStatement.setInt(2, user_id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
 
-    public void setPassword(int user_id, String password) throws ExecuteDeniedException {
+    public void setPassword(int user_id, String password) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "UPDATE users SET password=? WHERE user_id=?";
@@ -207,7 +207,7 @@ public class UserData {
             preparedStatement.setInt(2, user_id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
 

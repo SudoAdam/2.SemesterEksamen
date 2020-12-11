@@ -7,7 +7,7 @@ package com.example.demo.Data;
 
 import com.example.demo.Domain.User;
 import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
-import com.example.demo.Exceptions.DataExceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.DataExceptions.OperationDeniedException;
 import com.example.demo.Exceptions.ServiceExceptions.LoginException;
 import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
 import org.junit.jupiter.api.AfterEach;
@@ -48,7 +48,7 @@ class UserDataTest {
     }
 
     @BeforeEach
-    void construct() throws QueryDeniedException, ExecuteDeniedException {
+    void construct() throws QueryDeniedException, OperationDeniedException {
         // Every test requires a user object, we will make it for every test.
         userData.deleteUser(e_mail);
         userData.createUser(e_mail, password, first_name, last_name);
@@ -57,7 +57,7 @@ class UserDataTest {
     }
 
     @AfterEach
-    void destruct() throws ExecuteDeniedException {
+    void destruct() throws OperationDeniedException {
         // After every test we will delete the test user.
         userData.deleteUser(e_mail);
         try {
@@ -71,7 +71,7 @@ class UserDataTest {
     // TEST ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Test
     void createUser_exception() {
-        assertThrows(ExecuteDeniedException.class, ()->{userData.createUser("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "", "", "");});
+        assertThrows(OperationDeniedException.class, ()->{userData.createUser("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "", "", "");});
     }
 
     @Test

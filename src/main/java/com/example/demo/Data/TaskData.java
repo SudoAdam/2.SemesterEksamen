@@ -8,7 +8,7 @@ package com.example.demo.Data;
 
 import com.example.demo.Domain.Task;
 import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
-import com.example.demo.Exceptions.DataExceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.DataExceptions.OperationDeniedException;
 import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
 import com.example.demo.Mapper.TaskMapper;
 
@@ -59,7 +59,7 @@ public class TaskData {
         }
     }
 
-    public void createTask(int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws ExecuteDeniedException {
+    public void createTask(int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "INSERT INTO tasks (project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours) VALUES (?,?,?,?,?,?,?);";
@@ -73,11 +73,11 @@ public class TaskData {
             preparedStatement.setInt(7, working_hours);
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
 
-    public void editTask(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws ExecuteDeniedException {
+    public void editTask(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "UPDATE tasks SET project_id=?, task_name=?, task_description=?, task_leader_id=?, kickoff=?, deadline=?, working_hours=? WHERE task_id=?;";
@@ -92,11 +92,11 @@ public class TaskData {
             preparedStatement.setInt(8, task_id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
 
-    public void deleteTask(int id) throws ExecuteDeniedException {
+    public void deleteTask(int id) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "DELETE FROM tasks WHERE task_id=?";
@@ -104,11 +104,11 @@ public class TaskData {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
 
-    public void deleteTask(String task_name) throws ExecuteDeniedException {
+    public void deleteTask(String task_name) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "DELETE FROM tasks WHERE task_name=?";
@@ -116,7 +116,7 @@ public class TaskData {
             preparedStatement.setString(1, task_name);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+            throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
 }
