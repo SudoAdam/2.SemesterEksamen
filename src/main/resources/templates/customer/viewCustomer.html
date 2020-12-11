@@ -22,7 +22,8 @@
         <a th:if="${session.user.getIs_admin() == 1}" th:href="@{/editCustomer?id={id}(id=${customer.customer_id})}">Edit
             Customer</a>
         <br>
-        <img class="pb" src="/images/defaultprofilepic.png">
+        <img class="pb" th:src="*{'data:image/jpeg;base64,' + customer.byteArrayAs64String()}">
+        <br>
     </div>
     <table class="list-table">
         <thead>

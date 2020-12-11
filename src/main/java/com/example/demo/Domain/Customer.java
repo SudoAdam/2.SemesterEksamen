@@ -5,6 +5,9 @@
 
 package com.example.demo.Domain;
 
+import com.fasterxml.jackson.databind.ser.std.ObjectArraySerializer;
+import org.apache.tomcat.util.codec.binary.Base64;
+
 public class Customer implements DomainInterface {
     // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private int customer_id;
@@ -12,17 +15,19 @@ public class Customer implements DomainInterface {
     private String contact_name;
     private String contact_email;
     private String contact_phone;
+    private byte[] img;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public Customer() {
     }
 
-    public Customer(int customer_id, String name, String contact_name, String contact_email, String contact_phone) {
+    public Customer(int customer_id, String name, String contact_name, String contact_email, String contact_phone, byte[] img) {
         this.customer_id = customer_id;
         this.name = name;
         this.contact_name = contact_name;
         this.contact_email = contact_email;
         this.contact_phone = contact_phone;
+        this.img = img;
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -64,5 +69,9 @@ public class Customer implements DomainInterface {
 
     public void setContact_phone(String contact_phone) {
         this.contact_phone = contact_phone;
+    }
+
+    public String byteArrayAs64String() {
+        return Base64.encodeBase64String(this.img);
     }
 }

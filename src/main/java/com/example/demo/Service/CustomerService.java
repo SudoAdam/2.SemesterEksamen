@@ -9,7 +9,9 @@ import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
 import com.example.demo.Exceptions.DataExceptions.OperationDeniedException;
 import com.example.demo.Exceptions.ServiceExceptions.FailedRequestException;
 import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class CustomerService {
@@ -62,6 +64,15 @@ public class CustomerService {
         try {
             customerData.deleteCustomer(id);
         } catch (OperationDeniedException e) {
+            throw new FailedRequestException(e.getMessage());
+        }
+    }
+
+    public void addCustomerPicture(int customer_id, MultipartFile file) throws FailedRequestException {
+        try {
+            byte[] fileAsBytes = file.getBytes();
+            customerData.uploadCustomerImg(customer_id, fileAsBytes);
+        } catch (IOException | ExecuteDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
     }

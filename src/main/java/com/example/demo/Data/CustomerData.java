@@ -10,10 +10,8 @@ import com.example.demo.Exceptions.DataExceptions.OperationDeniedException;
 import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
 import com.example.demo.Mapper.CustomerMapper;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.sql.rowset.serial.SerialBlob;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class CustomerData {
@@ -97,6 +95,20 @@ public class CustomerData {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+        }
+    }
+
+    public void uploadCustomerImg(int customer_id, byte[] fileAsBytes) throws ExecuteDeniedException {
+        try {
+            Blob img = new SerialBlob(fileAsBytes);
+            String statement = "UPDATE customers SET img=? WHERE customer_id=?;";
+            Connection connection = connector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setBlob(1, img);
+            preparedStatement.setInt(2, customer_id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new ExecuteDeniedException("Error when querying database: SQLException message: " + e.getMessage());
         }
     }
 }

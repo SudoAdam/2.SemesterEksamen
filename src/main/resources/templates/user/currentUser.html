@@ -21,6 +21,26 @@
         <img class="pb" th:src="*{'data:image/jpeg;base64,' + session.user.byteArrayAs64String()}">
         <br>
     </div>
+    <table class="list-table">
+        <thead>
+        <tr>
+            <th>Projects</th>
+            <th>Kick Off</th>
+            <th>Deadline</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="project : ${userProjectList}">
+            <td th:text="${project.project_name}"></td>
+            <td th:text="${project.kickoff}"></td>
+            <td th:text="${project.deadline}"></td>
+            <td> &#10060;</td> <!-- 9989 -->
+            <td><a th:href="@{/viewProject?id={id}(id=${project.project_id})}">View Project</a></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 <th:block th:include="/includes/footer :: footer"></th:block>

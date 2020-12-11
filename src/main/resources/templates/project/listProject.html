@@ -10,7 +10,7 @@
     <div id="headline">
         <h1 style="color: #35455D">Projects</h1>
     </div>
-    <table class="list-table">
+    <table th:if="${session.user.getIs_admin() == 1}" class="list-table">
         <thead>
         <tr>
             <th>Project name</th>
@@ -28,12 +28,32 @@
             <td> &#10060;</td> <!-- 9989 -->
             <td><a th:href="@{/viewProject?id={id}(id=${project.project_id})}">View Project</a></td>
         </tr>
-        <tr th:if="${session.user.getIs_admin() == 1}" style="background-color: #9EBDD5; text-align: center">
+        <tr style="background-color: #9EBDD5; text-align: center">
             <td colspan="6">
                 <form action="/createProject" method="get">
                     <input class="plus-button" value="+" type="submit">
                 </form>
             </td>
+        </tr>
+        </tbody>
+    </table>
+    <table th:if="${session.user.getIs_admin() == 0}" class="list-table">
+        <thead>
+        <tr>
+            <th>Projects</th>
+            <th>Kick Off</th>
+            <th>Deadline</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="project : ${userProjectList}">
+            <td th:text="${project.project_name}"></td>
+            <td th:text="${project.kickoff}"></td>
+            <td th:text="${project.deadline}"></td>
+            <td> &#10060;</td> <!-- 9989 -->
+            <td><a th:href="@{/viewProject?id={id}(id=${project.project_id})}">View Project</a></td>
         </tr>
         </tbody>
     </table>
