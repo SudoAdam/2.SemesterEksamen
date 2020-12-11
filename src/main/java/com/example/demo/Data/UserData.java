@@ -5,11 +5,12 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.User;
+import com.example.demo.Exceptions.EmptyResultSetException;
 import com.example.demo.Exceptions.ExecuteDeniedException;
-import com.example.demo.Exceptions.LoginException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Mapper.UserMapper;
 
+import javax.sql.rowset.serial.SerialBlob;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -25,7 +26,7 @@ public class UserData {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<User> getUsers() throws QueryDeniedException {
+    public ArrayList<User> getUsers() throws QueryDeniedException, EmptyResultSetException {
         try {
             Connection connection = connector.getConnection();
             String statement = "SELECT * FROM users";
@@ -42,7 +43,7 @@ public class UserData {
         }
     }
 
-    public User getUser(int id) throws QueryDeniedException {
+    public User getUser(int id) throws QueryDeniedException, EmptyResultSetException {
         try {
             Connection connection = connector.getConnection();
             String statement = "SELECT * FROM users WHERE user_id = ?";
@@ -55,7 +56,7 @@ public class UserData {
         }
     }
 
-    public User getUser(String e_mail) throws QueryDeniedException {
+    public User getUser(String e_mail) throws QueryDeniedException, EmptyResultSetException {
         try {
             Connection connection = connector.getConnection();
             String statement = "SELECT * FROM users WHERE e_mail = ?";
@@ -68,7 +69,7 @@ public class UserData {
         }
     }
 
-    public User login(String email, String password) throws LoginException, QueryDeniedException {
+    public User login(String email, String password) throws QueryDeniedException, EmptyResultSetException {
         try {
             Connection connection = connector.getConnection();
             String statement = "SELECT * FROM users WHERE e_mail=? and password=?";
@@ -77,8 +78,6 @@ public class UserData {
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
             return (User) userMapper.create(resultSet);
-        } catch (QueryDeniedException e) {
-            throw new LoginException("password or credentials where incorrect");
         } catch (SQLException e) {
             throw new QueryDeniedException("Error when querying database: SQLException message: " + e.getMessage());
         }
@@ -148,8 +147,9 @@ public class UserData {
         }
     }
 
-    public void uploadImg(int user_id, Blob img) throws ExecuteDeniedException {
+    public void uploadImg(int user_id, byte[] fileAsBytes) throws ExecuteDeniedException {
         try {
+            Blob img = new SerialBlob(fileAsBytes);
             String statement = "UPDATE users SET img=? WHERE user_id=?;";
             Connection connection = connector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(statement);

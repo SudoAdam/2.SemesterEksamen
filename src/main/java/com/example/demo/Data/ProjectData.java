@@ -7,6 +7,7 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Project;
+import com.example.demo.Exceptions.EmptyResultSetException;
 import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Mapper.ProjectMapper;
@@ -27,7 +28,7 @@ public class ProjectData {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<Project> getProjects() throws QueryDeniedException {
+    public ArrayList<Project> getProjects() throws QueryDeniedException, EmptyResultSetException {
         try {
             Connection connection = connector.getConnection();
             String statement = "SELECT * FROM projects";
@@ -44,7 +45,7 @@ public class ProjectData {
         }
     }
 
-    public Project getProject(int project_id) throws QueryDeniedException {
+    public Project getProject(int project_id) throws QueryDeniedException, EmptyResultSetException {
         try {
             Connection connection = connector.getConnection();
             String statement = "SELECT * FROM projects WHERE project_id=?";
@@ -57,7 +58,7 @@ public class ProjectData {
         }
     }
 
-    public Project getProject(String project_name) throws QueryDeniedException {
+    public Project getProject(String project_name) throws QueryDeniedException, EmptyResultSetException {
         try {
             Connection connection = connector.getConnection();
             String statement = "SELECT * FROM projects WHERE project_name=?";
@@ -70,7 +71,7 @@ public class ProjectData {
         }
     }
 
-    public ArrayList<Project> getUserProjects(int user_id) throws QueryDeniedException {
+    public ArrayList<Project> getUserProjects(int user_id) throws QueryDeniedException, EmptyResultSetException {
         try {
             Connection connection = connector.getConnection();
             String statement =

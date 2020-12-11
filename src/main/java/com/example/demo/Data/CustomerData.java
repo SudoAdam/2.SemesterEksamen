@@ -6,6 +6,7 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Customer;
+import com.example.demo.Exceptions.EmptyResultSetException;
 import com.example.demo.Exceptions.ExecuteDeniedException;
 import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Mapper.CustomerMapper;
@@ -28,7 +29,7 @@ public class CustomerData {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ArrayList<Customer> getCustomers() throws QueryDeniedException {
+    public ArrayList<Customer> getCustomers() throws QueryDeniedException, EmptyResultSetException {
         try {
             Connection connection = connector.getConnection();
             String statement = "SELECT * FROM customers";
@@ -44,7 +45,7 @@ public class CustomerData {
         }
     }
 
-    public Customer getCustomer(int id) throws QueryDeniedException {
+    public Customer getCustomer(int id) throws QueryDeniedException, EmptyResultSetException {
         try {
             Connection connection = connector.getConnection();
             String statement = "SELECT * FROM customers WHERE customer_id = ?";
@@ -88,31 +89,15 @@ public class CustomerData {
         }
     }
 
-    public int findCustomerIdFromName(String name) throws QueryDeniedException {
-        try {
-            int id = -1;
-            Connection connection = connector.getConnection();
-            String statement = "SELECT customer_id from customers where name like ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(statement);
-            preparedStatement.setString(1, '"' + name + '"');
-            ResultSet resultSet = preparedStatement.executeQuery();
-            String result = "" + resultSet.getObject(1);
-            id = Integer.parseInt(result);
-            return id;
-        } catch (SQLException e) {
-            throw new QueryDeniedException("Error when querying database: SQLException message: " + e.getMessage());
-        }
-    }
-
-    public void deleteCustomer(int id) throws ExecuteDeniedException {
+    public void deleteCustomer(int customer_id) throws ExecuteDeniedException {
         try {
             Connection connection = connector.getConnection();
             String statement = "DELETE FROM customers WHERE customer_id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, customer_id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new ExecuteDeniedException("Error when querying database: SQLException message: " + e.getMessage());
+            throw new ExecuteDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
 }

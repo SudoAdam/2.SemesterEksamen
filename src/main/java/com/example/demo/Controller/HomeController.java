@@ -1,9 +1,8 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.User;
-import com.example.demo.Exceptions.ExecuteDeniedException;
+import com.example.demo.Exceptions.FailedRequestException;
 import com.example.demo.Exceptions.LoginException;
-import com.example.demo.Exceptions.QueryDeniedException;
 import com.example.demo.Service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +29,7 @@ public class HomeController {
     }
 
     @PostMapping("/login")
-    public String login(WebRequest request) throws LoginException, QueryDeniedException {
+    public String login(WebRequest request) throws LoginException, FailedRequestException {
         String email = request.getParameter("mail");
         String password = request.getParameter("password");
         User user = userService.login(email, password);
@@ -59,7 +58,7 @@ public class HomeController {
     }
 
     @PostMapping("/createUser")
-    public String createUser(WebRequest request) throws ExecuteDeniedException {
+    public String createUser(WebRequest request) throws FailedRequestException {
         String e_mail = request.getParameter("email");
         String password = request.getParameter("password");
         String first_name = request.getParameter("firstName");

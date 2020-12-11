@@ -6,8 +6,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Project;
-import com.example.demo.Exceptions.ExecuteDeniedException;
-import com.example.demo.Exceptions.QueryDeniedException;
+import com.example.demo.Exceptions.FailedRequestException;
 import com.example.demo.Service.CustomerService;
 import com.example.demo.Service.ProjectService;
 import org.springframework.stereotype.Controller;
@@ -37,7 +36,7 @@ public class CustomerController {
     }
 
     @PostMapping("/createCustomer")
-    public String createCustomer(WebRequest request) throws ExecuteDeniedException {
+    public String createCustomer(WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -51,7 +50,7 @@ public class CustomerController {
     }
 
     @GetMapping("/listCustomer")
-    public String listCustomer(Model model, WebRequest request) throws QueryDeniedException {
+    public String listCustomer(Model model, WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -62,7 +61,7 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/editCustomer", method = {RequestMethod.GET, RequestMethod.POST})
-    public String editCustomer(@RequestParam int id, Model model, WebRequest request) throws QueryDeniedException {
+    public String editCustomer(@RequestParam int id, Model model, WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -72,7 +71,7 @@ public class CustomerController {
     }
 
     @PostMapping("/updateCustomer")
-    public String updateCustomer(WebRequest request) throws QueryDeniedException {
+    public String updateCustomer(WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -88,7 +87,7 @@ public class CustomerController {
 
     // Responds to /viewCustomer?id=project_id
     @RequestMapping(value = "/viewCustomer", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewCustomer(@RequestParam int id, Model model, WebRequest request) throws QueryDeniedException {
+    public String viewCustomer(@RequestParam int id, Model model, WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -105,7 +104,7 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/deleteCustomer", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteCustomer(@RequestParam int id, WebRequest request) throws ExecuteDeniedException {
+    public String deleteCustomer(@RequestParam int id, WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {

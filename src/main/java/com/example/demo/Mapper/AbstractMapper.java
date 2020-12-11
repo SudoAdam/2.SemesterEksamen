@@ -16,6 +16,7 @@
 package com.example.demo.Mapper;
 
 import com.example.demo.Domain.DomainInterface;
+import com.example.demo.Exceptions.EmptyResultSetException;
 import com.example.demo.Exceptions.QueryDeniedException;
 
 import java.sql.ResultSet;
@@ -33,16 +34,14 @@ public abstract class AbstractMapper {
     }
     */
 
-    public DomainInterface create(ResultSet resultSet) throws QueryDeniedException {
+    public DomainInterface create(ResultSet resultSet) throws EmptyResultSetException {
         try {
             if (resultSet.isBeforeFirst()) {
-                if (!resultSet.next()) {
-                    throw new QueryDeniedException("Error scrubbing resultSet: Message: Empty resultSet");
-                }
+                resultSet.next();
             }
             return mapping(resultSet);
         } catch (SQLException e) {
-            throw new QueryDeniedException("Error reading resultSet: SQLException message: " + e.getMessage());
+            throw new EmptyResultSetException();
         }
     }
 

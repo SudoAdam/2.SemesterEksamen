@@ -1,9 +1,8 @@
 package com.example.demo.Controller;
 
-import com.example.demo.Domain.SubTask;
 import com.example.demo.Domain.Task;
-import com.example.demo.Exceptions.ExecuteDeniedException;
-import com.example.demo.Exceptions.QueryDeniedException;
+import com.example.demo.Exceptions.DateContextException;
+import com.example.demo.Exceptions.FailedRequestException;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.TaskService;
 import com.example.demo.Service.UserService;
@@ -28,7 +27,7 @@ public class TaskController {
 
     // Responds to /editTask?id=task_id
     @RequestMapping(value = "/editTask", method = {RequestMethod.GET, RequestMethod.POST})
-    public String editTask(@RequestParam int id, Model model, WebRequest request) throws QueryDeniedException {
+    public String editTask(@RequestParam int id, Model model, WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -41,7 +40,7 @@ public class TaskController {
     }
 
     @PostMapping("/updateTask")
-    public String updateTask(WebRequest request, Model model) throws QueryDeniedException, ExecuteDeniedException {
+    public String updateTask(WebRequest request, Model model) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -70,7 +69,7 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/createTask", method = {RequestMethod.GET, RequestMethod.POST})
-    public String createTask(@RequestParam int id, Model model, WebRequest request) throws QueryDeniedException {
+    public String createTask(@RequestParam int id, Model model, WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -81,7 +80,7 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/createTaskPost", method = {RequestMethod.GET, RequestMethod.POST})
-    public String createTaskPost(@RequestParam int id, WebRequest request) throws Exception {
+    public String createTaskPost(@RequestParam int id, WebRequest request) throws DateContextException, FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -122,7 +121,7 @@ public class TaskController {
     }*/
 
     @RequestMapping(value = "/deleteTask", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteTask(@RequestParam int id, WebRequest request) throws QueryDeniedException, ExecuteDeniedException {
+    public String deleteTask(@RequestParam int id, WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -133,9 +132,8 @@ public class TaskController {
         }
     }
 
-
     @PostMapping("/deleteSubTask")
-    public String deleteSubTask(WebRequest request) throws QueryDeniedException, ExecuteDeniedException {
+    public String deleteSubTask(WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
@@ -150,9 +148,8 @@ public class TaskController {
         }
     }
 
-
     @RequestMapping(value = "/createSubTask", method = {RequestMethod.GET, RequestMethod.POST})
-    public String createSubTask(WebRequest request) throws ExecuteDeniedException {
+    public String createSubTask(WebRequest request) throws FailedRequestException {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
