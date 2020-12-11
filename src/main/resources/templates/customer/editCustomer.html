@@ -12,7 +12,7 @@
     <div id="bio-left" style="float: left">
         <a class="back-button" th:href="@{/viewCustomer?id={id}(id=${customer.customer_id})}">&#11013;</a>
     </div>
-    <div id="input-form" style="clear: both">
+    <div id="input-form" style="text-align: left; float: left">
         <form action="/updateCustomer" method="POST">
             <input type="hidden" name="cId" th:value="${customer.customer_id}">
             <p>Customer Name
@@ -30,6 +30,18 @@
             </a>
         </form>
     </div>
+    <div style="float: right">
+        <br>
+        <img class="pb" th:src="*{'data:image/jpeg;base64,' + customer.byteArrayAs64String()}">
+        <p>
+        <form method="POST" action="/uploadCustomerImg" enctype="multipart/form-data">
+            <th:label path="file">New Customer Picture</th:label>
+            <input type="hidden" name="customer_id" th:value="${customer.customer_id}">
+            <br><input type="file" name="file"/>
+            <br><input type="submit" value="Submit"/>
+        </form>
+    </div>
+    <div style="clear: both"></div>
 </div>
 </body>
 <th:block th:include="/includes/footer :: footer"></th:block>

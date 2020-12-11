@@ -18,6 +18,7 @@ public class CustomerMapper extends AbstractMapper {
         String contact_name = resultSet.getString("contact_name");
         String contact_email = resultSet.getString("contact_email");
         String contact_phone = resultSet.getString("contact_phone");
-        return new Customer(customer_id, name, contact_name, contact_email, contact_phone);
+        byte[] img = resultSet.getBytes("img");
+        return new Customer(customer_id, name, contact_name, contact_email, contact_phone, img);
     }
 }

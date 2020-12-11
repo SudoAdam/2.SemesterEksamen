@@ -6,6 +6,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Project;
+import com.example.demo.Domain.User;
 import com.example.demo.Exceptions.ServiceExceptions.FailedRequestException;
 import com.example.demo.Service.CustomerService;
 import com.example.demo.Service.ProjectService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 
@@ -118,6 +120,18 @@ public class CustomerController {
             return false;
         } else {
             return true;
+        }
+    }
+
+    @PostMapping("/uploadCustomerImg")
+    public String uploadImg(@RequestParam("file") MultipartFile file, WebRequest request) throws FailedRequestException {
+        if (!checkLogin(request)) {
+            return "redirect:/";
+        } else {
+            String cID = request.getParameter("customer_id");
+            int customer_id = Integer.parseInt(cID);
+            customerService.addCustomerPicture(customer_id, file);
+            return "redirect:/currentUser";
         }
     }
 }
