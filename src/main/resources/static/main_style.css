@@ -127,7 +127,8 @@ footer{
     text-align: center;
     clear: both;
     border-radius:4px;
-    border:1px solid #AAAAAA;
+    border:3px solid #AAAAAA;
+    padding: 50px;
 }
 
 .form-control {
@@ -176,3 +177,4 @@ footer{
     border-radius: 15px 15px 15px 15px;
 }
 
+h1
