@@ -21,14 +21,14 @@
             <label>Admin</label>
             <input type="hidden" name="user_id" th:value="${user.user_id}">
         <div>
-            <button type="submit">Update Role</button>
+            <button type="submit" class="submit-button">Update Role</button>
         </div>
         </form>
         <p>
         <form action="/resetUserPassword" method="POST" th:if="${session.user.getIs_admin() == 1}">
             <input type="hidden" name="user_id" th:value="${user.user_id}">
         <div>
-            <button type="submit">Reset Password</button>
+            <button type="submit" class="submit-button">Reset Password</button>
         </div>
         </form>
     </div>
