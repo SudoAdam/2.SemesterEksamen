@@ -1,12 +1,11 @@
 /**
  * This test is specifically made ordered.
- * Ordered tests are needed when testing data requests due to CRUD (Create, Read, Edit, Delete)
+ * Integration test of data layer
  *
  * @author Patrick Vincent Højstrøm
  * @version 1.0
  * @since 27-11-2020
  */
-
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Task;

@@ -1,19 +1,27 @@
+/**
+ * Integration test of jdbc connectivity
+ *
+ * @author Patrick Vincent Højstrøm
+ * @version 1.0
+ * @since 27-11-2020
+ */
 package com.example.demo.Data;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
 
 import java.sql.Connection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
 class ConnectorTest {
+    private final Connector connector;
+
+    ConnectorTest() {
+        this.connector = new Connector();
+    }
 
     @Test
-    void getConnection(ApplicationContext ctx) {
-        Connector connector = (Connector) ctx.getBean("connector");
+    void getConnection() {
         Connection connection = connector.getConnection();
         assertNotNull(connection);
     }
