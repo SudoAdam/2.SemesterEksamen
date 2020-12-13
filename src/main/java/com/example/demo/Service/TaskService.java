@@ -20,14 +20,14 @@ public class TaskService {
     private final TaskData taskData;
     private final SubTaskData subTaskData;
     private final UserService userService;
-    private final TimeLogic timeLogic;
+    private final DateLogic dateLogic;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public TaskService(UserService userService, TaskData taskData, SubTaskData subTaskData, TimeLogic timeLogic) {
+    public TaskService(UserService userService, TaskData taskData, SubTaskData subTaskData, DateLogic dateLogic) {
         this.userService = userService;
         this.taskData = taskData;
         this.subTaskData =subTaskData;
-        this.timeLogic = timeLogic;
+        this.dateLogic = dateLogic;
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -69,7 +69,7 @@ public class TaskService {
 
     public void createTask(int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws DateContextException, FailedRequestException {
         try {
-        if (!timeLogic.correctDate(kickoff, deadline)) {
+        if (!dateLogic.correctDate(kickoff, deadline)) {
             throw new DateContextException();
         }
         taskData.createTask(project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);

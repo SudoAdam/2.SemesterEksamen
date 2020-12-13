@@ -7,7 +7,7 @@ package com.example.demo.Service;
 
 import java.time.LocalDate;
 
-public class TimeLogic {
+public class DateLogic {
 
     public boolean correctDate(LocalDate kickoff, LocalDate deadline) {
         boolean result = false;

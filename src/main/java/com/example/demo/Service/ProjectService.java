@@ -28,15 +28,15 @@ public class ProjectService {
     private final UserData userData;
     private final CustomerData customerData;
     private final ParticipantData participantData;
-    private final TimeLogic timeLogic;
+    private final DateLogic dateLogic;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public ProjectService(ProjectData projectData, UserData userData, CustomerData customerData, ParticipantData participantData, TimeLogic timeLogic) {
+    public ProjectService(ProjectData projectData, UserData userData, CustomerData customerData, ParticipantData participantData, DateLogic dateLogic) {
         this.projectData = projectData;
         this.userData = userData;
         this.customerData = customerData;
         this.participantData = participantData;
-        this.timeLogic = timeLogic;
+        this.dateLogic = dateLogic;
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -77,7 +77,7 @@ public class ProjectService {
 
     public void createProject(String project_name, LocalDate kickoff, LocalDate deadline, int project_leader_id, int customer_id) throws FailedRequestException, DateContextException {
         try {
-            if (!timeLogic.correctDate(kickoff, deadline)) {
+            if (!dateLogic.correctDate(kickoff, deadline)) {
                 throw new DateContextException();
             }
             projectData.createProject(project_name, kickoff, deadline, project_leader_id, customer_id);

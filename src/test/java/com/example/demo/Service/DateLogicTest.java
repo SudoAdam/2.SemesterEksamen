@@ -13,11 +13,11 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TimeLogicTest {
-    private final TimeLogic timeLogic;
+class DateLogicTest {
+    private final DateLogic dateLogic;
 
-    TimeLogicTest() {
-        this.timeLogic = new TimeLogic();
+    DateLogicTest() {
+        this.dateLogic = new DateLogic();
     }
 
     @Test
@@ -25,7 +25,7 @@ class TimeLogicTest {
         LocalDate start = LocalDate.of(2020,12,1);
         LocalDate finish = LocalDate.of(2020,12,15);
 
-        assertTrue(timeLogic.correctDate(start, finish));
-        assertFalse(timeLogic.correctDate(finish, start));
+        assertTrue(dateLogic.correctDate(start, finish));
+        assertFalse(dateLogic.correctDate(finish, start));
     }
 }
