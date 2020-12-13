@@ -18,8 +18,9 @@ import java.util.Arrays;
 public class DemoControllerAdvice {
 
     @ExceptionHandler(LoginException.class)
-    public String handleLoginException() {
-        return "redirect:/";
+    public String handleLoginException(Model model, LoginException e) {
+        model.addAttribute("exception", e.getMessage());
+        return "authentication/login";
     }
 
     @ExceptionHandler(Exception.class)

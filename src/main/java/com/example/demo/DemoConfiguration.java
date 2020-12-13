@@ -20,7 +20,7 @@ public class DemoConfiguration {
     }
 
     @Bean
-    public DateLogic timeLogic() { return new DateLogic(); }
+    public DateLogic dateLogic() { return new DateLogic(); }
 
     @Bean
     public EncryptionLogic encryptionLogic() { return new EncryptionLogic(); }

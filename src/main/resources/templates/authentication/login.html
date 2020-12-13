@@ -7,6 +7,16 @@
 </head>
 <th:block th:include="/includes/headerNotLoggedIn :: header"></th:block>
 <body>
+
+<!-- If loginException -->
+<td th:if="${exception}">
+    <p th:text="${exception}"></p>
+    <script>
+
+    </script>
+</td>
+<!-- If loginException -->
+
 <div id="container">
     <div id="input-form">
         <form action="/login" method="POST">
