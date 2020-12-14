@@ -14,18 +14,18 @@
     <div style="text-align: left; float: left" id="input-form">
         <form action="/updateUser" method="POST">
             <p>First Name
-            <p><input type="text" name="fName" th:value="${session.user.first_name}" required>
+            <p><input type="text" class="form-control" name="fName" th:value="${session.user.first_name}" required>
             <p>Last Name
-            <p><input type="text" name="lName" th:value="${session.user.last_name}" required>
+            <p><input type="text" class="form-control" name="lName" th:value="${session.user.last_name}" required>
             <p>Email
-            <p><input type="email" name="email" th:value="${session.user.e_mail}" required>
+            <p><input type="email" class="form-control" name="email" th:value="${session.user.e_mail}" required>
             <p>Input only if you wish to change password:
             <p>Old Password
-            <p><input type="password" name="oPwd">
+            <p><input type="password" class="form-control" name="oPwd">
             <p>New Password
-            <p><input type="password" name="pwd1">
+            <p><input type="password" class="form-control" name="pwd1">
             <p>Repeat New Password
-            <p><input type="password" name="pwd2">
+            <p><input type="password" class="form-control" name="pwd2">
                 <input type="hidden" name="uId" th:value="${session.user.user_id}">
             <div class="button">
                 <input type="Submit" class="submit-button" value="  Update!  ">

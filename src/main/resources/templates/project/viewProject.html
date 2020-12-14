@@ -127,11 +127,11 @@
         <tr style="border-bottom: 6px solid #9EBDD5;" th:if="${session.user.getIs_admin() == 1}">
             <form action="/createSubTask" method="post">
                 <td></td>
-                <td><input name="sub_task_name" placeholder="Sub Task Name" required></td>
-                <td><input name="sub_task_description" placeholder="Description"></td>
+                <td><input name="sub_task_name" class="form-control" placeholder="Sub Task Name" required></td>
+                <td><input name="sub_task_description" class="form-control" placeholder="Description"></td>
                 <td><input type="hidden" name="task_id" th:value="${task.task_id}"></td>
                 <td><input type="hidden" name="project_id" th:value="${task.project_id}"></td>
-                <td><input type="submit" value="Add Sub Task"></td>
+                <td><input type="submit" class="submit-button" value="Add Sub Task"></td>
             </form>
         </tr>
         </tbody>

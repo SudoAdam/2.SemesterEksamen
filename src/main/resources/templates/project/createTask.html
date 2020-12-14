@@ -15,9 +15,9 @@
     <div id="input-form">
         <form th:action="@{/createTaskPost?id={id}(id=${project.project_id})}" method="POST">
             <p>Task Name
-            <p><input type="text" name="taskName" required>
+            <p><input type="text" class="form-control" name="taskName" required>
             <p>Description
-            <p><input type="text" name="taskDesc" required>
+            <p><input type="text" class="form-control" name="taskDesc" required>
             <p>Task Manager
             <p><select class="form-control" name="taskLeader">
                 <option th:value="${null}">Select Task Manager</option>
@@ -26,13 +26,13 @@
                         th:text="${participant.first_name}+' '+ ${participant.last_name}+' '+${participant.e_mail}"></option>
             </select>
             <p>Kick-off
-            <p><input type="date" name="kickoff" required>
+            <p><input type="date" class="form-control" name="kickoff" required>
             <p>Deadline
-            <p><input type="date" name="deadline" required>
+            <p><input type="date" class="form-control" name="deadline" required>
             <p>Working Hours
-            <p><input type="number" name="workingHours" required>
+            <p><input type="number" class="form-control" name="workingHours" required>
                             <div class="button">
-                <input type="Submit" value="  Create!  ">
+                <input type="Submit" class="submit-button" value="  Create!  ">
             </div>
             <br>
             <br>
