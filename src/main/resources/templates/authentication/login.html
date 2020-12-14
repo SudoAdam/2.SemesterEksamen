@@ -9,17 +9,13 @@
 <th:block th:include="/includes/headerNotLoggedIn :: header"></th:block>
 <body>
 
-<!-- modal login exception -->
+<!-- login exception -->
 <td th:if="${exception}">
-    <div class="modal-bg" id="modal">
-        <div class="modal-content">
-            <div class="modal-close" onclick="close_modal()">+</div>
-            <h1>Error</h1>
-            <h3 th:text="${exception}"></h3>
-        </div>
-    </div>
+    <script th:inline="javascript">
+        alert([[${exception}]]);
+    </script>
 </td>
-<!-- modal login exception -->
+<!-- login exception -->
 
 <div id="container">
     <div id="input-form">
@@ -43,5 +39,6 @@
     </div>
 </div>
 </body>
+
 <th:block th:include="/includes/footer :: footer"></th:block>
 </html>
