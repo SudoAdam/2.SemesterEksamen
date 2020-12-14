@@ -97,10 +97,9 @@
            <td colspan="6" th:text="${task.task_name}"></td>
         </tr>
         <tr>
-
            <!-- <td th:text="${task.task_name}"></td> -->
             <td th:text="${task.task_description}"></td>
-            <td th:text="${task.working_hours}+ ' hours'"></td>
+
             <td th:text="${task.kickoff}"></td>
             <td th:text="${task.deadline}"></td>
             <td></td>
@@ -113,8 +112,7 @@
             <td style="font-size: 50%">&#9899;</td>
             <td th:text="${subtask.sub_task_name}"></td>
             <td th:text="${subtask.sub_task_description}"></td>
-            <td></td>
-            <td></td>
+            <td th:text="${subtask.sub_task_hours}"></td>
             <td>
                 <form th:if="${session.user.getIs_admin() == 1}" action="/deleteSubTask" method="post">
                     <input type="hidden" name="task_id" th:value="${subtask.task_id}">
@@ -129,8 +127,9 @@
                 <td></td>
                 <td><input name="sub_task_name" class="form-control" placeholder="Sub Task Name" required></td>
                 <td><input name="sub_task_description" class="form-control" placeholder="Description"></td>
-                <td><input type="hidden" name="task_id" th:value="${task.task_id}"></td>
-                <td><input type="hidden" name="project_id" th:value="${task.project_id}"></td>
+                <td><input name="sub_task_hours" class="form-control" placeholder="Hours"></td>
+                <input type="hidden" name="task_id" th:value="${task.task_id}">
+                <input type="hidden" name="project_id" th:value="${task.project_id}">
                 <td><input type="submit" class="submit-button" value="Add Sub Task"></td>
             </form>
         </tr>
