@@ -102,9 +102,9 @@ public class TaskService {
         }
     }
 
-    public void createSubTask(int task_id, String name, String description) throws FailedRequestException {
+    public void createSubTask(int task_id, String name, String description, int hours) throws FailedRequestException {
         try {
-        subTaskData.createSubTask(task_id,description,name);
+        subTaskData.createSubTask(task_id,description,name,hours);
         } catch (OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }

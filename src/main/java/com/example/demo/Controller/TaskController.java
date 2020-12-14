@@ -157,9 +157,11 @@ public class TaskController {
             String stDesc = request.getParameter("sub_task_description");
             String tId = request.getParameter("task_id");
             String pId = request.getParameter("project_id");
+            String sHour= request.getParameter("sub_task_hours");
             int task_id = Integer.parseInt(tId);
             int project_id = Integer.parseInt(pId);
-            taskService.createSubTask(task_id, stName, stDesc);
+            int hours = Integer.parseInt(sHour);
+            taskService.createSubTask(task_id, stName, stDesc,hours);
 
             return "redirect:/viewProject?id=" + project_id;
         }
