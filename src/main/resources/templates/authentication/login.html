@@ -10,9 +10,9 @@
 <body>
 
 <!-- login exception -->
-<td th:if="${exception}">
+<td th:if="${LoginException}">
     <script th:inline="javascript">
-        alert([[${exception}]]);
+        alert([[${LoginException}]]);
     </script>
 </td>
 <!-- login exception -->

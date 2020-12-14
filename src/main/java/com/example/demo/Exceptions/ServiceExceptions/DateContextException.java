@@ -5,7 +5,7 @@ public class DateContextException extends Exception {
 
     public DateContextException() {
         // Default message
-        this.message = "DateContextException: start-date must be before end-date";
+        this.message = "Start-date must be before end-date...";
     }
 
     public DateContextException(String message) {

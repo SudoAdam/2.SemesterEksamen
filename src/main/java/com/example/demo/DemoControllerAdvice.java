@@ -7,6 +7,7 @@
  */
 package com.example.demo;
 
+import com.example.demo.Exceptions.ServiceExceptions.DateContextException;
 import com.example.demo.Exceptions.ServiceExceptions.LoginException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,7 +20,7 @@ public class DemoControllerAdvice {
 
     @ExceptionHandler(LoginException.class)
     public String handleLoginException(Model model, LoginException e) {
-        model.addAttribute("exception", e.getMessage());
+        model.addAttribute("LoginException", e.getMessage());
         return "authentication/login";
     }
 
