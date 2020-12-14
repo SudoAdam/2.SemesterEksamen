@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class TaskMapper extends AbstractMapper {
-    UserMapper userMapper = new UserMapper();
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Override
