@@ -44,6 +44,9 @@ class TaskDataTest {
         taskData.createTask(project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
     }
 
+
+    //workinghours er flyttet til sub_tasks, som vi aftalte i fredags...
+/*
     @Test
     @Order(1)
     void getTasks(ApplicationContext ctx) throws QueryDeniedException, EmptyResultSetException {
@@ -95,5 +98,5 @@ class TaskDataTest {
         assertEquals(LocalDate.of(2020,12,2),t02.getKickoff());
         assertEquals(LocalDate.of(2020,12,9),t02.getDeadline());
         assertEquals(48,t02.getWorking_hours());
-    }
+    }*/
 }
