@@ -31,7 +31,7 @@ public class TaskData {
     public ArrayList<Task> getTasks(int project_id) throws QueryDeniedException, EmptyResultSetException {
         try {
             Connection connection = connector.getConnection();
-            String statement = "SELECT * FROM tasks WHERE project_id=?;";
+            String statement = "SELECT * FROM tasks INNER JOIN users ON tasks.task_leader_id=users.user_id where project_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, project_id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -49,7 +49,7 @@ public class TaskData {
     public Task getTask(int task_id) throws QueryDeniedException, EmptyResultSetException {
         try {
             Connection connection = connector.getConnection();
-            String statement = "SELECT * FROM tasks WHERE task_id = ?";
+            String statement = "SELECT * FROM tasks INNER JOIN users ON tasks.task_leader_id=users.user_id WHERE task_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, task_id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -59,10 +59,10 @@ public class TaskData {
         }
     }
 
-    public void createTask(int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws OperationDeniedException {
+    public void createTask(int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
-            String statement = "INSERT INTO tasks (project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours) VALUES (?,?,?,?,?,?,?);";
+            String statement = "INSERT INTO tasks (project_id, task_name, task_description, task_leader_id, kickoff, deadline) VALUES (?,?,?,?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, project_id);
             preparedStatement.setString(2, task_name);
@@ -70,17 +70,16 @@ public class TaskData {
             preparedStatement.setInt(4, task_leader_id);
             preparedStatement.setString(5, kickoff.toString());
             preparedStatement.setString(6, deadline.toString());
-            preparedStatement.setInt(7, working_hours);
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
         }
     }
 
-    public void editTask(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws OperationDeniedException {
+    public void editTask(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
-            String statement = "UPDATE tasks SET project_id=?, task_name=?, task_description=?, task_leader_id=?, kickoff=?, deadline=?, working_hours=? WHERE task_id=?;";
+            String statement = "UPDATE tasks SET project_id=?, task_name=?, task_description=?, task_leader_id=?, kickoff=?, deadline=? WHERE task_id=?;";
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, project_id);
             preparedStatement.setString(2, task_name);
@@ -88,8 +87,7 @@ public class TaskData {
             preparedStatement.setInt(4, task_leader_id);
             preparedStatement.setString(5, kickoff.toString());
             preparedStatement.setString(6, deadline.toString());
-            preparedStatement.setInt(7, working_hours);
-            preparedStatement.setInt(8, task_id);
+            preparedStatement.setInt(7, task_id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());

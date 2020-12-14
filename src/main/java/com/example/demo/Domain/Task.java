@@ -26,6 +26,16 @@ public class Task implements DomainInterface {
         this.deadline = deadline;
     }
 
+    public Task(int task_id, int project_id, String task_name, String task_description, User task_leader, LocalDate kickoff, LocalDate deadline) {
+        this.task_id = task_id;
+        this.project_id = project_id;
+        this.task_name = task_name;
+        this.task_description = task_description;
+        this.task_leader = task_leader;
+        this.kickoff = kickoff;
+        this.deadline = deadline;
+    }
+
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public int getTask_id() {
         return task_id;

@@ -52,16 +52,14 @@ public class TaskController {
             String taskLeader = request.getParameter("taskLeader");
             String kickOffStr = request.getParameter("kickoff");
             String deadlineStr = request.getParameter("deadline");
-            String workingHours = request.getParameter("wh");
 
             int tId = Integer.parseInt(taskId);
             int pId = Integer.parseInt(projectId);
             int project_leader_id = userService.findUserIdFromEmail(taskLeader);
             LocalDate kickoff = LocalDate.parse(kickOffStr);
             LocalDate deadline = LocalDate.parse(deadlineStr);
-            int wh = Integer.parseInt(workingHours);
 
-            taskService.editTask(tId, pId, taskName, taskDesc, project_leader_id, kickoff, deadline, wh);
+            taskService.editTask(tId, pId, taskName, taskDesc, project_leader_id, kickoff, deadline);
             model.addAttribute("project", projectService.getProject(Integer.parseInt(projectId)));
             model.addAttribute("tasks", taskService.getTasks(pId));
             return "redirect:/viewProject?id=" + pId;
@@ -89,13 +87,11 @@ public class TaskController {
             String taskLeader = request.getParameter("taskLeader");
             String taskKickoff = request.getParameter("kickoff");
             String taskDeadline = request.getParameter("deadline");
-            String workingHoursSTR = request.getParameter("workingHours");
 
             LocalDate kickoff = LocalDate.parse(taskKickoff);
             LocalDate deadline = LocalDate.parse(taskDeadline);
-            int workingHours = Integer.parseInt(workingHoursSTR);
             int project_leader_id = Integer.parseInt(taskLeader);
-            taskService.createTask(id, taskName, taskDesc, project_leader_id, kickoff, deadline, workingHours);
+            taskService.createTask(id, taskName, taskDesc, project_leader_id, kickoff, deadline);
             return "redirect:/viewProject?id=" + id;
         }
     }

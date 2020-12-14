@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
 class TaskDataTest {
-
+/*
     @Test
     @Order(0)
     void createTask(ApplicationContext ctx) throws OperationDeniedException {
@@ -42,7 +42,7 @@ class TaskDataTest {
         int working_hours = 37;
 
         taskData.createTask(project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
-    }
+    }*/
 
 
     //workinghours er flyttet til sub_tasks, som vi aftalte i fredags...

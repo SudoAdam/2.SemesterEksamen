@@ -90,20 +90,20 @@ public class TaskService {
         }
     }
 
-    public void createTask(int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws DateContextException, FailedRequestException {
+    public void createTask(int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline) throws DateContextException, FailedRequestException {
         try {
             if (!dateLogic.correctDate(kickoff, deadline)) {
                 throw new DateContextException();
             }
-            taskData.createTask(project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
+            taskData.createTask(project_id, task_name, task_description, task_leader_id, kickoff, deadline);
         } catch (OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
     }
 
-    public void editTask(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws FailedRequestException {
+    public void editTask(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline) throws FailedRequestException {
         try {
-            taskData.editTask(task_id, project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
+            taskData.editTask(task_id, project_id, task_name, task_description, task_leader_id, kickoff, deadline);
         } catch (OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
