@@ -59,11 +59,11 @@ public class TaskController {
 
             int tId = Integer.parseInt(taskId);
             int pId = Integer.parseInt(projectId);
-            int project_leader_id = userService.findUserIdFromEmail(taskLeader);
+            int task_leader_id = Integer.parseInt(taskLeader);
             LocalDate kickoff = LocalDate.parse(kickOffStr);
             LocalDate deadline = LocalDate.parse(deadlineStr);
 
-            taskService.editTask(tId, pId, taskName, taskDesc, project_leader_id, kickoff, deadline);
+            taskService.editTask(tId, pId, taskName, taskDesc, task_leader_id, kickoff, deadline);
             model.addAttribute("project", projectService.getProject(Integer.parseInt(projectId)));
             model.addAttribute("tasks", taskService.getTasks(pId));
             return "redirect:/viewProject?id=" + pId;
@@ -99,26 +99,6 @@ public class TaskController {
             return "redirect:/viewProject?id=" + id;
         }
     }
-
-    /*@PostMapping("/updateTask")
-    public String updateTask(WebRequest request, Model model) {
-        String taskId = request.getParameter("tId");
-        String taskName = request.getParameter("tName");
-        String taskDesc = request.getParameter("tDesc");
-        String taskWH = request.getParameter("tWH");
-        String kickOffStr = request.getParameter("tKickoff");
-        String deadlineStr = request.getParameter("tDeadline");
-        String taskLeader = request.getParameter("tLeader");
-
-        int tId = Integer.parseInt(taskId);
-        LocalDate kickoff = LocalDate.parse(kickOffStr);
-        LocalDate deadline = LocalDate.parse(deadlineStr);
-
-        taskService.editTask(taskId,)
-        model.addAttribute("project", projectService.getProject(Integer.parseInt(projectId)));
-
-        return "project/viewProject";
-    }*/
 
     @RequestMapping(value = "/deleteTask", method = {RequestMethod.GET, RequestMethod.POST})
     public String deleteTask(@RequestParam int id, WebRequest request) throws FailedRequestException, LoginException {

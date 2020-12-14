@@ -19,7 +19,7 @@
             <p><input type="text" name="tDesc" th:value="${task.task_description}" required>
             <p>Task Manager
             <p><select class="form-control" name="taskLeader" required>
-                <option th:value="${task.task_leader_email}" th:text="${task.task_leader.getFirst_name()}+' '+${task.task_leader.getFirst_name()}+' '+${task.task_leader_email}"></option>
+                <option th:value="${task.task_leader_id}" th:text="${task.task_leader_name}+' '+${task.task_leader_email}"></option>
                 <option th:each="participant : ${participants}"
                         th:value="${participant.user_id}"
                         th:text="${participant.first_name}+' '+ ${participant.last_name}+' '+${participant.e_mail}"></option>
@@ -34,7 +34,8 @@
                 <input type="Submit" value="  Update!  ">
             </div>
         </form>
-        <a th:if="${session.user.getIs_admin() == 1}" th:href="@{/deleteTaskid={id}(id=${task.task_id})}">Delete User</a>
+        <p></p>
+        <a th:if="${session.user.getIs_admin() == 1}" th:href="@{/deleteTask?id={id}(id=${task.task_id})}">Delete Task</a>
     </div>
 </div>
 </body>

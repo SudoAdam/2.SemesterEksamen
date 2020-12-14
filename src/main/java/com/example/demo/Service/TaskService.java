@@ -31,13 +31,13 @@ public class TaskService {
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    private void finalize(Task task) throws QueryDeniedException, FailedRequestException {
+   /* private void finalize(Task task) throws QueryDeniedException, FailedRequestException {
         int task_leader_id = task.getTask_leader_id();
         User task_leader = userService.getUser(task_leader_id);
         task.setTask_leader(task_leader);
         String e_mail = userService.findEmailFromUserId(task_leader_id);
         task.setTask_leader_email(e_mail);
-    }
+    } */
 
     public ArrayList<Task> getTasks(int project_id) throws FailedRequestException {
         try {
@@ -83,7 +83,6 @@ public class TaskService {
     public Task getTask(int task_id) throws FailedRequestException {
         try {
             Task t = taskData.getTask(task_id);
-            finalize(t);
             return (t);
         } catch (QueryDeniedException | EmptyResultSetException e) {
             throw new FailedRequestException(e.getMessage());
