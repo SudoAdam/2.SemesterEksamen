@@ -9,32 +9,28 @@ public class Task implements DomainInterface {
     private String task_name;
     private String task_description;
     private int task_leader_id;
-    private User task_leader;
+    private String task_leader_name;
     private String task_leader_email;
     private LocalDate kickoff;
     private LocalDate deadline;
     private int task_hours;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public Task(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline) {
+
+
+    public Task(int task_id, int project_id, String task_name, String task_description, int task_leader_id, String task_leader_name,
+                String task_leader_email, LocalDate kickoff, LocalDate deadline) {
         this.task_id = task_id;
         this.project_id = project_id;
         this.task_name = task_name;
         this.task_description = task_description;
         this.task_leader_id = task_leader_id;
+        this.task_leader_name = task_leader_name;
+        this.task_leader_email = task_leader_email;
         this.kickoff = kickoff;
         this.deadline = deadline;
     }
 
-    public Task(int task_id, int project_id, String task_name, String task_description, User task_leader, LocalDate kickoff, LocalDate deadline) {
-        this.task_id = task_id;
-        this.project_id = project_id;
-        this.task_name = task_name;
-        this.task_description = task_description;
-        this.task_leader = task_leader;
-        this.kickoff = kickoff;
-        this.deadline = deadline;
-    }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public int getTask_id() {
@@ -77,12 +73,12 @@ public class Task implements DomainInterface {
         this.task_leader_id = task_leader_id;
     }
 
-    public User getTask_leader() {
-        return task_leader;
+    public String getTask_leader_name() {
+        return task_leader_name;
     }
 
-    public void setTask_leader(User task_leader) {
-        this.task_leader = task_leader;
+    public void setTask_leader_name(String task_leader_name) {
+        this.task_leader_name = task_leader_name;
     }
 
     public String getTask_leader_email() {
