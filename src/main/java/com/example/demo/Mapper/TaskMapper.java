@@ -26,7 +26,6 @@ public class TaskMapper extends AbstractMapper {
         int task_leader_id = resultSet.getInt("task_leader_id");
         LocalDate kickoff = LocalDate.parse(resultSet.getString("kickoff"));
         LocalDate deadline = LocalDate.parse(resultSet.getString("deadline"));
-        int working_hours = resultSet.getInt("working_hours");
-        return new Task(task_id, project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
+        return new Task(task_id, project_id, task_name, task_description, task_leader_id, kickoff, deadline);
     }
 }

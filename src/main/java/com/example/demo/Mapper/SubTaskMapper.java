@@ -17,6 +17,7 @@ public class SubTaskMapper extends AbstractMapper{
         int task_id = resultSet.getInt("task_id");
         String sub_task_name = resultSet.getString("sub_task_name");
         String sub_task_description = resultSet.getString("sub_task_description");
-        return new SubTask(sub_task_id, sub_task_name, sub_task_description, task_id);
+        int sub_task_hours = resultSet.getInt("sub_task_hours");
+        return new SubTask(sub_task_id, sub_task_name, sub_task_description, task_id, sub_task_hours);
     }
 }

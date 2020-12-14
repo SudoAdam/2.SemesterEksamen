@@ -13,10 +13,9 @@ public class Task implements DomainInterface {
     private String task_leader_email;
     private LocalDate kickoff;
     private LocalDate deadline;
-    private int working_hours;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public Task(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) {
+    public Task(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline) {
         this.task_id = task_id;
         this.project_id = project_id;
         this.task_name = task_name;
@@ -24,7 +23,6 @@ public class Task implements DomainInterface {
         this.task_leader_id = task_leader_id;
         this.kickoff = kickoff;
         this.deadline = deadline;
-        this.working_hours = working_hours;
     }
 
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -100,11 +98,4 @@ public class Task implements DomainInterface {
         this.deadline = deadline;
     }
 
-    public int getWorking_hours() {
-        return working_hours;
-    }
-
-    public void setWorking_hours(int working_hours) {
-        this.working_hours = working_hours;
-    }
 }

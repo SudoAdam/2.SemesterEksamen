@@ -48,10 +48,10 @@ public class TaskService {
         }
     }
 
-    public int getWorkinghours(ArrayList<Task> list){
+    public int getWorkinghours(ArrayList<SubTask> list){
        int totalTime = 0;
         for (int i = 0; i < list.size(); i++) {
-           int time = list.get(i).getWorking_hours();
+           int time = list.get(i).getSub_task_hours();
             totalTime += time;
         }
         return totalTime;
