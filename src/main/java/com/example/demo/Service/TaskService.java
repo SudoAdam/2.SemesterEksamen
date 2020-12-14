@@ -26,7 +26,7 @@ public class TaskService {
     public TaskService(UserService userService, TaskData taskData, SubTaskData subTaskData, DateLogic dateLogic) {
         this.userService = userService;
         this.taskData = taskData;
-        this.subTaskData =subTaskData;
+        this.subTaskData = subTaskData;
         this.dateLogic = dateLogic;
     }
 
@@ -41,27 +41,50 @@ public class TaskService {
 
     public ArrayList<Task> getTasks(int project_id) throws FailedRequestException {
         try {
-        ArrayList<Task> list = taskData.getTasks(project_id);
-        return list;
+            ArrayList<Task> list = taskData.getTasks(project_id);
+            return list;
         } catch (QueryDeniedException | EmptyResultSetException e) {
             throw new FailedRequestException(e.getMessage());
         }
     }
 
-    public int getWorkinghours(ArrayList<SubTask> list){
-       int totalTime = 0;
+    public int getWorkinghours(ArrayList<SubTask> list) {
+        int totalTime = 0;
         for (int i = 0; i < list.size(); i++) {
-           int time = list.get(i).getSub_task_hours();
+            int time = list.get(i).getSub_task_hours();
             totalTime += time;
         }
         return totalTime;
     }
 
+    public int getTaskhours(ArrayList<SubTask> list) {
+        int totalTime = 0;
+        for (int i = 0; i < list.size(); i++) {
+            int time = list.get(i).getSub_task_hours();
+            totalTime += time;
+        }
+        return totalTime;
+    }
+
+    public ArrayList<Task> getTaskHours(ArrayList<Task> tasks, ArrayList<SubTask> subTasks) {
+        for (int i = 0; i < tasks.size(); i++) {
+            int id = tasks.get(i).getTask_id();
+            int time = 0;
+            for (int j = 0; j < subTasks.size(); j++) {
+                if (subTasks.get(j).getTask_id() == id) {
+                    time += subTasks.get(j).getSub_task_hours();
+                }
+            }
+            tasks.get(i).setTask_hours(time);
+        }
+        return tasks;
+    }
+
     public Task getTask(int task_id) throws FailedRequestException {
         try {
-        Task t = taskData.getTask(task_id);
-        finalize(t);
-        return (t);
+            Task t = taskData.getTask(task_id);
+            finalize(t);
+            return (t);
         } catch (QueryDeniedException | EmptyResultSetException e) {
             throw new FailedRequestException(e.getMessage());
         }
@@ -69,10 +92,10 @@ public class TaskService {
 
     public void createTask(int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws DateContextException, FailedRequestException {
         try {
-        if (!dateLogic.correctDate(kickoff, deadline)) {
-            throw new DateContextException();
-        }
-        taskData.createTask(project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
+            if (!dateLogic.correctDate(kickoff, deadline)) {
+                throw new DateContextException();
+            }
+            taskData.createTask(project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
         } catch (OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
@@ -80,7 +103,7 @@ public class TaskService {
 
     public void editTask(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline, int working_hours) throws FailedRequestException {
         try {
-        taskData.editTask(task_id, project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
+            taskData.editTask(task_id, project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
         } catch (OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
@@ -88,7 +111,7 @@ public class TaskService {
 
     public void deleteTask(int id) throws FailedRequestException {
         try {
-        taskData.deleteTask(id);
+            taskData.deleteTask(id);
         } catch (OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
@@ -96,7 +119,7 @@ public class TaskService {
 
     public void deleteSubTask(int task_id, int sub_task_id) throws FailedRequestException {
         try {
-        subTaskData.deleteSubTask(task_id, sub_task_id);
+            subTaskData.deleteSubTask(task_id, sub_task_id);
         } catch (OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
@@ -104,7 +127,7 @@ public class TaskService {
 
     public void createSubTask(int task_id, String name, String description, int hours) throws FailedRequestException {
         try {
-        subTaskData.createSubTask(task_id,description,name,hours);
+            subTaskData.createSubTask(task_id, description, name, hours);
         } catch (OperationDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         }
@@ -112,15 +135,15 @@ public class TaskService {
 
     public ArrayList<SubTask> getSubTasks(int project_id) throws FailedRequestException {
         try {
-        return subTaskData.getSubTasks(project_id);
+            return subTaskData.getSubTasks(project_id);
         } catch (QueryDeniedException | EmptyResultSetException e) {
             throw new FailedRequestException(e.getMessage());
         }
     }
 
     public SubTask getSubTask(int task_id, int sub_task_id) throws FailedRequestException {
-        try{
-        return subTaskData.getSubTask(task_id, sub_task_id);
+        try {
+            return subTaskData.getSubTask(task_id, sub_task_id);
         } catch (QueryDeniedException | EmptyResultSetException e) {
             throw new FailedRequestException(e.getMessage());
         }

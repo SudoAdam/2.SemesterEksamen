@@ -13,6 +13,7 @@ public class Task implements DomainInterface {
     private String task_leader_email;
     private LocalDate kickoff;
     private LocalDate deadline;
+    private int task_hours;
 
     // CONSTRUCTOR +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public Task(int task_id, int project_id, String task_name, String task_description, int task_leader_id, LocalDate kickoff, LocalDate deadline) {
@@ -98,4 +99,11 @@ public class Task implements DomainInterface {
         this.deadline = deadline;
     }
 
+    public int getTask_hours() {
+        return task_hours;
+    }
+
+    public void setTask_hours(int task_hours) {
+        this.task_hours = task_hours;
+    }
 }
