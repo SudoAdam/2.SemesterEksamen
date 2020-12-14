@@ -1,6 +1,8 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.Project;
+import com.example.demo.Domain.SubTask;
+import com.example.demo.Domain.Task;
 import com.example.demo.Domain.User;
 import com.example.demo.Exceptions.ServiceExceptions.DateContextException;
 import com.example.demo.Exceptions.ServiceExceptions.FailedRequestException;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Controller
 public class ProjectController {
@@ -123,12 +126,15 @@ public class ProjectController {
         if (!checkLogin(request)) {
             return "redirect:/";
         } else {
+            ArrayList<Task> tasks = taskService.getTasks(id);
+            ArrayList<SubTask> subTasks = taskService.getSubTasks(id);
+            tasks = taskService.getTaskHours(tasks,subTasks);
             Project p = projectService.getProject(id);
             model.addAttribute("participants",projectService.getParticipants(id));
-            model.addAttribute("subtasks", taskService.getSubTasks(id));
+            model.addAttribute("subtasks", subTasks);
             model.addAttribute("projectmanager", userService.getUser(p.getProject_leader_id()));
             model.addAttribute("customer", customerService.getCustomer(p.getCustomer_id()));
-            model.addAttribute("tasks", taskService.getTasks(id));
+            model.addAttribute("tasks", tasks );
             model.addAttribute("project", p);
             model.addAttribute("users", userService.getUsers());
             model.addAttribute("workingHours", taskService.getWorkinghours(taskService.getSubTasks(id)));
