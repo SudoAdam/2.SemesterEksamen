@@ -7,7 +7,9 @@ package com.example.demo.Controller;
 import com.example.demo.Domain.Customer;
 import com.example.demo.Domain.Project;
 import com.example.demo.Exceptions.ServiceExceptions.FailedRequestException;
+import com.example.demo.Exceptions.ServiceExceptions.LoginException;
 import com.example.demo.Service.CustomerService;
+import com.example.demo.Service.LoginLogic;
 import com.example.demo.Service.ProjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,25 +23,27 @@ import java.util.ArrayList;
 public class CustomerController {
     CustomerService customerService;
     ProjectService projectService;
+    LoginLogic loginLogic;
 
-    public CustomerController(CustomerService customerService, ProjectService projectService) {
+    public CustomerController(CustomerService customerService, ProjectService projectService, LoginLogic loginLogic) {
         this.customerService = customerService;
         this.projectService = projectService;
+        this.loginLogic = loginLogic;
     }
 
     @GetMapping("/createCustomer")
-    public String createProject(WebRequest request) {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String createProject(WebRequest request) throws LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             return "customer/createCustomer";
         }
     }
 
     @PostMapping("/createCustomer")
-    public String createCustomer(WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String createCustomer(WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             String companyName = request.getParameter("comName");
             String contactName = request.getParameter("conName");
@@ -51,9 +55,9 @@ public class CustomerController {
     }
 
     @GetMapping("/listCustomer")
-    public String listCustomer(Model model, WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String listCustomer(Model model, WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             ArrayList<Customer> customerList = customerService.getCustomers();
             model.addAttribute("customerList", customerList);
@@ -62,9 +66,9 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/editCustomer", method = {RequestMethod.GET, RequestMethod.POST})
-    public String editCustomer(@RequestParam int id, Model model, WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String editCustomer(@RequestParam int id, Model model, WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             model.addAttribute("customer", customerService.getCustomer(id));
             return "customer/editCustomer";
@@ -72,9 +76,9 @@ public class CustomerController {
     }
 
     @PostMapping("/updateCustomer")
-    public String updateCustomer(WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String updateCustomer(WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             int customerID = Integer.parseInt(request.getParameter("cId"));
             String companyName = request.getParameter("comName");
@@ -88,9 +92,9 @@ public class CustomerController {
 
     // Responds to /viewCustomer?id=project_id
     @RequestMapping(value = "/viewCustomer", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewCustomer(@RequestParam int id, Model model, WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String viewCustomer(@RequestParam int id, Model model, WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             ArrayList<Project> projectList = projectService.getProjects();
             ArrayList<Project> projectCustomerList = new ArrayList<>();
@@ -105,27 +109,19 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/deleteCustomer", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteCustomer(@RequestParam int id, WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String deleteCustomer(@RequestParam int id, WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             customerService.deleteCustomer(id);
             return "redirect:/listCustomer";
         }
     }
 
-    public Boolean checkLogin(WebRequest request) {
-        if (request.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     @PostMapping("/uploadCustomerImg")
-    public String uploadImg(@RequestParam("file") MultipartFile file, WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String uploadImg(@RequestParam("file") MultipartFile file, WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             String cID = request.getParameter("customer_id");
             int customer_id = Integer.parseInt(cID);

@@ -15,6 +15,11 @@ import org.springframework.context.annotation.Configuration;
 public class DemoConfiguration {
 
     @Bean
+    public LoginLogic loginLogic() {
+        return new LoginLogic();
+    }
+
+    @Bean
     public Connector connector() {
         return new Connector();
     }
