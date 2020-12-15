@@ -126,7 +126,7 @@ public class CustomerController {
             String cID = request.getParameter("customer_id");
             int customer_id = Integer.parseInt(cID);
             customerService.addCustomerPicture(customer_id, file);
-            return "redirect:/currentUser";
+            return "redirect:/viewCustomer?id="+cID;
         }
     }
 }
