@@ -16,18 +16,18 @@
             <th>Project name</th>
             <th>Start</th>
             <th>End</th>
-            <th>Status</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
+
         <tr th:each="project : ${projectList}">
             <td th:text="${project.project_name}"></td>
             <td th:text="${project.kickoff}"></td>
             <td th:text="${project.deadline}"></td>
-            <td> &#10060;</td> <!-- 9989 -->
             <td><a th:href="@{/viewProject?id={id}(id=${project.project_id})}">View Project</a></td>
         </tr>
+
         <tr style="background-color: #9EBDD5; text-align: center">
             <td colspan="6">
                 <form action="/createProject" method="get">
