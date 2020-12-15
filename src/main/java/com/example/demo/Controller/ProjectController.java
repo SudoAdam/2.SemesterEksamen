@@ -50,6 +50,11 @@ public class ProjectController {
         if (!loginLogic.checkLogin(request)) {
             throw new LoginException();
         } else {
+            try {
+                model.addAttribute(model.getAttribute("DateContextException"));
+            } catch (Exception e) {
+                assert(true);
+            }
             model.addAttribute("customers", customerService.getCustomers());
             model.addAttribute("users", userService.getUsers());
             return "project/createProject";
