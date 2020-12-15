@@ -7,9 +7,9 @@
  */
 package com.example.demo;
 
-import com.example.demo.Exceptions.ServiceExceptions.DateContextException;
 import com.example.demo.Exceptions.ServiceExceptions.LoginException;
 import org.springframework.ui.Model;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -17,6 +17,11 @@ import java.util.Arrays;
 
 @ControllerAdvice
 public class DemoControllerAdvice {
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public String handleLoginException() {
+        return "authentication/login";
+    }
 
     @ExceptionHandler(LoginException.class)
     public String handleLoginException(Model model, LoginException e) {
