@@ -8,7 +8,7 @@ public class LoginException extends Exception {
     }
 
     public LoginException() {
-        this.message = "LoginException: You must log in!";
+        this.message = "You must be logged in to use this service...\nRedirecting to main page!";
     }
 
     @Override

@@ -1,11 +1,12 @@
 /**
  * @Author Rasmus Berg and Adam
  */
-
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.User;
 import com.example.demo.Exceptions.ServiceExceptions.FailedRequestException;
+import com.example.demo.Exceptions.ServiceExceptions.LoginException;
+import com.example.demo.Service.LoginLogic;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.UserService;
 import org.springframework.stereotype.Controller;
@@ -20,10 +21,12 @@ import java.util.ArrayList;
 public class UserController {
     UserService userService;
     ProjectService projectService;
+    LoginLogic loginLogic;
 
-    public UserController(UserService userService, ProjectService projectService) {
+    public UserController(UserService userService, ProjectService projectService, LoginLogic loginLogic) {
         this.userService = userService;
         this.projectService = projectService;
+        this.loginLogic = loginLogic;
     }
 
     private void setSessionInfo(WebRequest request, User user) {
@@ -32,9 +35,9 @@ public class UserController {
     }
 
     @GetMapping("/listUser")
-    public String showUsers(Model model, WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String showUsers(Model model, WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             ArrayList<User> userList = userService.getUsers();
             model.addAttribute("userList", userList);
@@ -43,18 +46,18 @@ public class UserController {
     }
 
     @GetMapping("/editUser")
-    public String editUser(WebRequest request) {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String editUser(WebRequest request) throws LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             return "user/editUser";
         }
     }
 
     @PostMapping("/updateUser")
-    public String updateUser(WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String updateUser(WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
             String userId = request.getParameter("uId");
@@ -76,9 +79,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/viewUser", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewUser(@RequestParam int id, Model model, WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String viewUser(@RequestParam int id, Model model, WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             model.addAttribute("projects", projectService.getUserProjects(id));
             model.addAttribute("user", userService.getUser(id));
@@ -87,9 +90,9 @@ public class UserController {
     }
 
     @GetMapping("/currentUser")
-    public String currentUser(WebRequest request,Model model) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String currentUser(WebRequest request,Model model) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
             model.addAttribute("userProjectList", projectService.getUserProjects(user.getUser_id()));
@@ -98,9 +101,9 @@ public class UserController {
     }
 
     @PostMapping("/uploadImg")
-    public String uploadImg(@RequestParam("file") MultipartFile file, WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String uploadImg(@RequestParam("file") MultipartFile file, WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
             userService.addProfilePicture(user.getUser_id(), file);
@@ -111,9 +114,9 @@ public class UserController {
     }
 
     @PostMapping("/updateUserRole")
-    public String updateUserRole(WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String updateUserRole(WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             String userId = request.getParameter("user_id");
             String isAdmin = request.getParameter("is_admin");
@@ -128,9 +131,9 @@ public class UserController {
     }
 
     @PostMapping("/resetUserPassword")
-    public String resetUserPassword(WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String resetUserPassword(WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             String userId = request.getParameter("user_id");
             userService.resetPassword(Integer.parseInt(userId));
@@ -139,20 +142,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/deleteUser", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteUser(@RequestParam int id, WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String deleteUser(@RequestParam int id, WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             userService.deleteUser(id);
             return "redirect:/listUser";
-        }
-    }
-
-    public Boolean checkLogin(WebRequest request) {
-        if (request.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
-            return false;
-        } else {
-            return true;
         }
     }
 }

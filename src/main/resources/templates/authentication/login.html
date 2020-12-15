@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="main_style.css"/>
+    <script src="error.js"></script>
     <title>Login</title>
 </head>
 <th:block th:include="/includes/headerNotLoggedIn :: header"></th:block>
 <body>
 
-<!-- If loginException -->
-<td th:if="${exception}">
-    <p th:text="${exception}"></p>
-    <script>
-
+<!-- login exception -->
+<td th:if="${LoginException}">
+    <script th:inline="javascript">
+        submit_alert([[${LoginException}]]);
     </script>
 </td>
-<!-- If loginException -->
+<!-- login exception -->
 
 <div id="container">
     <div id="input-form">
@@ -32,12 +32,15 @@
             </div>
         </form>
         <p>
-            <a href="/createUser"><input type="Submit" class="submit-button" value="  Create new user  "></a>
+            <a href="/createUser">
+                <input type="Submit" class="submit-button" value="  Create new user  ">
+            </a>
             <br>
             <br>
             <a href="/forgot"><input type="Submit" class="submit-button" value="  I forgot my password...  "></a>
     </div>
 </div>
 </body>
+
 <th:block th:include="/includes/footer :: footer"></th:block>
 </html>

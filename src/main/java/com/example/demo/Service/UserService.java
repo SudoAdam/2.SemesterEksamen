@@ -46,7 +46,7 @@ public class UserService {
         } catch (QueryDeniedException e) {
             throw new FailedRequestException(e.getMessage());
         } catch (EmptyResultSetException e) {
-            throw new LoginException("Cridentials or password was incorrect");
+            throw new LoginException("Incorrect credentials was given...");
         }
     }
 
