@@ -77,6 +77,11 @@ class UserDataTest {
     }
 
     @Test
+    void login_exception() {
+        assertThrows(EmptyResultSetException.class, ()->{userData.login("false@123.com", "notARealPass");} );
+    }
+
+    @Test
     void getUsers() throws QueryDeniedException, EmptyResultSetException {
         ArrayList<User> users = userData.getUsers();
         for (User u: users) {
@@ -108,11 +113,6 @@ class UserDataTest {
     void login() throws QueryDeniedException, EmptyResultSetException {
         User user = userData.login(e_mail, password);
         assertUser(user);
-    }
-
-    @Test
-    void login_exception() {
-        assertThrows(LoginException.class, ()->{userData.login("false@123.com", "");} );
     }
 
     @Test

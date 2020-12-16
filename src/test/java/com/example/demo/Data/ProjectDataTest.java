@@ -2,8 +2,9 @@
  * This test is specifically made ordered.
  * Integration test of data layer
  *
+ * (Deprecated due to changes in database with cascade constraint)
+ *
  * @author Patrick Vincent Højstrøm
- * @version 1.0
  * @since 27-11-2020
  */
 package com.example.demo.Data;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Deprecated
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
 class ProjectDataTest {

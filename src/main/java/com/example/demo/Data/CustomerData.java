@@ -55,6 +55,19 @@ public class CustomerData {
         }
     }
 
+    public Customer getCustomer(String e_mail) throws QueryDeniedException, EmptyResultSetException {
+        try {
+            Connection connection = connector.getConnection();
+            String statement = "SELECT * FROM customers WHERE contact_email = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, e_mail);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return (Customer) customerMapper.create(resultSet);
+        } catch (SQLException e) {
+            throw new QueryDeniedException("Error when querying database: SQLException message: " + e.getMessage());
+        }
+    }
+
     public void createCustomer(String name, String contact_name, String contact_email, String contact_phone) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();

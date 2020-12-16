@@ -1,7 +1,6 @@
 /**
  * @Author Rasmus Berg
  */
-
 package com.example.demo.Data;
 
 import com.example.demo.Domain.User;
