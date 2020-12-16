@@ -2,8 +2,9 @@
  * This test is specifically made ordered.
  * Integration test of data layer
  *
+ * (Deprecated due to changes in database with cascade constraint)
+ *
  * @author Patrick Vincent Højstrøm
- * @version 1.0
  * @since 27-11-2020
  */
 package com.example.demo.Data;
@@ -24,10 +25,11 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Deprecated
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
 class TaskDataTest {
-/*
+
     @Test
     @Order(0)
     void createTask(ApplicationContext ctx) throws OperationDeniedException {
@@ -39,14 +41,10 @@ class TaskDataTest {
         int task_leader_id = 1;
         LocalDate kickoff = LocalDate.of(2020,12,2);
         LocalDate deadline = LocalDate.of(2020,12,8);
-        int working_hours = 37;
 
-        taskData.createTask(project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
-    }*/
+        taskData.createTask(project_id, task_name, task_description, task_leader_id, kickoff, deadline);
+    }
 
-
-    //workinghours er flyttet til sub_tasks, som vi aftalte i fredags...
-/*
     @Test
     @Order(1)
     void getTasks(ApplicationContext ctx) throws QueryDeniedException, EmptyResultSetException {
@@ -61,7 +59,6 @@ class TaskDataTest {
         assertEquals(1,t.getTask_leader_id());
         assertEquals(LocalDate.of(2020,12,2),t.getKickoff());
         assertEquals(LocalDate.of(2020,12,8),t.getDeadline());
-        assertEquals(37,t.getWorking_hours());
     }
 
     @Test
@@ -79,9 +76,8 @@ class TaskDataTest {
         int task_leader_id = 2;
         LocalDate kickoff = LocalDate.of(2020,12,2);
         LocalDate deadline = LocalDate.of(2020,12,9);
-        int working_hours = 48;
 
-        taskData.editTask(task_id, project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
+        taskData.editTask(task_id, project_id, task_name, task_description, task_leader_id, kickoff, deadline);
 
         ArrayList<Task> list02 = taskData.getTasks(1);
         Task t02 = list02.get(list02.size()-1);
@@ -97,6 +93,5 @@ class TaskDataTest {
         assertEquals(2,t02.getTask_leader_id());
         assertEquals(LocalDate.of(2020,12,2),t02.getKickoff());
         assertEquals(LocalDate.of(2020,12,9),t02.getDeadline());
-        assertEquals(48,t02.getWorking_hours());
-    }*/
+    }
 }

@@ -2,7 +2,6 @@
  * Unit test of encryption logic
  *
  * @author Patrick Vincent Højstrøm
- * @version 1.0
  * @since 11-12-2020
  */
 package com.example.demo.Service;
@@ -23,7 +22,7 @@ class EncryptionLogicTest {
     void toHash() {
         String hash = encryptionLogic.toHash(password);
         assertNotEquals(password, hash);
-        System.out.println("Non-encrypted  :     " + password);
-        System.out.println("Hash-encrypted :     " + hash);
+        // System.out.println("Non-encrypted  :     " + password);
+        // System.out.println("Hash-encrypted :     " + hash);
     }
 }
