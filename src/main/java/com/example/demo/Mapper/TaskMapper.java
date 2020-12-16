@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class TaskMapper extends AbstractMapper {
+
     // BEHAVIOR ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Override
     public Task mapping(ResultSet resultSet) throws SQLException {
@@ -23,10 +24,14 @@ public class TaskMapper extends AbstractMapper {
         int project_id = resultSet.getInt("project_id");
         String task_name = resultSet.getString("task_name");
         String task_description = resultSet.getString("task_description");
-        int task_leader_id = resultSet.getInt("task_leader_id");
         LocalDate kickoff = LocalDate.parse(resultSet.getString("kickoff"));
         LocalDate deadline = LocalDate.parse(resultSet.getString("deadline"));
-        int working_hours = resultSet.getInt("working_hours");
-        return new Task(task_id, project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
+        int task_leader_id = resultSet.getInt("task_leader_id");
+        String e_mail = resultSet.getString("e_mail");
+        String first_name = resultSet.getString("first_name");
+        String last_name = resultSet.getString("last_name");
+        String name = first_name + ' ' + last_name;
+
+        return new Task(task_id, project_id, task_name, task_description, task_leader_id, name, e_mail, kickoff, deadline);
     }
 }

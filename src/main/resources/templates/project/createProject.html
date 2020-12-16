@@ -4,9 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="main_style.css"/>
+    <script src="popups.js"></script>
     <title>Create Project</title>
 </head>
 <th:block th:include="/includes/header :: header"></th:block>
+
+<!-- date context exception -->
+<td th:if="${DateContextException}">
+    <script th:inline="javascript">
+        submit_alert([[${DateContextException}]]);
+    </script>
+</td>
+<!-- date context exception -->
+
 <body>
 <div id="container">
     <div id="bio-left" style="float: left">
@@ -15,7 +25,7 @@
     <div id="input-form">
         <form action="/createProject" method="POST">
             <p>Project Name
-            <p><input type="text" name="pName" required>
+            <p><input type="text" name="pName" class="form-control" required>
             <p><select class="form-control" name="cId" required>
                 <option value="">Select Customer</option>
                 <option th:each="customer : ${customers}"
@@ -29,11 +39,11 @@
                         th:text="${user.first_name}+' '+ ${user.last_name}+' '+${user.e_mail}"></option>
             </select>
             <p>Kick-off
-            <p><input type="date" name="kickOff" required>
+            <p><input type="date" class="form-control" name="kickOff" required>
             <p>Deadline
-            <p><input type="date" name="deadline" required>
+            <p><input type="date" class="form-control" name="deadline" required>
             <div class="button">
-                <input type="Submit" value="  Create!  ">
+                <input type="Submit" class="submit-button" value="  Create!  ">
             </div>
             <br>
             <br>

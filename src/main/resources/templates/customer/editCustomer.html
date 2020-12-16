@@ -16,13 +16,13 @@
         <form action="/updateCustomer" method="POST">
             <input type="hidden" name="cId" th:value="${customer.customer_id}">
             <p>Customer Name
-            <p><input type="text" name="comName" th:value="${customer.name}" required>
+            <p><input type="text" class="form-control" name="comName" th:value="${customer.name}" required>
             <p>Customer Contact
-            <p><input type="text" name="conName" th:value="${customer.contact_name}" required>
-            <p><input type="email" name="conEmail" th:value="${customer.contact_email}" required>
-            <p><input type="tel" name="tel" th:value="${customer.contact_phone}" required>
+            <p><input type="text" class="form-control" name="conName" th:value="${customer.contact_name}" required>
+            <p><input type="email" class="form-control" name="conEmail" th:value="${customer.contact_email}" required>
+            <p><input type="tel" class="form-control" name="tel" th:value="${customer.contact_phone}" required>
             <div class="button">
-                <input type="Submit" value="  Update!  ">
+                <input type="Submit" class="submit-button" value="  Update!  ">
             </div>
             <a th:if="${session.user.getIs_admin() == 1}"
                th:href="@{/deleteCustomer?id={id}(id=${customer.customer_id})}">

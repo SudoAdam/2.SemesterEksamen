@@ -10,7 +10,7 @@
 <body>
 <div id="container">
     <div id="bio-left" style="float: left">
-        <a style="text-decoration: none" href="/">&#128281;</a>
+        <a class="back-button" href="/">⬅</a>
     </div>
     <div id="input-form">
         <form action="/createUser" method="POST">
@@ -18,19 +18,19 @@
             <p>Please proceed to fill in your information...</p>
             <br>
             Email
-            <p><input type="email" name="email" required>
+            <p><input type="email" class="form-control" name="email" required>
             <p>Password
-            <p><input type="password" name="password" required>
+            <p><input type="password" class="form-control" name="password" required>
             <p>Fornavn
-            <p><input type="text" name="firstName" required>
+            <p><input type="text" class="form-control" name="firstName" required>
             <p>Efternavn
-            <p><input type="text" name="lastName" required>
+            <p><input type="text" class="form-control" name="lastName" required>
             <div class="button">
-                <input type="Submit" value="  Create!  ">
+                <input type="Submit" class="submit-button" value="  Create!  ">
             </div>
             <p>
         </form>
-        <a href="/"><input type="Submit" value="  Back to login  "></a>
+        <a href="/"><input type="Submit" class="submit-button" value="  Back to login  "></a>
     </div>
 </div>
 </body>

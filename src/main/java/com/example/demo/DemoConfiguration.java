@@ -15,12 +15,17 @@ import org.springframework.context.annotation.Configuration;
 public class DemoConfiguration {
 
     @Bean
+    public LoginLogic loginLogic() {
+        return new LoginLogic();
+    }
+
+    @Bean
     public Connector connector() {
         return new Connector();
     }
 
     @Bean
-    public TimeLogic timeLogic() { return new TimeLogic(); }
+    public DateLogic dateLogic() { return new DateLogic(); }
 
     @Bean
     public EncryptionLogic encryptionLogic() { return new EncryptionLogic(); }
@@ -44,8 +49,8 @@ public class DemoConfiguration {
     }
 
     @Bean
-    public TaskService taskService(UserService userService, TaskData taskData, SubTaskData subTaskData, TimeLogic timeLogic) {
-        return new TaskService(userService, taskData, subTaskData, timeLogic);
+    public TaskService taskService(UserService userService, TaskData taskData, SubTaskData subTaskData, DateLogic dateLogic) {
+        return new TaskService(userService, taskData, subTaskData, dateLogic);
     }
 
     @Bean
@@ -95,7 +100,7 @@ public class DemoConfiguration {
     }
 
     @Bean
-    public ProjectService projectService(ProjectData projectData, UserData userData, CustomerData customerData, ParticipantData participantData, TimeLogic timeLogic) {
-        return new ProjectService(projectData, userData, customerData, participantData, timeLogic);
+    public ProjectService projectService(ProjectData projectData, UserData userData, CustomerData customerData, ParticipantData participantData, DateLogic dateLogic) {
+        return new ProjectService(projectData, userData, customerData, participantData, dateLogic);
     }
 }

@@ -1,19 +1,20 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.Project;
+import com.example.demo.Domain.SubTask;
+import com.example.demo.Domain.Task;
 import com.example.demo.Domain.User;
 import com.example.demo.Exceptions.ServiceExceptions.DateContextException;
 import com.example.demo.Exceptions.ServiceExceptions.FailedRequestException;
-import com.example.demo.Service.CustomerService;
-import com.example.demo.Service.ProjectService;
-import com.example.demo.Service.TaskService;
-import com.example.demo.Service.UserService;
+import com.example.demo.Exceptions.ServiceExceptions.LoginException;
+import com.example.demo.Service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Controller
 public class ProjectController {
@@ -21,18 +22,20 @@ public class ProjectController {
     TaskService taskService;
     UserService userService;
     CustomerService customerService;
+    LoginLogic loginLogic;
 
-    public ProjectController(ProjectService projectService, TaskService taskService, UserService userService, CustomerService customerService) {
+    public ProjectController(ProjectService projectService, TaskService taskService, UserService userService, CustomerService customerService, LoginLogic loginLogic) {
         this.projectService = projectService;
         this.taskService = taskService;
         this.userService = userService;
         this.customerService = customerService;
+        this.loginLogic = loginLogic;
     }
 
     @GetMapping("/listProject")
-    public String showProjects(Model model, WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String showProjects(Model model, WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
 
@@ -43,10 +46,15 @@ public class ProjectController {
     }
 
     @GetMapping("/createProject")
-    public String createProject(Model model, WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String createProject(Model model, WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
+            try {
+                model.addAttribute(model.getAttribute("DateContextException"));
+            } catch (Exception e) {
+                assert(true);
+            }
             model.addAttribute("customers", customerService.getCustomers());
             model.addAttribute("users", userService.getUsers());
             return "project/createProject";
@@ -54,9 +62,9 @@ public class ProjectController {
     }
 
     @PostMapping("/createProject")
-    public String createProject(WebRequest request) throws FailedRequestException, DateContextException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String createProject(WebRequest request) throws FailedRequestException, DateContextException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             //denne funktion er ikke færdig!
             String projectName = request.getParameter("pName");
@@ -77,9 +85,9 @@ public class ProjectController {
 
     // Responds to /editProject?id=project_id
     @RequestMapping(value = "/editProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String editProject(@RequestParam int id, Model model, WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String editProject(@RequestParam int id, Model model, WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             Project p = projectService.getProject(id);
             model.addAttribute("customers", customerService.getCustomers());
@@ -92,9 +100,9 @@ public class ProjectController {
     }
 
     @PostMapping("/updateProject")
-    public String updateProject(WebRequest request, Model model) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String updateProject(WebRequest request, Model model) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             String projectId = request.getParameter("id");
             String projectName = request.getParameter("pName");
@@ -119,28 +127,31 @@ public class ProjectController {
 
     // Responds to /viewProject?id=project_id
     @RequestMapping(value = "/viewProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String viewProject(@RequestParam int id, Model model, WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String viewProject(@RequestParam int id, Model model, WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
+            ArrayList<Task> tasks = taskService.getTasks(id);
+            ArrayList<SubTask> subTasks = taskService.getSubTasks(id);
+            tasks = taskService.getTaskHours(tasks,subTasks);
             Project p = projectService.getProject(id);
             model.addAttribute("participants",projectService.getParticipants(id));
-            model.addAttribute("subtasks", taskService.getSubTasks(id));
+            model.addAttribute("subtasks", subTasks);
             model.addAttribute("projectmanager", userService.getUser(p.getProject_leader_id()));
             model.addAttribute("customer", customerService.getCustomer(p.getCustomer_id()));
-            model.addAttribute("tasks", taskService.getTasks(id));
+            model.addAttribute("tasks", tasks );
             model.addAttribute("project", p);
             model.addAttribute("users", userService.getUsers());
-            model.addAttribute("workingHours", taskService.getWorkinghours(taskService.getTasks(id)));
+            model.addAttribute("workingHours", taskService.getWorkinghours(taskService.getSubTasks(id)));
             return "project/viewProject";
         }
     }
 
     // Responds to /deleteProject?id=project_id
     @RequestMapping(value = "/deleteProject", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteProject(@RequestParam int id, WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String deleteProject(@RequestParam int id, WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             projectService.deleteProject(id);
             return "redirect:/listProject";
@@ -148,9 +159,9 @@ public class ProjectController {
     }
 
     @PostMapping("/addParticipant")
-    public String addParticipant(@RequestParam int user_id, int project_id, int project_role_id, WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String addParticipant(@RequestParam int user_id, int project_id, int project_role_id, WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             projectService.assignParticipant(user_id, project_id, project_role_id);
             return "redirect:/viewProject?id=" + project_id;
@@ -158,9 +169,9 @@ public class ProjectController {
     }
 
     @PostMapping("/removeParticipant")
-    public String removeParticipant(WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String removeParticipant(WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             String uId = request.getParameter("user_id");
             String pId = request.getParameter("project_id");
@@ -169,14 +180,6 @@ public class ProjectController {
             projectService.removeParticipant(user_id, project_id);
         return "redirect:/viewProject?id=" + project_id;
 
-        }
-    }
-
-    public Boolean checkLogin(WebRequest request) {
-        if (request.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
-            return false;
-        } else {
-            return true;
         }
     }
 }

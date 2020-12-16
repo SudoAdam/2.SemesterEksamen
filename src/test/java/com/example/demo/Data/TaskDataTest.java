@@ -1,12 +1,11 @@
 /**
  * This test is specifically made ordered.
- * Ordered tests are needed when testing data requests due to CRUD (Create, Read, Edit, Delete)
+ * Integration test of data layer
  *
  * @author Patrick Vincent Højstrøm
  * @version 1.0
  * @since 27-11-2020
  */
-
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Task;
@@ -28,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
 class TaskDataTest {
-
+/*
     @Test
     @Order(0)
     void createTask(ApplicationContext ctx) throws OperationDeniedException {
@@ -43,8 +42,11 @@ class TaskDataTest {
         int working_hours = 37;
 
         taskData.createTask(project_id, task_name, task_description, task_leader_id, kickoff, deadline, working_hours);
-    }
+    }*/
 
+
+    //workinghours er flyttet til sub_tasks, som vi aftalte i fredags...
+/*
     @Test
     @Order(1)
     void getTasks(ApplicationContext ctx) throws QueryDeniedException, EmptyResultSetException {
@@ -96,5 +98,5 @@ class TaskDataTest {
         assertEquals(LocalDate.of(2020,12,2),t02.getKickoff());
         assertEquals(LocalDate.of(2020,12,9),t02.getDeadline());
         assertEquals(48,t02.getWorking_hours());
-    }
+    }*/
 }

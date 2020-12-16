@@ -132,7 +132,7 @@ footer{
 }
 
 .form-control {
-    font-size: 20px;
+    font-size: 15px;
     border-radius:4px;
     border:1px solid #AAAAAA;
 }
@@ -177,4 +177,4 @@ footer{
     border-radius: 15px 15px 15px 15px;
 }
 
-h1
+h1 {}

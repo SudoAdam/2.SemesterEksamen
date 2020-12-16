@@ -3,31 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="main_style.css"/>
+    <script src="popups.js"></script>
     <title>Login</title>
 </head>
 <th:block th:include="/includes/headerNotLoggedIn :: header"></th:block>
 <body>
+
+<!-- login exception -->
+<td th:if="${LoginException}">
+    <script th:inline="javascript">
+        submit_alert([[${LoginException}]]);
+    </script>
+</td>
+<!-- login exception -->
+
 <div id="container">
     <div id="input-form">
         <form action="/login" method="POST">
             <h2>Welcome to the Project Management Tool</h2>
             <br>
             <p> Email
-            <p><input type="email" name="mail">
+            <p><input type="email" class="form-control" name="mail">
             <p> Password
-            <p><input type="password" name="password">
+            <p><input type="password" class="form-control" name="password">
             <p>
             <div class="button">
-                <input type="Submit" value="  Log in!  ">
+                <input type="Submit" class="submit-button" value="  Log in!  ">
             </div>
         </form>
         <p>
-            <a href="/createUser"><input type="Submit" value="  Create new user  "></a>
+            <a href="/createUser">
+                <input type="Submit" class="submit-button" value="  Create new user  ">
+            </a>
             <br>
             <br>
-            <a href="/forgot"><input type="Submit" value="  I forgot my password...  "></a>
+            <a href="/forgot"><input type="Submit" class="submit-button" value="  I forgot my password...  "></a>
     </div>
 </div>
 </body>
+
 <th:block th:include="/includes/footer :: footer"></th:block>
 </html>

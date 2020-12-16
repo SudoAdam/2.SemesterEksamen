@@ -1,4 +1,6 @@
 /**
+ * Integration test of data layer
+ *
  * @author Patrick Vincent Højstrøm
  * @version 1.0
  * @since 9-12-2020

@@ -81,14 +81,15 @@ public class SubTaskData {
         }
     }
 
-    public void createSubTask(int task_id, String sub_task_description, String sub_task_name) throws OperationDeniedException {
+    public void createSubTask(int task_id, String sub_task_description, String sub_task_name, int sub_task_hours) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();
-            String statement = "INSERT INTO sub_tasks (task_ID, sub_task_description, sub_task_name) VALUES (?,?,?);";
+            String statement = "INSERT INTO sub_tasks (task_ID, sub_task_description, sub_task_name, sub_task_hours) VALUES (?,?,?,?);";
             PreparedStatement preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setInt(1, task_id);
             preparedStatement.setString(2, sub_task_description);
             preparedStatement.setString(3, sub_task_name);
+            preparedStatement.setInt(4,sub_task_hours);
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());

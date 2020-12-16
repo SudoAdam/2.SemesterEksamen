@@ -10,7 +10,8 @@
 <div id="container">
     <h1>Error</h1>
     <p style="text-align: left" th:text="'Title: ' + ${title}"> </p>
-    <p style="text-align: left" th:text="'Error: ' + ${exception} + ': Message: ' + ${message} + ';'"></p>
+    <p style="text-align: left" th:text="'Error: ' + ${exception} + ': Message: ' + ${message} + ';'"> </p>
+    <p style="text-align: left" th:text="'Stacktrace: ' + ${stacktrace}"> </p>
     <a href="/"> To Login </a>
 </div>
 </body>

@@ -28,7 +28,6 @@
             <th>Kick Off</th>
             <th>Deadline</th>
             <th></th>
-            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -36,7 +35,6 @@
             <td th:text="${project.project_name}"></td>
             <td th:text="${project.kickoff}"></td>
             <td th:text="${project.deadline}"></td>
-            <td> &#10060;</td> <!-- 9989 -->
             <td><a th:href="@{/viewProject?id={id}(id=${project.project_id})}">View Project</a></td>
         </tr>
         </tbody>

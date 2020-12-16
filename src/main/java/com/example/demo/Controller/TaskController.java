@@ -3,6 +3,8 @@ package com.example.demo.Controller;
 import com.example.demo.Domain.Task;
 import com.example.demo.Exceptions.ServiceExceptions.DateContextException;
 import com.example.demo.Exceptions.ServiceExceptions.FailedRequestException;
+import com.example.demo.Exceptions.ServiceExceptions.LoginException;
+import com.example.demo.Service.LoginLogic;
 import com.example.demo.Service.ProjectService;
 import com.example.demo.Service.TaskService;
 import com.example.demo.Service.UserService;
@@ -18,18 +20,20 @@ public class TaskController {
     TaskService taskService;
     UserService userService;
     ProjectService projectService;
+    LoginLogic loginLogic;
 
-    public TaskController(TaskService taskService, UserService userService, ProjectService projectService) {
+    public TaskController(TaskService taskService, UserService userService, ProjectService projectService, LoginLogic loginLogic) {
         this.taskService = taskService;
         this.userService = userService;
         this.projectService = projectService;
+        this.loginLogic = loginLogic;
     }
 
     // Responds to /editTask?id=task_id
     @RequestMapping(value = "/editTask", method = {RequestMethod.GET, RequestMethod.POST})
-    public String editTask(@RequestParam int id, Model model, WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String editTask(@RequestParam int id, Model model, WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             int project_id = taskService.getTask(id).getProject_id();
             model.addAttribute("participants", projectService.getParticipants(project_id));
@@ -40,9 +44,9 @@ public class TaskController {
     }
 
     @PostMapping("/updateTask")
-    public String updateTask(WebRequest request, Model model) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String updateTask(WebRequest request, Model model) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             // Consider refactoring to handle mapping in either Data or Mapping layer
             String taskId = request.getParameter("tId");
@@ -52,16 +56,14 @@ public class TaskController {
             String taskLeader = request.getParameter("taskLeader");
             String kickOffStr = request.getParameter("kickoff");
             String deadlineStr = request.getParameter("deadline");
-            String workingHours = request.getParameter("wh");
 
             int tId = Integer.parseInt(taskId);
             int pId = Integer.parseInt(projectId);
-            int project_leader_id = userService.findUserIdFromEmail(taskLeader);
+            int task_leader_id = Integer.parseInt(taskLeader);
             LocalDate kickoff = LocalDate.parse(kickOffStr);
             LocalDate deadline = LocalDate.parse(deadlineStr);
-            int wh = Integer.parseInt(workingHours);
 
-            taskService.editTask(tId, pId, taskName, taskDesc, project_leader_id, kickoff, deadline, wh);
+            taskService.editTask(tId, pId, taskName, taskDesc, task_leader_id, kickoff, deadline);
             model.addAttribute("project", projectService.getProject(Integer.parseInt(projectId)));
             model.addAttribute("tasks", taskService.getTasks(pId));
             return "redirect:/viewProject?id=" + pId;
@@ -69,9 +71,9 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/createTask", method = {RequestMethod.GET, RequestMethod.POST})
-    public String createTask(@RequestParam int id, Model model, WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String createTask(@RequestParam int id, Model model, WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             model.addAttribute("project", projectService.getProject(id));
             model.addAttribute("participants", projectService.getParticipants(id));
@@ -80,50 +82,28 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/createTaskPost", method = {RequestMethod.GET, RequestMethod.POST})
-    public String createTaskPost(@RequestParam int id, WebRequest request) throws DateContextException, FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String createTaskPost(@RequestParam int id, WebRequest request) throws DateContextException, FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             String taskName = request.getParameter("taskName");
             String taskDesc = request.getParameter("taskDesc");
             String taskLeader = request.getParameter("taskLeader");
             String taskKickoff = request.getParameter("kickoff");
             String taskDeadline = request.getParameter("deadline");
-            String workingHoursSTR = request.getParameter("workingHours");
 
             LocalDate kickoff = LocalDate.parse(taskKickoff);
             LocalDate deadline = LocalDate.parse(taskDeadline);
-            int workingHours = Integer.parseInt(workingHoursSTR);
             int project_leader_id = Integer.parseInt(taskLeader);
-            taskService.createTask(id, taskName, taskDesc, project_leader_id, kickoff, deadline, workingHours);
+            taskService.createTask(id, taskName, taskDesc, project_leader_id, kickoff, deadline);
             return "redirect:/viewProject?id=" + id;
         }
     }
 
-    /*@PostMapping("/updateTask")
-    public String updateTask(WebRequest request, Model model) {
-        String taskId = request.getParameter("tId");
-        String taskName = request.getParameter("tName");
-        String taskDesc = request.getParameter("tDesc");
-        String taskWH = request.getParameter("tWH");
-        String kickOffStr = request.getParameter("tKickoff");
-        String deadlineStr = request.getParameter("tDeadline");
-        String taskLeader = request.getParameter("tLeader");
-
-        int tId = Integer.parseInt(taskId);
-        LocalDate kickoff = LocalDate.parse(kickOffStr);
-        LocalDate deadline = LocalDate.parse(deadlineStr);
-
-        taskService.editTask(taskId,)
-        model.addAttribute("project", projectService.getProject(Integer.parseInt(projectId)));
-
-        return "project/viewProject";
-    }*/
-
     @RequestMapping(value = "/deleteTask", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteTask(@RequestParam int id, WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String deleteTask(@RequestParam int id, WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             Task task = taskService.getTask(id);
             int project_id = task.getProject_id();
@@ -133,9 +113,9 @@ public class TaskController {
     }
 
     @PostMapping("/deleteSubTask")
-    public String deleteSubTask(WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String deleteSubTask(WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             String pId = request.getParameter("project_id");
             String tId = request.getParameter("task_id");
@@ -149,27 +129,21 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/createSubTask", method = {RequestMethod.GET, RequestMethod.POST})
-    public String createSubTask(WebRequest request) throws FailedRequestException {
-        if (!checkLogin(request)) {
-            return "redirect:/";
+    public String createSubTask(WebRequest request) throws FailedRequestException, LoginException {
+        if (!loginLogic.checkLogin(request)) {
+            throw new LoginException();
         } else {
             String stName = request.getParameter("sub_task_name");
             String stDesc = request.getParameter("sub_task_description");
             String tId = request.getParameter("task_id");
             String pId = request.getParameter("project_id");
+            String sHour= request.getParameter("sub_task_hours");
             int task_id = Integer.parseInt(tId);
             int project_id = Integer.parseInt(pId);
-            taskService.createSubTask(task_id, stName, stDesc);
+            int hours = Integer.parseInt(sHour);
+            taskService.createSubTask(task_id, stName, stDesc,hours);
 
             return "redirect:/viewProject?id=" + project_id;
-        }
-    }
-
-    public Boolean checkLogin(WebRequest request) {
-        if (request.getAttribute("user", WebRequest.SCOPE_SESSION) == null) {
-            return false;
-        } else {
-            return true;
         }
     }
 }

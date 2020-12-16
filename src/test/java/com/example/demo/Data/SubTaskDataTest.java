@@ -1,3 +1,10 @@
+/**
+ * Integration test of data layer
+ *
+ * @author Patrick
+ * @version 1.0
+ * @since 9-12-2020
+ */
 package com.example.demo.Data;
 
 import com.example.demo.Domain.SubTask;
@@ -47,7 +54,7 @@ class SubTaskDataTest {
         assertEquals(sub_task_description, subTask.getSub_task_description());
         assertEquals(sub_task_name, subTask.getSub_task_name());
     }
-
+/*
     @BeforeEach
     void construct() throws QueryDeniedException, OperationDeniedException, EmptyResultSetException {
 
@@ -77,7 +84,7 @@ class SubTaskDataTest {
         subTaskData.createSubTask(task_id, sub_task_description, sub_task_name);
 
         sub_task_id = subTaskData.getSubTask(task_id, sub_task_name).getSub_task_id();
-    }
+    }*/
 
     @AfterEach
     void destruct() throws OperationDeniedException {
