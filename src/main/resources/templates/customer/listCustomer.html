@@ -14,6 +14,7 @@
     <table class="list-table">
         <thead>
         <tr>
+            <th></th>
             <th>Company name</th>
             <th>Contact name</th>
             <th>Contact E-mail</th>
@@ -22,6 +23,7 @@
         </thead>
         <tbody>
         <tr th:each="customer : ${customerList}">
+            <td><img class="pb-list" th:src="*{'data:image/jpeg;base64,' + customer.byteArrayAs64String()}"></td>
             <td th:text="${customer.name}"></td>
             <td th:text="${customer.contact_name}"></td>
             <td th:text="${customer.contact_email}"></td>
