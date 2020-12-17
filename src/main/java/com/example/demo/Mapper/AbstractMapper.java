@@ -16,7 +16,7 @@
 package com.example.demo.Mapper;
 
 import com.example.demo.Domain.DomainInterface;
-import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
+import com.example.demo.Exceptions.MapperExceptions.EmptyResultSetException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

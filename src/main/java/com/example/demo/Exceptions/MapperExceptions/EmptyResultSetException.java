@@ -1,4 +1,4 @@
-package com.example.demo.Exceptions.DataExceptions;
+package com.example.demo.Exceptions.MapperExceptions;
 
 public class EmptyResultSetException extends Exception {
     private final String message;

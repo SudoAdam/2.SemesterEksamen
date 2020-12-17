@@ -1,8 +1,6 @@
 /**
  * @Author Rasmus Berg
  */
-
-
 package com.example.demo.Domain;
 
 import com.fasterxml.jackson.databind.ser.std.ObjectArraySerializer;

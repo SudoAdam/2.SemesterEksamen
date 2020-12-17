@@ -10,7 +10,7 @@
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Task;
-import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
+import com.example.demo.Exceptions.MapperExceptions.EmptyResultSetException;
 import com.example.demo.Exceptions.DataExceptions.OperationDeniedException;
 import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
 import org.junit.jupiter.api.MethodOrderer;

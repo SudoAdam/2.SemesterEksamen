@@ -2,15 +2,13 @@
  * Integration test of data layer
  *
  * @author Patrick Vincent Højstrøm
- * @version 1.0
  * @since 9-12-2020
  */
 package com.example.demo.Data;
 
 import com.example.demo.Domain.User;
-import com.example.demo.Exceptions.DataExceptions.EmptyResultSetException;
+import com.example.demo.Exceptions.MapperExceptions.EmptyResultSetException;
 import com.example.demo.Exceptions.DataExceptions.OperationDeniedException;
-import com.example.demo.Exceptions.ServiceExceptions.LoginException;
 import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
