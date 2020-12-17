@@ -60,27 +60,27 @@ class UserDataTest {
     void destruct() throws OperationDeniedException {
         // After every test we will delete the test user.
         userData.deleteUser(e_mail);
-        try {
-            userData.findUserIdFromEmail(e_mail);
-        } catch (QueryDeniedException e) {
-            assertNotNull(e);
-        }
-
     }
 
     // TEST ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Test
-    void createUser_exception() {
+    void createUser_failure() {
         assertThrows(OperationDeniedException.class, ()->{userData.createUser("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "", "", "");});
     }
 
     @Test
-    void login_exception() {
+    void login_failure() {
         assertThrows(EmptyResultSetException.class, ()->{userData.login("false@123.com", "notARealPass");} );
     }
 
     @Test
-    void getUsers() throws QueryDeniedException, EmptyResultSetException {
+    void getUser_failure() throws OperationDeniedException {
+        userData.deleteUser(e_mail);
+        assertThrows(EmptyResultSetException.class, ()->{userData.getUser(e_mail);});
+    }
+
+    @Test
+    void getUsers_success() throws QueryDeniedException, EmptyResultSetException {
         ArrayList<User> users = userData.getUsers();
         for (User u: users) {
             assertNotNull(u);
@@ -88,33 +88,39 @@ class UserDataTest {
     }
 
     @Test
-    void getUser_byMail() throws QueryDeniedException, EmptyResultSetException {
-        User user01 = userData.getUser(e_mail);
-        assertUser(user01);
-        User user02 = userData.getUser(user_id);
-        assertUser(user02);
+    void getUser_byMail_success() throws QueryDeniedException, EmptyResultSetException {
+        User user = userData.getUser(e_mail);
+        assertUser(user);
     }
 
     @Test
-    void findUserIdFromEmail() throws QueryDeniedException {
+    void getUser_byID_success() throws QueryDeniedException, EmptyResultSetException {
+        User user = userData.getUser(user_id);
+        assertUser(user);
+    }
+
+    @Test
+    void findUserIdFromEmail_success() throws QueryDeniedException {
         int this_user_id = userData.findUserIdFromEmail(e_mail);
         assertEquals(user_id, this_user_id);
     }
 
     @Test
-    void findEmailFromUserId() throws QueryDeniedException {
+    void findEmailFromUserId_success() throws QueryDeniedException {
         String this_e_mail = userData.findEmailFromUserId(user_id);
         assertEquals(e_mail, this_e_mail);
     }
 
     @Test
-    void login() throws QueryDeniedException, EmptyResultSetException {
+    void login_success() throws QueryDeniedException, EmptyResultSetException {
         User user = userData.login(e_mail, password);
         assertUser(user);
     }
 
     @Test
-    void editUser() {
-
+    void editUser_success() throws EmptyResultSetException, QueryDeniedException, OperationDeniedException {
+        userData.editUser(user_id, e_mail, password, first_name, last_name, 1);
+        User user = userData.getUser(user_id);
+        assertEquals(1, user.getIs_admin());
     }
 }

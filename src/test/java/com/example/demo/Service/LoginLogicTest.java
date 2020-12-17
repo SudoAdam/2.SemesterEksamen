@@ -7,6 +7,8 @@
 package com.example.demo.Service;
 
 import com.example.demo.Domain.User;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.context.request.WebRequest;
 
@@ -24,6 +26,16 @@ class LoginLogicTest {
         this.webRequest = new WebRequest() {
             private final Map<String, Object> attributes = new HashMap<>();
             private final Map<Integer, Map<String, Object>> session = new HashMap<>();
+            @Override
+            public Object getAttribute(String s, int i) {
+                return session.get(i).get(s); }
+            @Override
+            public void setAttribute(String s, Object o, int i) {
+                attributes.put(s, o);
+                session.put(i, attributes); }
+            @Override
+            public void removeAttribute(String s, int i) {
+                attributes.remove(s); }
 
             @Override
             public String getHeader(String s) {
@@ -111,22 +123,6 @@ class LoginLogicTest {
             }
 
             @Override
-            public Object getAttribute(String s, int i) {
-                return session.get(i).get(s);
-            }
-
-            @Override
-            public void setAttribute(String s, Object o, int i) {
-                attributes.put(s, o);
-                session.put(i, attributes);
-            }
-
-            @Override
-            public void removeAttribute(String s, int i) {
-                attributes.remove(s);
-            }
-
-            @Override
             public String[] getAttributeNames(int i) {
                 return new String[0];
             }
@@ -153,11 +149,23 @@ class LoginLogicTest {
         };
     }
 
-    @Test
-    void checkLogin() {
+    @BeforeEach
+    void construct() {
         webRequest.setAttribute("user", new User(), WebRequest.SCOPE_SESSION);
-        assertTrue(loginLogic.checkLogin(webRequest));
+    }
 
+    @AfterEach
+    void destruct() {
+        webRequest.removeAttribute("user", webRequest.SCOPE_SESSION);
+    }
+
+    @Test
+    void checkLogin_succes() {
+        assertTrue(loginLogic.checkLogin(webRequest));
+    }
+
+    @Test
+    void checkLogin_failure() {
         webRequest.removeAttribute("user", webRequest.SCOPE_SESSION);
         assertFalse(loginLogic.checkLogin(webRequest));
     }
