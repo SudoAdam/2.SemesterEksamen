@@ -21,7 +21,7 @@ class ConnectorTest {
     }
 
     @Test
-    void getConnection() {
+    void getConnection_success() {
         Connection connection = connector.getConnection();
         assertNotNull(connection);
     }
