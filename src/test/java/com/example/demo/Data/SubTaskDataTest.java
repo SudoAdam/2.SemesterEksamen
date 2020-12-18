@@ -68,6 +68,7 @@ class SubTaskDataTest {
     @BeforeEach
     void construct() throws QueryDeniedException, OperationDeniedException, EmptyResultSetException {
 
+        userData.deleteUser("mock@user.com");
         userData.createUser("mock@user.com", "mockPass", "mock", "mocky");
         leader_id = userData.getUser("mock@user.com").getUser_id();
 

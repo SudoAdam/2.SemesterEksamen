@@ -9,7 +9,7 @@ public class OperationDeniedException extends Exception {
 
     public OperationDeniedException() {
         // Default message
-        this.message = "Request could not be sent";
+        this.message = "Request could not be performed";
     }
 
     @Override
