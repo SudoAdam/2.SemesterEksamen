@@ -1,3 +1,9 @@
+/**
+ * @author Kasper Fauerby
+ * @version 1.0
+ * @since 09-12-2020
+ */
+
 package com.example.demo.Data;
 
 import com.example.demo.Domain.Participant;

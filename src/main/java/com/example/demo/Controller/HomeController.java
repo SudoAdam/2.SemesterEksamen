@@ -42,7 +42,7 @@ public class HomeController {
         return "redirect:/";
     }
 
-    @GetMapping("/loggedin")
+    @GetMapping("/loggedin") // This is a test
     public String loggedin(WebRequest request) {
         User user = (User) request.getAttribute("user", WebRequest.SCOPE_SESSION);
         if (user != null) {

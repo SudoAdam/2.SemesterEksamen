@@ -1,3 +1,9 @@
+/**
+ * @author Kasper Fauerby
+ * @version 1.0
+ * @since 27-11-2020
+ */
+
 package com.example.demo.Controller;
 
 import com.example.demo.Domain.Project;
@@ -66,7 +72,6 @@ public class ProjectController {
         if (!loginLogic.checkLogin(request)) {
             throw new LoginException();
         } else {
-            //denne funktion er ikke færdig!
             String projectName = request.getParameter("pName");
             String kickOffStr = request.getParameter("kickOff");
             String deadlineStr = request.getParameter("deadline");
