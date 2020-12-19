@@ -9,7 +9,7 @@ Installation guide for the ProjektKalkulationsVærktøjet Java program:
 
     start MySQL workbench and create a new database
     
-    in the new database run the DDL.sql file
+    in the new database run the DDL.sql file from the sql folder in root of the project
 
     Then run the DML.sql in the database you created in Workbench
 
@@ -20,6 +20,8 @@ Installation guide for the ProjektKalkulationsVærktøjet Java program:
     Run the program
 
     Go to localhost on your browser with the assigned port.
+
+    For login with admin status use "admin@admin.dk" and "admin" as credentials.
 
 
 
