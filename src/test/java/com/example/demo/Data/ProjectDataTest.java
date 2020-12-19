@@ -22,20 +22,24 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Deprecated
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
 class ProjectDataTest {
+    private final ProjectData projectData;
+    private final CustomerData customerData;
+    private final UserData userData;
+
     private final String project_name;
     private final String project_name_new;
     private final LocalDate kickoff;
     private final LocalDate deadline;
-    private int project_leader_id;
     private final String project_leader_mail;
-    private int customer_id;
     private final String customer_mail;
 
-    ProjectDataTest() {
+    ProjectDataTest(ApplicationContext ctx) {
+        this.projectData = (ProjectData) ctx.getBean("projectData");
+        this.customerData = (CustomerData) ctx.getBean("customerData");
+        this.userData = (UserData) ctx.getBean("userData");
         this.project_name = "The newest Deal";
         this.project_name_new = "The newest Deal ADVANCED";
         this.kickoff = LocalDate.of(2020,12,2);
@@ -52,37 +56,33 @@ class ProjectDataTest {
 
     @Test
     @Order(0)
-    void createProject(ApplicationContext ctx) {
-        ProjectData projectData = (ProjectData) ctx.getBean("projectData");
-        CustomerData customerData = (CustomerData) ctx.getBean("customerData");
-        UserData userData = (UserData) ctx.getBean("userData");
+    void createProject() {
 
         try {
             // Projects are dependent on a customer
             customerData.createCustomer("MockCustomer", "MockName", customer_mail, "12121212");
-            customer_id = customerData.getCustomer(customer_mail).getCustomer_id();
-        } catch (OperationDeniedException | EmptyResultSetException | QueryDeniedException e) {
+        } catch (OperationDeniedException e) {
             assert true;
         }
         try {
             // Projects are dependent on a user
             userData.createUser(project_leader_mail, "mock", "Sammy", "Jonson");
-            project_leader_id = userData.getUser(project_leader_mail).getUser_id();
-        } catch (OperationDeniedException | EmptyResultSetException | QueryDeniedException e) {
-            assert true;
-        }
-        try {
-            projectData.createProject(project_name, kickoff, deadline, project_leader_id, customer_id);
         } catch (OperationDeniedException e) {
             assert true;
         }
+        try {
+            int customer_id = customerData.getCustomer(customer_mail).getCustomer_id();
+            int project_leader_id = userData.getUser(project_leader_mail).getUser_id();
+            projectData.createProject(project_name, kickoff, deadline, project_leader_id, customer_id);
+        } catch (OperationDeniedException | QueryDeniedException | EmptyResultSetException e) {
+            assert true;
+        }
+
     }
 
     @Test
     @Order(1)
-    void getProjects(ApplicationContext ctx) throws QueryDeniedException, EmptyResultSetException {
-        ProjectData projectData = (ProjectData) ctx.getBean("projectData");
-
+    void getProjects() throws QueryDeniedException, EmptyResultSetException {
         // Get list of projects
         ArrayList<Project> list = projectData.getProjects();
 
@@ -94,9 +94,7 @@ class ProjectDataTest {
 
     @Test
     @Order(2)
-    void getProject(ApplicationContext ctx) throws QueryDeniedException, EmptyResultSetException {
-        ProjectData projectData = (ProjectData) ctx.getBean("projectData");
-
+    void getProject() throws QueryDeniedException, EmptyResultSetException {
         Project p = projectData.getProject(project_name);
 
         assertProject(p);
@@ -104,9 +102,7 @@ class ProjectDataTest {
 
     @Test
     @Order(3)
-    void editProject(ApplicationContext ctx) throws QueryDeniedException, OperationDeniedException, EmptyResultSetException {
-        ProjectData projectData = (ProjectData) ctx.getBean("projectData");
-
+    void editProject() throws QueryDeniedException, OperationDeniedException, EmptyResultSetException {
         projectData.editProject(project_name, project_name_new, kickoff, deadline);
 
         Project p_new = projectData.getProject(project_name_new);
@@ -122,11 +118,7 @@ class ProjectDataTest {
 
     @Test
     @Order(4)
-    void deleteProject(ApplicationContext ctx) throws OperationDeniedException, QueryDeniedException, EmptyResultSetException {
-        ProjectData projectData = (ProjectData) ctx.getBean("projectData");
-        CustomerData customerData = (CustomerData) ctx.getBean("customerData");
-        UserData userData = (UserData) ctx.getBean("userData");
-
+    void deleteProject() throws OperationDeniedException, QueryDeniedException, EmptyResultSetException {
         try {
             projectData.getProject(project_name);
             projectData.deleteProject(project_name);

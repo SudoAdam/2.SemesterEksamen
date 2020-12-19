@@ -13,10 +13,7 @@ import com.example.demo.Domain.Task;
 import com.example.demo.Exceptions.MapperExceptions.EmptyResultSetException;
 import com.example.demo.Exceptions.DataExceptions.OperationDeniedException;
 import com.example.demo.Exceptions.DataExceptions.QueryDeniedException;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 
@@ -25,73 +22,105 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Deprecated
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
 class TaskDataTest {
+    private final TaskData taskData;
+    private final ProjectData projectData;
+    private final CustomerData customerData;
+    private final UserData userData;
 
-    @Test
-    @Order(0)
-    void createTask(ApplicationContext ctx) throws OperationDeniedException {
-        TaskData taskData = (TaskData) ctx.getBean("taskData");
+    private final String project_leader_mail;
+    private final String customer_mail;
+    private int project_leader_id;
+    private int customer_id;
+    private int project_id;
 
-        int project_id = 1;
-        String task_name = "Make clean!";
-        String task_description = "The software has a lot of mess in it...";
-        int task_leader_id = 1;
-        LocalDate kickoff = LocalDate.of(2020,12,2);
-        LocalDate deadline = LocalDate.of(2020,12,8);
+    private int task_id;
+    private final String task_name;
+    private final String task_description;
+    private final LocalDate kickoff;
+    private final LocalDate deadline;
 
-        taskData.createTask(project_id, task_name, task_description, task_leader_id, kickoff, deadline);
+    TaskDataTest(ApplicationContext ctx) {
+        this.taskData = (TaskData) ctx.getBean("taskData");
+        this.projectData = (ProjectData) ctx.getBean("projectData");
+        this.customerData = (CustomerData) ctx.getBean("customerData");
+        this.userData = (UserData) ctx.getBean("userData");
+
+        this.project_leader_mail = "Mock@mail.com";
+        this.customer_mail = "Mock@mail.com";
+
+        this.task_name = "Make clean!";
+        this.task_description = "The software has a lot of mess in it...";
+        this.kickoff = LocalDate.of(2020,12,2);
+        this.deadline = LocalDate.of(2020,12,8);
+    }
+
+    void assertTask(Task t) {
+        assertEquals(project_id,t.getProject_id());
+        assertEquals(task_name,t.getTask_name());
+        assertEquals(task_description,t.getTask_description());
+        assertEquals(project_leader_id,t.getTask_leader_id());
+        assertEquals(kickoff,t.getKickoff());
+        assertEquals(deadline,t.getDeadline());
+    }
+
+    @BeforeEach
+    void construct() throws OperationDeniedException, EmptyResultSetException, QueryDeniedException {
+        try {
+            customerData.createCustomer("MockCustomer", "MockName", customer_mail, "12121212");
+        } catch (OperationDeniedException e) {
+            projectData.deleteProject("Mock");
+            customerData.deleteCustomer(customer_mail);
+            userData.deleteUser(project_leader_mail);
+            customerData.createCustomer("MockCustomer", "MockName", customer_mail, "12121212");
+        }
+        userData.createUser(project_leader_mail, "mock", "Sammy", "Jonson");
+
+        customer_id = customerData.getCustomer(customer_mail).getCustomer_id();
+        project_leader_id = userData.getUser(project_leader_mail).getUser_id();
+
+        projectData.createProject("Mock", kickoff, deadline, project_leader_id, customer_id);
+        project_id = projectData.getProject("Mock").getProject_id();
+
+        try {
+            taskData.createTask(project_id, task_name, task_description, project_leader_id, kickoff, deadline);
+        } catch (OperationDeniedException e) {
+            taskData.deleteTask(task_name);
+            taskData.createTask(project_id, task_name, task_description, project_leader_id, kickoff, deadline);
+        }
+        ArrayList<Task> list = taskData.getTasks(project_id);
+        task_id = list.get(list.size()-1).getTask_id();
+    }
+
+    @AfterEach
+    void destruct() throws OperationDeniedException {
+        projectData.deleteProject(project_id);
+        customerData.deleteCustomer(customer_mail);
+        userData.deleteUser(project_leader_mail);
+        taskData.deleteTask(task_id);
     }
 
     @Test
-    @Order(1)
-    void getTasks(ApplicationContext ctx) throws QueryDeniedException, EmptyResultSetException {
-        TaskData taskData = (TaskData) ctx.getBean("taskData");
-
-        ArrayList<Task> list = taskData.getTasks(1);
+    void getTasks() throws QueryDeniedException, EmptyResultSetException {
+        ArrayList<Task> list = taskData.getTasks(project_id);
         Task t = list.get(list.size()-1);
-
-        assertEquals(1,t.getProject_id());
-        assertEquals("Make clean!",t.getTask_name());
-        assertEquals("The software has a lot of mess in it...",t.getTask_description());
-        assertEquals(1,t.getTask_leader_id());
-        assertEquals(LocalDate.of(2020,12,2),t.getKickoff());
-        assertEquals(LocalDate.of(2020,12,8),t.getDeadline());
+        assertTask(t);
     }
 
     @Test
-    @Order(2)
-    void editTask(ApplicationContext ctx) throws QueryDeniedException, OperationDeniedException, EmptyResultSetException {
-        TaskData taskData = (TaskData) ctx.getBean("taskData");
+    void getTask() throws EmptyResultSetException, QueryDeniedException {
+        Task t = taskData.getTask(task_id);
+        assertTask(t);
+    }
 
-        ArrayList<Task> list01 = taskData.getTasks(1);
-        Task t01 = list01.get(list01.size()-1);
+    @Test
+    void editTask() throws QueryDeniedException, OperationDeniedException, EmptyResultSetException {
 
-        int task_id = t01.getTask_id();
-        int project_id = t01.getProject_id();
-        String task_name = t01.getTask_name();
-        String task_description = "The software has a lot of mess in it... There's even more now!";
-        int task_leader_id = 2;
-        LocalDate kickoff = LocalDate.of(2020,12,2);
-        LocalDate deadline = LocalDate.of(2020,12,9);
+        String desc = "New Description";
+        taskData.editTask(task_id, project_id, task_name, desc, project_leader_id, kickoff, deadline);
 
-        taskData.editTask(task_id, project_id, task_name, task_description, task_leader_id, kickoff, deadline);
-
-        ArrayList<Task> list02 = taskData.getTasks(1);
-        Task t02 = list02.get(list02.size()-1);
-
-        // Compare the two versions
-        assertNotEquals(t02, t01);
-
-        // Test that data transfer is correctly translated
-        assertEquals(t02.getTask_id(),list02.get(list01.size()-1).getTask_id());
-        assertEquals(1,t02.getProject_id());
-        assertEquals(task_name,t02.getTask_name());
-        assertEquals(task_description,t02.getTask_description());
-        assertEquals(2,t02.getTask_leader_id());
-        assertEquals(LocalDate.of(2020,12,2),t02.getKickoff());
-        assertEquals(LocalDate.of(2020,12,9),t02.getDeadline());
+        Task t = taskData.getTask(task_id);
+        assertEquals(desc, t.getTask_description());
     }
 }
