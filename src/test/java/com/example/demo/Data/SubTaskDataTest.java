@@ -23,7 +23,6 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Deprecated
 @SpringBootTest
 class SubTaskDataTest {
     // FIELDS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -36,7 +35,9 @@ class SubTaskDataTest {
     private int task_id;
     private int sub_task_id;
     private int leader_id;
+    private final String leader_mail;
     private int customer_id;
+    private final String customer_mail;
     private final String project_name;
     private final String task_name;
     private final String sub_task_description;
@@ -52,6 +53,8 @@ class SubTaskDataTest {
         this.customerData = (CustomerData) ctx.getBean("customerData");
         this.project_name = "SubTask test project";
         this.task_name = "SubTask test task";
+        this.leader_mail = "mock@user.com";
+        this.customer_mail = "mock@customer.com";
         this.sub_task_description = "testing of sub task";
         this.sub_task_name = "SubTask test";
         this.sub_task_hrs = 14;
@@ -67,31 +70,16 @@ class SubTaskDataTest {
 
     @BeforeEach
     void construct() throws QueryDeniedException, OperationDeniedException, EmptyResultSetException {
+        userData.createUser(leader_mail, "mockPass", "mock", "mocky");
+        leader_id = userData.getUser(leader_mail).getUser_id();
 
-        userData.deleteUser("mock@user.com");
-        userData.createUser("mock@user.com", "mockPass", "mock", "mocky");
-        leader_id = userData.getUser("mock@user.com").getUser_id();
+        customerData.createCustomer("Company", "mock", customer_mail, "12345678");
+        customer_id = customerData.getCustomer(customer_mail).getCustomer_id();
 
-        customerData.createCustomer("Company", "mock", "mock@customer.com", "12345678");
-        customer_id = customerData.getCustomer("mock@customer.com").getCustomer_id();
-
-        projectData.createProject(
-                project_name,
-                LocalDate.of(2020,1,1),
-                LocalDate.of(2020,1,2),
-                leader_id,
-                customer_id
-        );
+        projectData.createProject(project_name, LocalDate.of(2020,1,1), LocalDate.of(2020,1,2), leader_id, customer_id);
         project_id = projectData.getProject(project_name).getProject_id();
 
-        taskData.createTask(
-                project_id,
-                task_name,
-                "test for sub task",
-                leader_id,
-                LocalDate.of(2020, 1, 1),
-                LocalDate.of(2020,1,2)
-        );
+        taskData.createTask(project_id, task_name, "test for sub task", leader_id, LocalDate.of(2020, 1, 1), LocalDate.of(2020,1,2));
         task_id = taskData.getTasks(project_id).get(0).getTask_id();
 
         subTaskData.createSubTask(task_id, sub_task_description, sub_task_name, sub_task_hrs);
@@ -100,9 +88,9 @@ class SubTaskDataTest {
 
     @AfterEach
     void destruct() throws OperationDeniedException {
+        projectData.deleteProject(project_id);
         userData.deleteUser(leader_id);
         customerData.deleteCustomer(customer_id);
-        projectData.deleteProject(project_id);
         taskData.deleteTask(task_id);
         subTaskData.deleteSubTask(task_id, sub_task_id);
     }
