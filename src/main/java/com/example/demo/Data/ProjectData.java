@@ -126,6 +126,21 @@ public class ProjectData {
         }
     }
 
+    public void editProject(String project_name_old, String project_name_new, LocalDate kickoff, LocalDate deadline) throws OperationDeniedException {
+        try {
+            Connection connection = connector.getConnection();
+            String statement = "UPDATE projects SET project_name=?, kickoff=?, deadline=? WHERE project_name=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, project_name_new);
+            preparedStatement.setString(2, kickoff.toString());
+            preparedStatement.setString(3, deadline.toString());
+            preparedStatement.setString(4, project_name_old);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+        }
+    }
+
     public void deleteProject(int id) throws OperationDeniedException {
         try {
             Connection connection = connector.getConnection();

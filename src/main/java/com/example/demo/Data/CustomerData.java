@@ -111,6 +111,18 @@ public class CustomerData {
         }
     }
 
+    public void deleteCustomer(String customer_email) throws OperationDeniedException {
+        try {
+            Connection connection = connector.getConnection();
+            String statement = "DELETE FROM customers WHERE contact_email=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, customer_email);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new OperationDeniedException("Error when requesting database: SQLException message: " + e.getMessage());
+        }
+    }
+
     public void uploadCustomerImg(int customer_id, byte[] fileAsBytes) throws OperationDeniedException {
         try {
             Blob img = new SerialBlob(fileAsBytes);
