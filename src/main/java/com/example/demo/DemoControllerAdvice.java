@@ -21,7 +21,7 @@ import java.util.Arrays;
 public class DemoControllerAdvice {
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public String handleLoginException() {
+    public String handleHttpRequestMethodNotSupportedException() {
         return "authentication/login";
     }
 
